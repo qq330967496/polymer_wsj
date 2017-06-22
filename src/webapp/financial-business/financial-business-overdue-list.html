@@ -1,0 +1,60 @@
+<!--逾期列表-->
+<dom-module id="financial-business-overdue-list">
+    <style>
+        :host {
+            display: table;
+            width: 100%;
+        }
+    </style>
+    <template>
+        <h-simple-grid class="multi-line-text" paging="{{queryParam}}" on-select-page="loadOrders">
+            <h-simple-grid-header>
+                <h-simple-grid-header-cell class="row-cell-orderNumber">融资订单号</h-simple-grid-header-cell>
+                <h-simple-grid-header-cell class="row-cell-company white-space-normal">客户名称</h-simple-grid-header-cell>
+                <h-simple-grid-header-cell class="row-cell-default">待收本息(元)</h-simple-grid-header-cell>
+                <h-simple-grid-header-cell class="row-cell-default">应收本金(元)</h-simple-grid-header-cell>
+                <h-simple-grid-header-cell class="row-cell-default">应收利息(元)</h-simple-grid-header-cell>
+                <h-simple-grid-header-cell class="row-cell-type">资金渠道</h-simple-grid-header-cell>
+                <h-simple-grid-header-cell class="row-cell-date">到期日</h-simple-grid-header-cell>
+                <h-simple-grid-header-cell class="row-cell-min">逾期天数</h-simple-grid-header-cell>
+                <h-simple-grid-header-cell class="row-cell-default">逾期罚息(元)</h-simple-grid-header-cell>
+                <h-simple-grid-header-cell class="row-cell-button row-cell-button-min flex-grow-one">操作
+                </h-simple-grid-header-cell>
+            </h-simple-grid-header>
+            <h-simple-grid-body>
+                <template is="dom-repeat" items="[[orders]]">
+                    <h-simple-grid-row>
+                        <h-simple-grid-row-cell class="row-cell-orderNumber">
+                            <a on-click="openTabOrderDetail" name$="[[item.id]]" order-no="[[item.financeOrderNo]]">[[item.financeOrderNo]]</a>
+                        </h-simple-grid-row-cell>
+                        <h-simple-grid-row-cell class="row-cell-company white-space-normal">
+                            <span>[[item.customerCompanyName]]</span>
+                        </h-simple-grid-row-cell>
+                        <h-simple-grid-row-cell class="row-cell-default"><span class="t-lightblue">¥ [[sum(item.amount,item.interest)]]</span>
+                        </h-simple-grid-row-cell>
+                        <h-simple-grid-row-cell class="row-cell-default"><span
+                                class="t-lightblue">¥ [[item.amount]]</span>
+                        </h-simple-grid-row-cell>
+                        <h-simple-grid-row-cell class="row-cell-default"><span
+                                class="t-lightblue">¥ [[item.interest]]</span>
+                        </h-simple-grid-row-cell>
+                        <h-simple-grid-row-cell class="row-cell-type"><span>[[setFundChannel(item.fundChannel)]]</span>
+                        </h-simple-grid-row-cell>
+                        <h-simple-grid-row-cell class="row-cell-date">
+                            <span>[[date2YyyyMmDd(item.interestSettleDate)]]</span></h-simple-grid-row-cell>
+                        <h-simple-grid-row-cell class="row-cell-min">
+                            <span>[[calOverdueDays(item.interestSettleDate)]]天</span>
+                        </h-simple-grid-row-cell>
+                        <h-simple-grid-row-cell class="row-cell-default"><span>¥ 0</span></h-simple-grid-row-cell>
+                        <h-simple-grid-row-cell is-option class="row-cell-button row-cell-button-min flex-grow-one">
+                            <h-dialog-button label="回款" class="btn btn-default" is-button
+                                             content-element="financial-business-return"
+                                             entity="[[item]]"></h-dialog-button>
+                        </h-simple-grid-row-cell>
+                    </h-simple-grid-row>
+                </template>
+            </h-simple-grid-body>
+        </h-simple-grid>
+    </template>
+    <script type="text/javascript" src="assets/js/financial-business-overdue-list.js"></script>
+</dom-module>

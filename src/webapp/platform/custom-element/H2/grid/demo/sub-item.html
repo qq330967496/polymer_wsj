@@ -1,0 +1,25 @@
+<link rel="import" href="../../o-resource.html" />
+<dom-module id="sub-item">
+    <link rel="import" type="css" href="h-simple-grid.css"/>
+    <style>
+        :host{
+            display: block;
+        }
+    </style>
+    <template>
+        <span>欢迎使用subItem</span>
+        <span>{{subData.name}}</span>
+        <span>{{subData.age}}</span>
+        <span>{{subData.sex}}</span>
+    </template>
+    <script>
+        Polymer({
+            is:"sub-item",
+            properties:{
+                subData:{
+                    type:Object
+                }
+            }
+        })
+    </script>
+</dom-module>

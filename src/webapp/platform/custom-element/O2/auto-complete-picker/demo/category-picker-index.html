@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <link rel="import" href="../../../o-resource.html"/>
+    <link rel="import" href="../o-auto-complete-picker.html"/>
+
+    <link rel="import" href="../o-category-picker.html"/>
+    <link rel="import" href="../o-customer-picker.html"/>
+    <link rel="import" href="../o-company-picker.html"/>
+    <link rel="import" href="../o-staff-picker.html"/>
+    <link rel="import" href="../o-address-picker.html"/>
+    <link rel="import" href="../o-business-picker.html"/>
+    <link rel="import" href="../o-filter-format-test.html"/>
+    <link rel="import" href="../o-productLine-picker.html"/>
+    <link rel="import" href="../o-manufacturer-picker.html"/>
+    <link rel="import" href="../o-designation-picker.html"/>
+    <link rel="import" href="../o-logistic-picker.html"/>
+    <link rel="import" href="../o-warehouse-picker.html"/>
+    <link rel="import" href="../o-order-picker.html"/>
+    <link rel="import" href="../o-company-bank-picker.html"/>
+    <!--<link rel="import" href="../paper-autocomplete.html"/>-->
+</head>
+<body>
+<template is="dom-bind">
+
+    <!--<o-warehouse-picker label="仓库"></o-warehouse-picker>-->
+    <!--<o-order-picker label="订单编号"></o-order-picker>-->
+
+<!--    <o-category-picker id="pick1" bind-data="{{category}}" label="分类"></o-category-picker>
+    当前选择的分类：<span>{{category}}</span><br>-->
+
+
+
+<!--    <o-filter-format-test id="pick3"  bind-data="{{id}}" label="客户姓名"></o-filter-format-test>
+    当前选择的客户：<span>{{id}}</span><br>-->
+
+    <o-company-picker id="pick4" demo label="客户公司" bind-data="{{companyId}}"></o-company-picker>
+    当前选择的公司：<span>{{companyId}}</span><br>
+    <!--
+        <o-staff-picker id="pick5" label="员工" bind-data="1"></o-staff-picker>
+        当前选择的员工：<span>{{staffId}}</span><br>
+
+
+        <o-business-picker label="业务选择" multi width="1200px" selected-data="{{selectedData}}"
+                           business="province-all"></o-business-picker>
+        <br>
+        当前选择的值：<span>{{selectedData}}</span><br>
+
+        <o-address-picker province="广东" city="广州"></o-address-picker>
+        <br>
+        当前选择的值：<span>{{selectedData}}</span><br>
+        <paper-autocomplete label="test"></paper-autocomplete>
+        <br>
+        <o-customer-picker  id="pick2" bind-data="{{id}}" label="客户姓名"></o-customer-picker>
+        当前选择的客户：<span>{{id}}</span>
+        <br>
+        <br>
+        <o-productLine-picker bind-data="{{id}}" label="产品"></o-productLine-picker>
+        当前选择的产品：<span>{{id}}</span><br>
+        <o-business-picker label="业务选择" multi width="1200px" selected-data="{{selectedData}}"
+                           business="category-sell"></o-business-picker>
+        <br>
+        当前选择的值：<span>{{selectedData}}</span><br>
+        <o-business-picker label="业务选择" multi width="1200px" selected-data="{{selectedData1}}"
+                           business="category-purchase"></o-business-picker>
+        <br>
+        当前选择的值：<span>{{selectedData1}}</span><br>
+        <o-manufacturer-picker bind-data="{{manufacturer}}"></o-manufacturer-picker>
+        当前选择的值：<span>{{manufacturer}}</span><br>
+        <o-designation-picker bind-data="(C91A)"></o-designation-picker>
+        当前选择的值：<span>{{designation}}</span><br>
+        <o-warehouse-picker bind-data="8"></o-warehouse-picker>
+        当前选择的值：<span>{{warehouse}}</span><br>
+        <o-category-picker bind-data="{{category}}" label="分类"></o-category-picker>
+        当前选择的分类：<span>{{category}}</span><br>-->
+
+  <!--  <o-company-bank-picker label="公司银行" company-id="7320"></o-company-bank-picker>-->
+
+    <!--<o-productLine-picker bind-data="{{id}}" label="产品" business-code="product2"></o-productLine-picker>-->
+
+    <!--<o-logistic-picker bind-data="{{id}}" label="物流" business-code="logistic"></o-logistic-picker>-->
+</template>
+</body>
+</html>

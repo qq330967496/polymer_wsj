@@ -1,0 +1,209 @@
+<link rel="import" href="../../o-resource.html" />
+<dom-module id="h-form-radio">
+    <style>
+        :host {
+            display: inline-block;
+            white-space: nowrap;
+            text-align: left;
+        }
+        :host .status-wrap{
+            display: inline-block;
+            position: relative;
+            /*margin-left: -4px;*/
+            float: left;
+        }
+        :host label{
+            display: inline-block;
+            line-height: 34px;
+            float: left;
+        }
+        :host .radio-label {
+            vertical-align: middle;
+        }
+        :host iron-selector > * {
+            padding: 6px 10px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        :host .status-items{
+            display: inline-block;
+            vertical-align: middle;
+        }
+        :host iron-selector .status {
+            border-right: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            border-top: 1px solid #ccc;
+            float: left;
+            background-color: #ffffff;
+        }
+
+        /*第一项*/
+        :host iron-selector .status:first-child {
+            border-left: 1px solid #ccc;
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+        }
+
+        /*最后一项*/
+        :host iron-selector .status:last-child {
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+
+        /*hover*/
+        :host iron-selector .status:hover {
+            background-color: #0099FF;
+            color: #fff;
+            border-right: 1px solid #0099FF;
+            border-bottom: 1px solid #0099FF;
+            border-top: 1px solid #0099FF;
+        }
+
+        /*选中*/
+        :host iron-selector .status.iron-selected {
+            border-right: 1px solid #0099FF;
+            border-bottom: 1px solid #0099FF;
+            border-top: 1px solid #0099FF;
+            background-color: #0099FF;
+            color: #fff;
+
+        }
+        :host iron-selector .status:first-child.iron-selected {
+            border-left: 1px solid #0099FF;
+        }
+        :host .shade {
+            display: none;
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 34px;
+            background-color: black;
+            z-index: 99;
+            opacity: .00;
+            border-radius: 4px;
+        }
+
+    </style>
+    <template>
+        <label class="label-size radio-label"><span>[[label]]</span>：</label>
+        <div class="status-wrap">
+            <iron-selector class="status-items" selected="{{selectedData}}" attr-for-selected="radioItem">
+                <template is="dom-repeat" items="[[_getFirstPart(radioItems)]]">
+                    <span class="status" radio-item="{{item.value}}">{{item.label}}</span>
+                </template>
+                <span class="status" radio-item="[[_getLastValue(radioItems)]]">[[_getLastLabel(radioItems)]]</span>
+            </iron-selector>
+            <div class="shade"></div>
+        </div>
+    </template>
+    <script>
+        Polymer({
+            is: "h-form-radio",
+            properties: {
+                /**
+                 *
+                 * 标签名字
+                 * eg：1
+                 *
+                 * @attribute label
+                 * @type {String}
+                 */
+                label: {
+                    type: String,
+                    value:"",
+                    observer:'_labelChange'
+                },
+                /**
+                 *
+                 * 初始选择项和radioItems的value值相对应
+                 * eg：1
+                 *
+                 * @attribute selected
+                 * @type {String}
+                 */
+                selectedData: {
+                    type: String,
+                    reflectToAttribute: true,
+                    notify: true
+                },
+                /**
+                 *
+                 * 需要展示的数据项
+                 * eg：[{value:1,label:"全部",count:"19"}]
+                 *
+                 * @attribute radioItems
+                 * @type {Array}
+                 */
+                radioItems: {
+                    type: Array,
+                    value: []
+                },
+                /**
+                 * 模式 常量：'Edit','View'
+                 */
+                mode: {
+                    type: String,
+                    value: 'Edit',
+                    observer: '_modeChange'
+                },
+            },
+            listeners: {
+                "tap": "itemSelected"
+            },
+            itemSelected: function() {
+                //点击的时候触发一个事件，给调用者捕获。事件名："on-item-selected"
+               this.fire("radio-selected", {"status": this.selectedData}, {bubbles: false});
+            },
+            _modeChange:function(newVal){
+                if(newVal=='View'){
+                    this.querySelector('.shade').style.display='block';
+                }else{
+                    this.querySelector('.shade').style.display='none';
+                }
+            },
+            /**
+             * 获取数组radioItems的前n-1个元素
+             * @param radioItems
+             * @returns {Array.<T>|string|Blob|ArrayBuffer|JQuery|*}
+             * @private
+             */
+            _getFirstPart:function(radioItems){
+                return radioItems.length>0?radioItems.slice(0,-1):[];
+            },
+            /**
+             * 获取数组radioItems最后一个元素的value值
+             * @param radioItems
+             * @returns {*}
+             * @private
+             */
+            _getLastValue: function (radioItems) {
+                return radioItems.length>0?radioItems[radioItems.length-1]['value']:{};
+            },
+            /**
+             * 获取数组radioItems最后一个元素的value值
+             * @param radioItems
+             * @returns {*}
+             * @private
+             */
+            _getLastLabel: function (radioItems) {
+                return radioItems.length>0?radioItems[radioItems.length-1]['label']:{};
+            },
+            /**
+             * 监听标签名改变
+             * @param label 标签名
+             * @private
+             */
+            _labelChange:function(label){
+                var labelElement = this.querySelector(".label-size");
+                if(labelElement){
+                    if(!label){
+                        labelElement.style.display= "none";
+                    }else{
+                        labelElement.style.display= "";
+                    }
+                }
+            }
+        })
+    </script>
+</dom-module>

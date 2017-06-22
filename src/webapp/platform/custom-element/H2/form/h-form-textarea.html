@@ -1,0 +1,123 @@
+<!--加载资源文件-->
+<link rel="import" href="../../o-resource.html" />
+<!--
+	这里的id和下面的is属性的值要保持一致，最好也和html文件的名字保持一直。
+	表示的是html标签的名字。
+-->
+<dom-module id="h-form-textarea">
+	<!--样式表-->
+	<style>
+		:host{
+			display: inline-block;
+		}
+		:host label{
+			line-height: 34px;
+		}
+		:host iron-autogrow-textarea{
+			flex-grow: 1;
+			min-width: 170px;
+			/*定义了最小宽度后，flex-grow属性才起效。否则当textarea内字符宽度超出textarea的宽度时会撑大textarea*/
+		}
+		:host span.input-view{
+			text-align: left;
+			line-height: 34px;
+		}
+	</style>
+	<!--组件的Local MOM-->
+	<template>
+		<div id="h-form-textarea-container">
+			<label class="label-size"><span>[[label]]</span>：</label>
+			<template is="dom-if" if="{{__isEditMode(mode)}}">
+				<iron-autogrow-textarea bind-value="{{bindData}}"  rows="[[rows]]" max-rows="[[maxRows]]" required="[[required]]"></iron-autogrow-textarea>
+			</template>
+			<template is="dom-if" if="{{__isViewMode(mode)}}">
+				<span class=" input-view" >{{bindData}}</span>
+			</template>
+		</div>
+	</template>
+</dom-module>
+
+<script>
+	Polymer({
+		is: 'h-form-textarea',
+		properties: {
+			/**
+			 * textarea 前面的标签名字
+			 *
+			 * @attribute label
+			 * @type {String}
+			 */
+			label: {
+				type: String,
+				value:"",
+				observer:'_labelChange'
+			},
+			/**
+			 * textarea 文本值
+			 * 双向绷定
+			 */
+			bindData: {
+				notify: true,
+				type: String
+			},
+			/**
+			 * textarea 行数
+			 *
+			 * @attribute rows
+			 * @type number
+			 * @default 4
+			 */
+			rows: {
+				type: Number,
+				value: 1
+			},
+			/**
+			 * textarea 最大行数
+			 *
+			 * @attribute maxRows
+			 * @type number
+			 * @default 4
+			 */
+			maxRows: {
+				type: Number,
+				value: 1
+			},
+			/**
+			 * textarea 是否必填
+			 * 设置为true的话为必填
+			 */
+			required: {
+				type: Boolean
+			}
+			,
+			/**
+			 * 模式 常量：'Edit','View'
+			 */
+			mode: {
+				type: String,
+				value: 'Edit'
+			}
+		},
+		__isEditMode:function(mode){
+			return !mode || mode=='Edit';
+		},
+		__isViewMode:function(mode){
+			return mode=='View';
+		},
+		/**
+		 * 监听标签名改变
+		 * @param label 标签名
+		 * @private
+		 */
+		_labelChange:function(label){
+			var labelElement = this.querySelector(".label-size");
+			if(labelElement){
+				if(!label){
+					labelElement.style.display= "none";
+				}else{
+					labelElement.style.display= "inline-block";
+				}
+			}
+		}
+	});
+</script>

@@ -1,0 +1,385 @@
+/**/
+/**/
+/*复合表格*/
+/**/
+/**/
+table.table-complex {
+    font-size: 12px;
+}
+/*表头*/
+table.table-complex tr th {
+    background: #595959;
+    font-weight: bold;
+    color: #ffffff;
+    height: 40px;
+    line-height: 40px;
+    text-align: left;
+    padding-left: 5px;
+}
+/*列*/
+table.table-complex tr td {
+    padding: 5px 0 5px 5px;
+    height: auto;
+    line-height: 2em;
+    border-bottom: 1px solid #ddd;
+}
+
+table.table-complex tr:nth-child(odd) td {
+    background: #f9f9f9;
+}
+
+/*子列表*/
+#row-have-item table.table-complex {
+    border-bottom: 1px solid #c0c9cc;
+}
+
+/*子列表表头*/
+#row-have-item table.table-complex tr th {
+    background-color: #d8e2e5;
+    font-weight: bold;
+    border-bottom: 1px solid #c0c9cc;
+    color: #333333;
+    height: 35px;
+    line-height: 35px;
+    padding-left: 5px;
+}
+
+/*子列表列*/
+#row-have-item table.table-complex tr td {
+    padding: 5px 0 5px 5px;
+}
+
+/**/
+/**/
+/*子列表*/
+/**/
+/**/
+/*列表外壳*/
+h-simple-grid-row#row-have-item .table-wrap {
+    padding: 10px 10px 10px 10px;
+    border-bottom: 1px solid #dddddd;
+}
+
+/*子列表*/
+h-simple-grid-row#row-have-item table {
+    /*border-bottom: 1px solid #dddddd;*/
+}
+/*子列表表体*/
+#row-have-item h-simple-grid-body .body{
+    border:none;
+}
+
+/*子列表表头*/
+#row-have-item h-simple-grid-header h-simple-grid-header-cell {
+    font-weight: bold;
+    height: 34px;
+    line-height: 34px;
+}
+
+#row-have-item .header-cell {
+    height: 32px;
+    line-height: 32px;
+    color:#333333;
+}
+
+#row-have-item h-simple-grid-header .header {
+    height: 34px;
+    line-height: 34px;
+}
+
+/*主列表奇数行子列表表头*/
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(odd) table tr th,
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(odd) h-simple-grid-header h-simple-grid-header-cell {
+    background-color: #ffffff;
+    border-bottom: 1px solid #dddddd;
+    padding-left: 5px;
+}
+
+/*主列表偶数行子列表表头*/
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(even) table tr th,
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(even) h-simple-grid-header h-simple-grid-header-cell {
+    background-color: #efefef;
+    border-bottom: 1px solid #dddddd;
+    padding-left: 5px;
+}
+
+/*子列表行*/
+#row-have-item h-simple-grid-body h-simple-grid-row .row{
+    padding: 0;
+}
+
+/*子列表奇数行*/
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(odd) h-simple-grid-body h-simple-grid-row .row{
+    background-color: #ffffff;
+    border-bottom: 1px solid #dddddd;
+    padding-left: 5px;
+}
+
+/*子列表偶数行*/
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(even) h-simple-grid-body h-simple-grid-row .row{
+    background-color: #efefef;
+    border-bottom: 1px solid #cccccc;
+    padding-left: 5px;
+}
+
+/*子列表列*/
+#row-have-item h-simple-grid-body h-simple-grid-row h-simple-grid-row-cell{
+    padding: 8px 0 8px 0;
+}
+
+/*主列表奇数行子列表列*/
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(odd) table tr td,
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(odd) h-simple-grid-body h-simple-grid-row h-simple-grid-row-cell{
+    background-color: #ffffff;
+    border-bottom: 1px solid #dddddd;
+}
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(odd) h-simple-grid-body h-simple-grid-row h-simple-grid-row-cell {
+    background: transparent;
+    border-bottom: 0;
+}
+
+
+/*主列表偶数行子列表列*/
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(even) table tr td,
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(even) h-simple-grid-body h-simple-grid-row h-simple-grid-row-cell {
+    background-color: #efefef;
+    border-bottom: 1px solid #dddddd;
+}
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(odd) table tr:last-child td,
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(even) table tr:last-child td{
+    border-bottom: none;
+}
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(even) h-simple-grid-body h-simple-grid-row h-simple-grid-row-cell {
+    background: transparent;
+    border-bottom: 0;
+}
+
+/*主列表奇数行子列表行hover*/
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(odd) table tr:hover td,
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(odd) h-simple-grid-body h-simple-grid-row:hover h-simple-grid-row-cell {
+    background-color: #e4eff2;
+}
+
+/*主列表偶数行子列表行hover*/
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(even) table tr:hover td,
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(even) h-simple-grid-body h-simple-grid-row:hover h-simple-grid-row-cell {
+    background-color: #e4eff2;
+}
+/*主列表子列表行hover*/
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(even) h-simple-grid-body h-simple-grid-row .row:hover,
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(odd) h-simple-grid-body h-simple-grid-row .row:hover{
+    background-color: #e4eff2;
+}
+
+
+
+/**/
+/**/
+/*简单表格*/
+/*h-simple-grid标签*/
+/**/
+/**/
+/*简单表格列表表头*/
+h-simple-grid.table-simple h-simple-grid-header .header,
+#row-have-item h-simple-grid.table-simple h-simple-grid-header .header{
+    border-top: 1px solid #cccccc;
+    border-left: 1px solid #cccccc;
+    border-right: 1px solid #cccccc;
+    border-bottom: 3px solid #dddddd;
+    color: #333333;
+    background-color: #ffffff;
+}
+/*简单表格列表表头列*/
+h-simple-grid.table-simple h-simple-grid-header h-simple-grid-header-cell,
+#row-have-item h-simple-grid.table-simple h-simple-grid-header h-simple-grid-header-cell{
+    background-color: #ffffff;
+    font-weight: bold;
+    color: #333333;
+    height: 35px;
+    line-height: 35px;
+    padding-left: 5px;
+}
+
+h-simple-grid.table-simple h-simple-grid-header h-simple-grid-header-cell .header-cell,
+#row-have-item h-simple-grid.table-simple h-simple-grid-header h-simple-grid-header-cell .header-cell{
+    background-color: #ffffff;
+    color: #333333;
+    height: 32px;
+    line-height: 32px;
+}
+
+/*简单表格表体*/
+h-simple-grid.table-simple h-simple-grid-body .body,
+#row-have-item h-simple-grid.table-simple h-simple-grid-body .body{
+    border-bottom: 1px solid #cccccc;
+    border-left: 1px solid #cccccc;
+    border-right: 1px solid #cccccc;
+}
+
+/*简单表格列*/
+h-simple-grid.table-simple h-simple-grid-body h-simple-grid-row h-simple-grid-row-cell,
+#row-have-item h-simple-grid.table-simple h-simple-grid-body h-simple-grid-row h-simple-grid-row-cell{
+    padding: 5px 0 5px 5px;
+    height: auto;
+    line-height: 2em;
+}
+
+/*简单表格偶数行*/
+h-simple-grid.table-simple h-simple-grid-body h-simple-grid-row:nth-child(even) h-simple-grid-row-cell,
+#row-have-item h-simple-grid.table-simple h-simple-grid-body h-simple-grid-row:nth-child(even) h-simple-grid-row-cell{
+    background: #f9f9f9;
+}
+
+/*简单表格行hover*/
+h-simple-grid.table-simple h-simple-grid-body h-simple-grid-row:hover h-simple-grid-row-cell,
+#row-have-item h-simple-grid.table-simple h-simple-grid-body h-simple-grid-row:hover h-simple-grid-row-cell{
+    background: #e4eff2;
+}
+/**/
+/**/
+/*简单表格*/
+/*table标签*/
+/**/
+/**/
+/*简单列表表头*/
+table.table-simple{
+    /*border-top: 1px solid #cccccc;*/
+    /*border-right: 1px solid #cccccc;*/
+    /*border-left: 1px solid #cccccc;*/
+    font-size: 12px;
+}
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(odd) h-simple-grid-row-cell table.table-simple tr th,
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(even) h-simple-grid-row-cell table.table-simple tr th,
+table.table-simple tr th{
+    background-color: #ffffff;
+    border-bottom: 3px solid #dddddd;
+    padding: 5px 0 5px 5px;
+    line-height: 2em;
+}
+/*简单列表列*/
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(odd) h-simple-grid-row-cell table.table-simple tr td,
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(even) h-simple-grid-row-cell table.table-simple tr td,
+table.table-simple tr td{
+    padding: 5px 0 5px 5px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #dddddd;
+    text-align: left;
+}
+/*简单列表奇数行列*/
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(odd) h-simple-grid-row-cell table.table-simple tr:nth-child(odd) td,
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(even) h-simple-grid-row-cell table.table-simple tr:nth-child(odd) td,
+table.table-simple tr:nth-child(odd) td{
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #cccccc;
+}
+/*简单列表行hover*/
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(odd) h-simple-grid-row-cell table.table-simple tr:hover td,
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(even) h-simple-grid-row-cell table.table-simple tr:hover td,
+table.table-simple tr:hover td{
+    background-color: #e4eff2;
+}
+/*弹窗里的列表*/
+.table-dialog .simple-grid,
+table.table-dialog{
+    border-top: 1px solid #dddddd;
+    border-left: 1px solid #dddddd;
+    border-right: 1px solid #dddddd;
+}
+/**/
+/*弹窗里的列表*/
+/**/
+#row-have-item h-simple-grid.table-simple.dialog-table h-simple-grid-header h-simple-grid-header-cell,
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(even) table.dialog-table tr th,
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(even) h-simple-grid.dialog-table h-simple-grid-header h-simple-grid-header-cell,
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(even) h-simple-grid.dialog-table h-simple-grid-body h-simple-grid-row .row{
+    background-color: #ffffff;
+}
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(even) h-simple-grid.dialog-table h-simple-grid-body h-simple-grid-row .row{
+    padding-left: 0;
+}
+#row-have-item h-simple-grid.table-simple.dialog-table h-simple-grid-header .header{
+    border-bottom: none;
+    height: auto;
+}
+
+.border-table tr th, .border-table tr td{
+    border-left: 1px solid #dddddd;
+}
+.border-table tr th:first-child, .border-table tr td:first-child{
+    border-left: none;
+}
+
+h-simple-grid.table-simple h-simple-grid-header h-simple-grid-header-cell.multi-row .header-cell,
+#row-have-item h-simple-grid.table-simple h-simple-grid-header h-simple-grid-header-cell.multi-row .header-cell{
+    background-color: #ffffff;
+    color: #333333;
+    height: 32px;
+    line-height: 16px;
+    vertical-align: middle;
+}
+.multi-line-text.input-table .row{
+    padding: 0;
+}
+
+/**/
+/*基本表格*/
+/**/
+
+table.table-base{}
+table.table-base tr th,
+table.table-base tr td{
+    padding-left:5px ;
+    padding-right:5px ;
+    vertical-align: middle;
+}
+table.table-base tr th{
+    line-height: 40px;
+}
+table.table-base tr th.table-left-title,
+table.table-base tr td.table-left-title{
+    padding-left:10px ;
+    padding-right:10px ;
+    width: 40px;
+    line-height: 26px;
+}
+/**/
+/*灰色表格*/
+/**/
+table.table-gray{
+    border:1px solid #cccccc;
+}
+table.table-gray tr th{
+    background-color: #dddddd;
+}
+table.table-gray tr th.table-left-title,
+table.table-gray tr td.table-left-title{
+    background-color: #cccccc;
+}
+table.table-gray tr td{
+    line-height: 34px;
+    border-bottom: 1px solid #dddddd;
+}
+table.table-base tr th.table-left-title.border-b,
+table.table-base tr td.table-left-title.border-b{
+    border-bottom: 1px solid #ffffff;
+}
+/**/
+/*基本表格*/
+/**/
+table.table-base tr th.serial-number,
+table.table-base tr td.serial-number{
+    width: 50px;
+    text-align: center;
+}
+table.table-base tr:last-child td{
+    border-bottom: none;
+}
+table.table-base tr td.operation-col{
+    font-size: 0;
+    line-height: 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+table.table-base tr td.btn-col{
+   line-height: 0;
+}

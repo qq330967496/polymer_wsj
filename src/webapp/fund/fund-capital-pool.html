@@ -1,0 +1,108 @@
+<!--资金池-->
+<dom-module id="fund-capital-pool">
+    <template>
+        <div class="fund-index-top float-box">
+            <dl class="fund-overview">
+                <dt>累计融资总额：</dt>
+                <dd><b class="t-sum font18">¥ 8,000,000.00</b> 元</dd>
+                <dt>累计融资利息：</dt>
+                <dd><b class="t-interest font18">¥ 10,000.00 元</b></dd>
+            </dl>
+            <dl class="fund-overview">
+                <dt>资金池总额：</dt>
+                <dd><b class="t-sum font18">¥ 4,000,000.00</b> 元</dd>
+                <dt>可用总金额：</dt>
+                <dd><b class="t-sum font18">¥ 3,200,000.00</b> 元</dd>
+            </dl>
+            <dl class="fund-overview">
+                <dt>待收总金额：</dt>
+                <dd><b class="t-sum font18">¥ 800,000.00</b> 元</dd>
+                <dt>待收总利息：</dt>
+                <dd><b class="t-interest font18">¥ 8,000.00</b> 元</dd>
+            </dl>
+            <dl class="fund-overview">
+                <dt><span class="font18">备用金</span></dt>
+                <dd>资金总额：<span>¥ 1,000,000.00</span> 元</dd>
+                <dd>可用金额：<span>¥ 800,000.00</span> 元</dd>
+                <dd>
+                    <paper-button class="btn btn-default">查看</paper-button>
+                </dd>
+            </dl>
+        </div>
+        <div class="box-part">
+            <div class="title-bar"><span class="inline-block mt-15">第三方资金渠道</span>
+                <paper-button class="btn btn-default pull-right mb-5">新增</paper-button>
+            </div>
+            <paper-tabs class="scroll-wrap" noink no-bar scrollable>
+                <div class="scroll-item">
+                    <dl class="fund-overview">
+                        <dt><span class="font18">铜板街</span></dt>
+                        <dd>资金总额：<span>¥ 1,000,000.00</span> 元</dd>
+                        <dd>可用金额：<span>¥ 800,000.00</span> 元</dd>
+                        <dd>
+                            <paper-button class="btn btn-default">查看</paper-button>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="scroll-item">
+                    <dl class="fund-overview">
+                        <dt><span class="font18">真融宝</span></dt>
+                        <dd>资金总额：<span>¥ 1,000,000.00</span> 元</dd>
+                        <dd>可用金额：<span>¥ 800,000.00</span> 元</dd>
+                        <dd>
+                            <paper-button class="btn btn-default">查看</paper-button>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="scroll-item">
+                    <dl class="fund-overview">
+                        <dt><span class="font18">海尔金融</span></dt>
+                        <dd>资金总额：<span>¥ 1,000,000.00</span> 元</dd>
+                        <dd>可用金额：<span>¥ 800,000.00</span> 元</dd>
+                        <dd>
+                            <paper-button class="btn btn-default">查看</paper-button>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="scroll-item">
+                    <dl class="fund-overview">
+                        <dt><span class="font18">铜板街</span></dt>
+                        <dd>资金总额：<span>¥ 1,000,000.00</span> 元</dd>
+                        <dd>可用金额：<span>¥ 800,000.00</span> 元</dd>
+                        <dd>
+                            <paper-button class="btn btn-default">查看</paper-button>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="scroll-item">
+                    <dl class="fund-overview">
+                        <dt><span class="font18">真融宝</span></dt>
+                        <dd>资金总额：<span>¥ 1,000,000.00</span> 元</dd>
+                        <dd>可用金额：<span>¥ 800,000.00</span> 元</dd>
+                        <dd>
+                            <paper-button class="btn btn-default">查看</paper-button>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="scroll-item">
+                    <dl class="fund-overview">
+                        <dt><span class="font18">海尔金融</span></dt>
+                        <dd>资金总额：<span>¥ 1,000,000.00</span> 元</dd>
+                        <dd>可用金额：<span>¥ 800,000.00</span> 元</dd>
+                        <dd>
+                            <paper-button class="btn btn-default">查看</paper-button>
+                        </dd>
+                    </dl>
+                </div>
+            </paper-tabs>
+        </div>
+        <div class="box-part">
+            <div class="title-bar"><span class="inline-block mb-5">近期融资记录</span>
+                <a href="#" class="pull-right mb-5">查看所有融资记录</a>
+            </div>
+            <fund-index-financing-records-last-list></fund-index-financing-records-last-list>
+        </div>
+
+    </template>
+    <script type="text/javascript" src="assets/js/fund-capital-pool.js"></script>
+</dom-module>

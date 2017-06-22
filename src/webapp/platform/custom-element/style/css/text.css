@@ -1,0 +1,240 @@
+.t-green{
+    color: #41A841;
+}
+.t-darkgreen{
+    color: #006400;
+}
+.t-darkergreen{
+    color: #060;
+}
+.t-red{
+    color: #F00;
+}
+.text-red-darker {
+    color: #900
+}
+.t-darkred{
+    color: #900;
+}
+.t-lightblue{
+    color: #2786F7;
+}
+.t-blue{
+    color: #00F;
+}
+.t-darkblue{
+    color:darkblue;
+}
+.t-deepskyblue{
+    color: deepskyblue;
+}
+.t-status{
+    color: #3306B6;
+}
+.t-darkyellow{
+    color: #C67605;
+}
+.t-gray{
+    color: #cccccc;
+}
+.t-darkgray{
+    color: #999999;
+}
+.t-jacinth{
+    color: #ff3300;
+}
+/*状态*/
+.t-donot{
+    color: #119AA5;
+}
+.t-pass{
+    color: #449d44;
+}
+.t-notpass{
+    color: #d01d33;
+}
+.t-disable{
+    color: #ABABAB;
+}
+.text-enable {
+    color: #008000
+}
+
+.text-disable {
+    color: #f00
+}
+.text-green {
+    color: #006400
+}
+
+.text-green-light {
+    color: #5cb85c
+}
+span.time {
+    padding: 3px 5px 2px 5px;
+    background: sandybrown;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    color: #ffffff;
+    font-family: "Arial-BoldMT", "Arial Bold", "Arial";
+    font-size: 12px;
+    line-height: 12px;
+    font-style: normal;
+    font-weight: 700;
+    display: inline-block;
+}
+.text-center{
+    text-align: center;
+}
+.t-orange{
+    color: #ffa238;
+}
+.t-left {
+    text-align: left;
+}
+
+.t-right {
+    text-align: right;
+}
+.nowrap{
+    white-space: normal;
+}
+.vertical-m{vertical-align: middle}
+
+.icon-circle {
+    border-radius: 10px;
+    border: 1px solid;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    box-sizing: border-box;
+}
+.circle {
+    border-radius: 10px;
+    /*border: 1px solid;*/
+    /*width: 20px;*/
+    /*height: 20px;*/
+    /*line-height: 20px;*/
+    text-align: center;
+}
+.stock-price{
+    color: red;
+    border-radius: 10px;
+    border-color: red;
+    display: inline-block;
+}
+.not-future {
+    color: #5cb85c;
+    border-radius: 10px;
+    border-color: green;
+    display: inline-block;
+}
+.future {
+    color: blue;
+    border-radius: 10px;
+    border-color: blue;
+    display: inline-block;
+}
+.on-sale {
+    color: #5cb85c;
+    display: inline-block;
+}
+.off-sale {
+    color: red;
+    display: inline-block;
+}
+.supplier-flag {
+    float: left;
+    font-size: 12px;
+    color: forestgreen;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    line-height: 18px;
+    border-radius: 10px;
+    border: 2px solid forestgreen;
+    text-align: center;
+    margin: 3px;
+}
+.font12{
+     font-size: 12px;
+ }
+.font10{
+    font-size: 10px;
+}
+.font18{
+    font-size: 18px;
+}
+/*单位*/
+.t-unit{
+    width: 38px;
+    font-size: 12px;
+}
+.t-prompt-d{
+    line-height: 34px;
+    color:#999999 ;
+    font-size: 12px;
+    margin-left: 5px;
+}
+/*人民币*/
+.rmb {
+    color: #ff3300;
+    font-family: "Arial-BoldMT","Arial Bold","Arial";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+}
+.rmb-small {
+    color: #ff3300;
+    font-family: "Arial-BoldMT","Arial Bold","Arial";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+}
+/*美元*/
+
+.dol {
+    color: #0066cc;
+    font-family: "Arial-BoldMT", "Arial Bold", "Arial";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+}
+.dol-small {
+    color: #0066cc;
+    font-family: "Arial-BoldMT","Arial Bold","Arial";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+}
+.circle-red {
+    color: #C30;
+    border-color: #C30;
+}
+
+.circle-font {
+    width: 25px;
+    height: 25px;
+    border: 2px solid;
+    border-radius: 18px;
+    font-size: 13px;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 20px;
+    text-align: center;
+}
+.font20{
+    font-size: 20px;
+}
+.font30{
+    font-size: 30px;
+}
+.t-sum{
+    color: #D15B47;
+}
+.t-interest{
+    color: #87B87F;
+}
+

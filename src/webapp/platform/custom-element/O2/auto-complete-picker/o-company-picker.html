@@ -1,0 +1,150 @@
+<!--公司组件-->
+<link rel="import" href="o-auto-complete-picker.html"/>
+<dom-module id="o-company-picker">
+    <style>
+        :host {
+            white-space:nowrap;
+            float: left;
+        }
+        :host label{
+            float: left;
+            line-height: 34px;
+        }
+    </style>
+    <template>
+        <o-auto-complete-picker id="company-complete" column-info="[[columnInfo]]" display-field="name"
+                                value-field="id" local-data="[[localData]]" demo="{{demo}}"
+                                placeholder="[[label]]"
+                                mode="{{mode}}"
+                                label="[[label]]"
+                                no-label="[[noLabel]]"
+                                bind-item-value="{{bindItemValue}}"
+                                data-url="[[_getQueryUrl(type)]]" bind-data="{{bindData}}"
+                                width="{{width}}"></o-auto-complete-picker>
+    </template>
+    <script>
+        Polymer({
+            is: 'o-company-picker',
+            behaviors:[OBaseBehavior],
+            properties: {
+                demo:{ //是否是演示模式
+                    type:Boolean,
+                    value:false
+                },
+                label:{ //组件label
+                    type:String
+                },
+                noLabel:{ //是否显示label
+                    type:Boolean,
+                    value:false
+                },
+                type:{//1 采购商 , 2 供应商 , 3 所有
+                    type:Number,
+                    value:3
+                },
+                bindData:{
+                    type:String,
+                    notify: true,
+                    observer:'_getEntity'
+                },
+                bindItemValue: {
+                    type: Object,
+                    notify: true
+                },
+                columnInfo: {
+                    type: Array,
+                    value: [{field: 'name', label: '公司名称', width: '80'},
+                        {field: 'customerPhone', label: '联系电话', width: '100'},
+                        {field: 'customerName', label: '联系人', width: '100'}
+                    ]
+                },
+                /**
+                 * 模式 常量：'Edit','View'
+                 */
+                mode: {
+                    type: String,
+                    value: 'Edit'
+                },
+                localData: {
+                    type: Array,
+                    value: [{
+                        name: "东莞市金沪新材料有限公司",
+                        phone: "15292081609",
+                        customerName : "张三",
+                        id : 10000001
+                    }, {
+                        name: "宁波市元弘贸易有限公司",
+                        phone: "15292081609",
+                        customerName :  "张三",
+                        id : 10000002
+
+                    }, {
+                        phone: "13742715650",
+                        name: "浙江物产化工集团宁波有限公司",
+                        customerName : "已经认证",
+                        id : 10000003
+                    }, {
+
+                        phone: "15547570686",
+                        name: "浙江华布岛进出口有限公司",
+                        customerName : "已经认证",
+                        id : 10000004
+                    }, {
+
+                        phone: "18677405656",
+                        name: "远大石化有限公司",
+                        customerName : "已经认证",
+                        id : 10000005
+                    }, {
+
+                        phone: "15513456204",
+                        name: "浙江凯勒聚合材料科技有限公司",
+                        customerName : "已经认证",
+                        id : 10000006
+                    }, {
+
+                        phone: "13573736602",
+                        name: "宁波范斯高进出口有限公司",
+                        customerName : "已经认证",
+                        id : 10000007
+                    }, {
+
+                        phone: "13573736602",
+                        name: "宁波范斯高进出口有限公司",
+                        customerName : "已经认证",
+                        id : 10000008
+                    }]
+                }
+            },
+            _getQueryUrl:function(type){
+                return '/crm/crmcustomersnew/findCompaniesByKeyword.do?type='+type
+            },
+            _getEntity: function (newBind,oldBind) {
+                var self = this;
+
+                if(this.demo){
+                    //var itemData = warp.itemdata;
+                }else if(newBind){
+                    var url = this.getRoot()+ '/crm/crmcustomersnew/findCompanyById/'+newBind+'.do';
+                    var param = {};
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        data: param,
+                        dataType: "json",
+                        success: function (data) {
+                            self.$['company-complete'].set('keyword',data.name);
+                            self.$['company-complete'].set('bindItemValue',data);
+                        },
+                        error: function (messge) {
+                            throw Error("查询失败：" + messge.responseText);
+                        }
+                    });
+                }else{
+                    self.$['company-complete'].set('keyword',null);
+                }
+            }
+
+        })
+    </script>
+</dom-module>

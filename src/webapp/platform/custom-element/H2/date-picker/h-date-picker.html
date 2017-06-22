@@ -1,0 +1,55 @@
+<link rel="import" href="../../o-resource.html"/>
+<dom-module id="h-date-picker">
+    <link rel="import" href="../../o-style.html"/>
+    <link rel="import" type="css" href="../../style/css/input-group.css"/>
+    <style>
+        :host .module-box{
+            border-radius: 4px;
+            font-size: 12px;
+            border-left:1px solid #ddd;
+            border-top:1px solid #ddd;
+        }
+
+    </style>
+    <template>
+        <input class="input-size" is="iron-input" bind-value="{{bindDate}}" id="keywordInput" on-click="_onInputClick">
+        <h-animated-dropdown  class="module-box" id="dropdown" >
+            <!--<paper-date-picker  date="{{bindDate}}" id="picker" responsive-width="655px"></paper-date-picker>-->
+            
+        </h-animated-dropdown>
+    </template>
+    <script>
+        Polymer({
+            is: "h-date-picker",
+            properties:{
+                bindDate:{
+                    type:Date,
+                    notify:true
+                }
+            },
+            _onInputClick:function(e){
+                var self = this;
+                var dropdown = this.$.dropdown;
+                if (dropdown) {
+                    dropdown.show();
+                    /*
+                     * 在选择面板打开的时候给body注册click监听事件。以防止多个实例的时候body click事件和实例自身引用错乱的问题。
+                     */
+                    var bodyClick = function(e){
+                        var warp = e.target;
+                        var keywordInput = self.$.keywordInput;
+                        if (warp != keywordInput) {
+                            if (dropdown) {
+                                dropdown.hide();
+                                document.body.removeEventListener("click",bodyClick,false);
+                            }
+                        }
+                    };
+                    document.body.addEventListener("click",bodyClick,false);
+                }
+                //这里不能够把事件阻止冒泡，应为Polymer会对事件做延迟处理。
+//              e.stopPropagation();
+            }
+        })
+    </script>
+</dom-module>

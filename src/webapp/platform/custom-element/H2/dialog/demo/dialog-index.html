@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="import" href="../h-dialog-button.html"/>
+		<link rel="import" href="../h-dialog.html" />
+		<link rel="import" href="edit-product-category.html" />
+		<link rel="import" href="../../../o-resource.html" />
+		<style>
+			body {
+				font-size: 12px;
+				margin: 0;
+				padding: 0;
+			}
+		</style>
+		<script type="text/javascript">
+			function open1(){
+				var dialog = document.getElementById("open-dialog");
+				if(dialog){
+					dialog.open();
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<!--<h-dialog-button label="测试编辑" width="1500px" is-button permission="false" mode="Edit" content-element="edit-product-category"></h-dialog-button>-->
+		<!--<h-dialog-button label="测试查看" width="1500px" is-button mode="View" content-element="edit-product-category"></h-dialog-button>-->
+		<!--<h-dialog-button label="测试编辑" width="1500px" is-a mode="Edit" content-element="edit-product-category"></h-dialog-button>-->
+		<!--<h-dialog-button label="测试查看" width="1500px" is-a mode="View" content-element="edit-product-category"></h-dialog-button>-->
+		<!--<h-dialog id="open-dialog">-->
+			<!--<edit-product-category></edit-product-category>-->
+		<!--</h-dialog>-->
+		<!--<button onclick="open1()">打开</button>-->
+		<paper-button tabindex="0" raised permission="false">AAAA</paper-button>
+		<!--<paper-button tabindex="0" raised permission="true">BBBB</paper-button>-->
+		<paper-button tabindex="0" raised >CCCC</paper-button>
+	</body>
+</html>

@@ -1,0 +1,99 @@
+<!--产品分类组件-->
+<link rel="import" href="o-auto-complete-picker.html"/>
+<dom-module id="o-category-picker">
+    <style>
+        :host {
+            white-space:nowrap;
+            float: left;
+        }
+        :host label{
+            float: left;
+            line-height: 34px;
+        }
+    </style>
+    <template>
+        <o-auto-complete-picker column-info="[[columnInfo]]" display-field="category"
+                                value-field="category" local-data="[[localData]]"  demo="{{demo}}"
+                                placeholder="[[label]]"
+                                mode="{{mode}}"
+                                label="[[label]]"
+                                no-label="[[noLabel]]"
+                                data-url="/sys/memcache/findByKeyword.do?businessCode=category" bind-data="{{bindData}}"></o-auto-complete-picker>
+    </template>
+    <script>
+        Polymer({
+            is: 'o-category-picker',
+            properties: {
+                demo:{ //是否是演示模式
+                    type:Boolean,
+                    value:false
+                },
+                label:{ //组件label
+                	type:String
+                },
+                noLabel:{ //是否显示label
+                    type:Boolean,
+                    value:false
+                },
+                bindData:{//绑定选中的值
+                    type:String,
+                    notify: true,
+                    observer:'_bindDataChange'
+                },
+                columnInfo: { //组件显示的行
+                    type: Array,
+                    value: [{field: 'category', label: '名称', width: '80'},
+                        {field: 'nameCn', label: '中文名称', width: '100'}
+                    ]
+                },
+                /**
+                 * 模式 常量：'Edit','View'
+                 */
+                mode: {
+                    type: String,
+                    value: 'Edit'
+                },
+                localData: {
+                    type: Array,
+                    value: [{
+                        category: "LDPE",
+                        nameEn: null,
+                        nameCn: "低密度聚乙烯"
+                    }, {
+                        category: "PPCP",
+                        nameEn: null,
+                        nameCn: "共聚聚丙烯"
+                    }, {
+                        category: "PP",
+                        nameEn: null,
+                        nameCn: "聚丙烯"
+                    }, {
+                        category: "ABS",
+                        nameEn: null,
+                        nameCn: "丙烯腈/丁二烯/苯乙烯共聚物"
+                    }, {
+                        category: "PPHM",
+                        nameEn: null,
+                        nameCn: "均聚聚丙烯"
+                    }, {
+                        category: "LLDPE",
+                        nameEn: null,
+                        nameCn: "线性聚乙烯"
+                    }, {
+                        category: "PVC",
+                        nameEn: null,
+                        nameCn: "聚氯乙烯"
+                    }]
+                }
+            },
+            _bindDataChange: function (newVal,oldVal) {
+                if(!newVal && oldVal){
+                    this.querySelector('o-auto-complete-picker').set('keyword',null);
+                }else{
+                    this.querySelector('o-auto-complete-picker').set('keyword',newVal);
+                }
+            }
+
+        })
+    </script>
+</dom-module>

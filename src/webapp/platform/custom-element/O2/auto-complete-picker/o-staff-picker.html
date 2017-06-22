@@ -1,0 +1,126 @@
+<!--员工选择组件-->
+<link rel="import" href="o-auto-complete-picker.html"/>
+<dom-module id="o-staff-picker">
+    <style>
+        :host {
+            white-space:nowrap;
+            float: left;
+        }
+        :host label{
+            float: left;
+            line-height: 34px;
+        }
+    </style>
+    <template>
+        <o-auto-complete-picker id="customer-complete" column-info="[[columnInfo]]" display-field="name"
+                                value-field="id" local-data="[[localData]]" demo="{{demo}}" keyword="{{keyword}}"
+                                placeholder="[[label]]"
+                                mode="{{mode}}"
+                                label="[[label]]"
+                                data-url="{{getStaffQueryUrl(isQryAll)}}"
+                                bind-data="{{bindData}}"
+                                width="{{width}}"></o-auto-complete-picker>
+    </template>
+    <script>
+        Polymer({
+            is: 'o-staff-picker',
+            behaviors: [OBaseBehavior],
+            properties: {
+                demo:{ //是否是演示模式
+                    type:Boolean,
+                    value:false
+                },
+                label:{ //组件label
+                    type:String
+                },
+                keyword: {
+                    type: String
+                },
+                /**
+                 * 是否查询全部
+                 */
+                isQryAll: {
+                    type: Boolean,
+                    value: false
+                },
+                bindData: {
+                    type: String,
+                    notify: true,
+                    observer: '_getStaffEntity'
+                },
+                columnInfo: { // picker-grid-config
+                    type: Array,
+                    readyOnly:true,
+                    value: [{field: 'name', label: '员工名称', width: '80'}]
+                },
+                /**
+                 * 模式 常量：'Edit','View'
+                 */
+                mode: {
+                    type: String,
+                    value: 'Edit'
+                },
+                localData: {
+                    type: Array,
+                    value: [{
+                        name: "李晶莹",
+                        id: 1
+                    }, {
+                        name: "袁冬",
+                        id: 2
+                    }, {
+                        name: "吴创鸿",
+                        id: 3
+                    }, {
+                        name: "侯文鎏"
+                        ,
+                        id: 4
+                    }, {
+                        name: "彭炬凯",
+                        id: 5
+                    }, {
+                        name: "王在祥",
+                        id: 6
+                    }, {
+                        name: "蔡文波",
+                        id: 7
+                    }]
+                }
+            },
+            getStaffQueryUrl: function (isQryAll) {
+                return "/uc/user/staffs/findByKeyword.do?useAuth=" + isQryAll;
+            },
+            /**
+             * 根据id查询员工
+             * @param newBind
+             * @param oldBind
+             * @private
+             */
+            _getStaffEntity: function (newBind, oldBind) {
+                var self = this;
+                var url = this.getRoot() + '/uc/user/staffs/' + newBind + '.do';
+                if (this.demo) {
+                    var complete = self.$['customer-complete'];
+                    complete.set('keyword',complete.getLabel(newBind));
+                } else if (newBind) {
+                    var param = {};
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        data: param,
+                        dataType: "json",
+                        success: function (data) {
+                            self.$['customer-complete'].set('keyword', data.name);
+                        },
+                        error: function (messge) {
+                            throw Error("查询失败：" + messge.responseText);
+                        }
+                    });
+                }else{
+                    self.$['customer-complete'].set('keyword', null);
+                }
+            }
+
+        })
+    </script>
+</dom-module>

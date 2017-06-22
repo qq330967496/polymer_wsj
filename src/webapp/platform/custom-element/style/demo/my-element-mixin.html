@@ -1,0 +1,42 @@
+<dom-module id="my-element-mixin">
+
+    <style>
+
+        /* Apply custom theme to toolbars */
+        :host {
+            --my-toolbar-theme: {
+                 background-color: green;
+                 border-radius: 4px;
+                 border: 1px solid gray;
+                 color: red;
+             };
+            --my-toolbar-title-theme: {
+                 color: red;
+             };
+        }
+
+        /* Make only toolbars with the .warning class red and bold */
+        .warning {
+            --my-toolbar-title-theme: {
+                 color: red;
+                 font-weight: bold;
+                 background-color: yellow;
+             };
+
+        }
+
+    </style>
+
+    <template>
+
+        <my-toolbar-mixin title="This one is green ."></my-toolbar-mixin>
+        <my-toolbar-mixin title="This one is green too."></my-toolbar-mixin>
+        <my-toolbar-mixin class="warning" title="This one is red."></my-toolbar-mixin>
+    </template>
+
+</dom-module>
+<script>
+    Polymer({
+        is:'my-element-mixin'
+    })
+</script>

@@ -1,0 +1,28 @@
+<link rel="import" href="../../o-resource.html" />
+<dom-module id="h-simple-grid-row-cell">
+<link rel="import" type="css" href="h-simple-grid.css"/>
+	<template>
+		<div id="row-cell-div-1" class="row-cell inline-block ellipsis-box ellipsis" >
+		    <div id="row-cell-div-2" class="content ellipsis display-table-cell">
+		    	<content></content>
+		    </div>
+		</div>
+	</template>
+	<script>
+		Polymer({
+			is:"h-simple-grid-row-cell",
+			properties:{
+				isOption:{
+					type:Boolean,
+					observer:'_optionChange'
+				}
+			},
+			_optionChange:function(newValue){
+				if(newValue){
+					this.$['row-cell-div-1'].classList.remove('ellipsis');
+					this.$['row-cell-div-2'].classList.remove('ellipsis');
+				}
+			}
+		})
+	</script>
+</dom-module>

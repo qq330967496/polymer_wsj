@@ -1,0 +1,607 @@
+<!--下拉自动填充父组件-->
+<script type="text/javascript" src="../../plugin/pinyinEngine.js"></script>
+<dom-module id="o-auto-complete-picker">
+    <link rel="import" href="../../o-style.html"/>
+    <style>
+        :host {
+            text-align: center;
+            display: inline-block;
+            float: left;
+        }
+
+        :host label {
+            float: left;
+            line-height: 34px;
+        }
+
+        :host div.input-warp {
+            display: inline-block;
+            float: left;
+        }
+
+        :host div.input-box {
+            position: relative;
+        }
+
+        :host div.input-warp input {
+            margin-left: 0;
+            float: left;
+        }
+
+        :host input[is=iron-input] {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        :host input {
+            height: 34px;
+            padding: 6px 12px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+            -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        }
+
+        :host input:focus {
+            border-color: #66afe9;
+            outline: 0;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+        }
+
+        :host input::-moz-placeholder {
+            color: #999;
+            opacity: 1;
+        }
+
+        :host input:-ms-input-placeholder {
+            color: #999;
+        }
+
+        :host input::-webkit-input-placeholder {
+            color: #999;
+        }
+
+        :host div.input-warp h-animated-dropdown {
+            max-height: 445px;
+            margin-top: 35px;
+        }
+
+        :host .module-box {
+            border-radius: 4px;
+            font-size: 12px;
+            border-left: 1px solid #ddd;
+            border-top: 1px solid #ddd;
+        }
+
+        :host .module-tip {
+            color: rgb(199, 14, 119);
+            border-bottom: 1px dashed #ddd;
+            padding: 6px 20px;
+            line-height: 17px;
+        }
+
+        :host .module-list-wrap {
+            max-height: 375px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        :host .module-list {
+            font-size: 12px;
+        }
+
+        :host .module-list th.complete {
+            padding: 8px 12px;
+            line-height: 1.42857143;
+            border-bottom: 2px solid #ddd;
+        }
+
+        :host .module-list tr.complete:nth-child(even) {
+            background-color: #efefef;
+        }
+
+        :host .module-list td.complete {
+            padding: 8px 12px;
+            line-height: 1.42857143;
+            border-bottom: 1px solid #ddd;
+        }
+
+        :host .module-list tr.complete:hover td {
+            background-color: #CAF1FF;
+            cursor: pointer;
+        }
+
+        :host .module-list th.complete:first-child {
+            padding-left: 20px;
+        }
+
+        :host .module-list th.complete:last-child {
+            padding-right: 200px;
+        }
+
+        :host .module-list td.complete:last-child {
+            padding-right: 20px;
+        }
+
+        :host .module-list td.complete:first-child {
+            padding-left: 20px;
+        }
+
+        :host .module-amount {
+            font-style: italic;
+            color: rgb(199, 14, 119);
+            text-align: center;
+            padding: 8px 20px;
+            line-height: 17px;
+        }
+
+        :host .shade {
+            display: none;
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 34px;
+            background-color: black;
+            z-index: 99;
+            opacity: .00;
+            border-radius: 4px;
+        }
+    </style>
+    <template>
+        <iron-a11y-keys id="keys" keys="down up enter" target="[[target]]" on-keys-pressed="_updatePressed">
+        </iron-a11y-keys>
+        <label class="label-size"><span>[[label]]</span>：</label>
+        <div class="input-warp">
+            <div class="input-box">
+                <input class="input-size" is="iron-input" bind-value="{{keyword}}" id="keywordInput"
+                       on-click="_onKeywordClick"
+                       placeholder="{{placeholder}}"
+                       style$="{{_getInputStyle(width)}}"
+                       on-keydown="_onKeyDown">
+
+                <div class="shade"></div>
+            </div>
+            <h-animated-dropdown class="module-box" id="dropdown"
+                                 on-click="_onDropdownClick">
+                <div class="module-tip">支持全拼、简拼搜索,空格分词</div>
+                <div class="module-list-wrap">
+                    <table class="module-list" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <thead>
+                        <tr class="complete">
+                            <template is="dom-repeat" items="[[columnInfo]]">
+                                <th class="text-center complete">{{item.label}}</th>
+                            </template>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <template is="dom-repeat" items="{{entityList}}" as="row">
+                            <tr class="complete" itemData="{{row}}" id="[[index]]">
+                                <template is="dom-repeat" items="[[columnInfo]]" as="col">
+                                    <td class="complete">{{_getFieldValue(row,col)}}</td>
+                                </template>
+                            </tr>
+                        </template>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="module-amount">已匹配:<span></span>条记录</div>
+            </h-animated-dropdown>
+        </div>
+    </template>
+    <script>
+//        var pinyin = window.ks.pinyin.newInstance();
+        Polymer({
+            is: "o-auto-complete-picker",
+            behaviors: [OBaseBehavior],
+            executePoint: 0,
+            properties: {
+                /**
+                 * input 前面的标签名字
+                 *
+                 * @attribute label
+                 * @type {String}
+                 */
+                label: {
+                    type: String,
+                    value:"",
+                    observer:'_labelChange'
+                },
+                pinyin: {
+                    type: Object,
+                    value: function () {
+                        return window.ks.pinyin.newInstance();
+                    }
+                },
+                placeholder: {
+                    type: String
+                },
+                keyword: {
+                    type: String,
+                    notify: true,
+                    observer: "_keywordChange"
+                },
+                entityList: {
+                    type: Array,
+                    value: []
+                },
+                columnInfo: {
+                    type: Array,
+                    value: []
+                },
+                //{filterField:[....],filterFun:function}
+                filter: Object,
+                localData: {
+                    type: Array,
+                    value: []
+                },
+                localCache: {
+                    type: Array,
+                    value: function () {
+                        return []
+                    }
+                },
+                dataUrl: {
+                    type: String
+                },
+                demo: {
+                    type: Boolean,
+                    value: false,
+                    notify: true
+                },
+                displayField: {
+                    type: String
+                },
+                valueField: {
+                    type: String
+                },
+                bindData: {
+                    type: String,
+                    notify: true
+                },
+                bindItemValue: {
+                    type: Object,
+                    notify: true
+                },
+                boundKeys: {
+                    type: Array
+                },
+                target: {
+                    type: Object,
+                    value: function () {
+                        return this;
+                    }
+                },
+                focusItem: {
+                    type: Object,
+                    value: null
+                },
+                focusIndex: {
+                    type: Number,
+                    value: -1
+                },
+                inputWith: {
+                    type: String,
+                    value: "170px;"
+                },
+                /**
+                 * 模式 常量：'Edit','View'
+                 */
+                mode: {
+                    type: String,
+                    value: 'Edit',
+                    observer: '_modeChange'
+                },
+                loading:{
+                    type: Boolean,
+                    value: true
+                }
+
+            },
+
+            observers: [
+                '_localDataChange(localData,displayField,valueField,demo)'
+            ],
+
+            _localDataChange: function (localData, displayField, valueField, demo) {
+                if (localData.length > 0 && displayField && valueField && demo) {
+                    localData.forEach(function (e) {
+                        pinyin.setCache([e[displayField]], JSON.stringify(e));
+                    });
+                }
+            },
+            /**
+             * 监听模式变化，改变组件样式
+             * @private
+             */
+            _modeChange: function (newVal) {
+                var keywordInput = self.$.keywordInput;
+                if (newVal == 'View') {
+                    this.querySelector('.shade').style.display = 'block';
+                    function hideInputBorder() {
+                        var keywordInput = this.$.keywordInput;
+                        if (keywordInput) {
+                            keywordInput.style.border = 'none';
+                            keywordInput.style.boxShadow = 'none';
+                        }
+                    }
+                    this.async(hideInputBorder.bind(this), 100);
+                } else {
+                    this.querySelector('.shade').style.display = 'none';
+                }
+            },
+            /**
+             * 输入框键盘按键事件
+             * @param event
+             * @private
+             */
+            _onKeyDown: function (event) {
+                if (event.ctrlKey == 1) {
+                    var k;
+                    if (document.all) {
+                        k = event.keyCode
+                    } else {
+                        k = event.which
+                    }
+                    if (k == 86) {
+                        this.async(this._pasteHandler.bind(this,event),200);
+                    }
+
+                }
+            },
+            /**
+             * 黏贴事件处理方法
+             * @param event
+             * @private
+             */
+            _pasteHandler:function(event) {
+                this._getEntities();
+                this._onKeywordClick(event);
+            },
+            /**
+             * 输入框点击事件
+             * @private
+             */
+            _onKeywordClick: function (event) {
+                var self = this;
+                var dropdown = this.$['dropdown'];
+                if (dropdown && !dropdown._showing) {
+                    this._getEntities();
+                    this._switchFocusItemAt(0);
+                    dropdown.show();
+                    /*
+                     * 在选择面板打开的时候给body注册click监听事件。以防止多个实例的时候body click事件和实例自身引用错乱的问题。
+                     */
+                    var bodyClick = function (e) {
+                        var warp = e.target;
+                        var keywordInput = self.$['keywordInput'];
+                        if (warp != keywordInput) {
+                            if (dropdown) {
+                                dropdown.hide();
+                                document.body.removeEventListener("click", bodyClick, false);
+                            }
+                        }
+                    };
+                    event.stopPropagation();
+                    document.body.addEventListener("click", bodyClick, false);
+
+                }
+            },
+            /**
+             * 下拉面板点击事件
+             * @param event
+             * @private
+             */
+            _onDropdownClick: function (event) {
+                var warp = event.target;
+                this._setBindData(warp);
+            },
+            /**
+             * 设置绑定数据
+             * @param warp
+             * @private
+             */
+            _setBindData: function (warp) {
+                if (warp.nodeName == 'DIV' || warp.nodeName == 'TH') {
+                    return;
+                }
+                var itemData = warp.itemdata;
+                while (!itemData) {
+                    warp = warp.parentElement;
+                    itemData = warp.itemdata;
+                }
+                //filter 支持数据项过滤
+                if (this.filter) {
+                    var args = [];
+                    if (this.filter.filterField) {
+                        this.filter.filterField.forEach(function (e, i) {
+                            args[i] = itemData[e];
+                        })
+                    } else {
+                        args[0] = itemData[this.displayField];
+                    }
+                    if (this.filter.filterFun.call(this, args)) {
+                        alert("当前项不能被选择");
+                        return;
+                    }
+                }
+                this.set("keyword", itemData[this.displayField]);
+                this.set("bindItemValue", itemData);
+                this.set("bindData", itemData[this.valueField]);
+            },
+            /**
+             * 监听key值变化
+             * @param newKey 新key值
+             * @private
+             */
+            _keywordChange: function (newKey) {
+                if (!newKey) {
+                    this.set("bindData", null);
+                    this.set("bindItemValue", null);
+                }
+                this.debounce("selectComponentData", this._getEntities, 200);
+            },
+            /**
+             * 查询方法
+             */
+            _getEntities: function () {
+                var self = this;
+                if (this.demo) {
+                    if (self.keyword) {
+                        //如果是本地数据那么我们在本地数据里面搜索，这里使用到了一个拼音搜索插件pinyinEngine.js
+                        var searchResult = pinyin.search(self.keyword);
+                        if (searchResult) {
+                            self.set("entityList", searchResult.map(function (e) {
+                                return JSON.parse(e.content);
+                            }));
+                        }
+                    } else {
+                        self.set("entityList", this.localData);
+                    }
+                }else if(self.loading && self.keyword === null){
+                    self.set("loading",false);
+                } else {
+                    var param = {
+                        limit: 10,
+                        keyword: self.keyword
+                    };
+                    $.ajax({
+                        type: "GET",
+                        url: self.getRoot() + this.dataUrl,
+                        data: param,
+                        dataType: "json",
+                        success: function (data) {
+                            //如果data == null or data.row == null
+                            if ((data && !data.rows && (typeof data.rows === 'object')) || !data) {//null
+                                self.set("entityList", [])
+                            } else {
+                                self.set("entityList", data.rows || data || []);
+                            }
+                        },
+                        error: function (messge) {
+                            self.set("entityList", []);
+                            throw Error("查询失败：" + messge.responseText);
+                        }
+                    });
+                }
+            },
+            /**
+             * 获取列值
+             * @param row 数据行
+             * @param col 数据列属性
+             * @private
+             */
+            _getFieldValue: function (row, col) {
+                //添加格式化函数支持
+                if (col.format) {
+                    return col.format(row);
+                } else {
+                    return row[col.field];
+                }
+            },
+            /**
+             * 热键响应事件
+             * @param event
+             * @private
+             */
+            _updatePressed: function (event) {
+                if (event.detail.key == 'up') {
+                    this._switchFocusItemAt(this.focusIndex - 1);
+                }
+                if (event.detail.key == 'down') {
+                    this._switchFocusItemAt(this.focusIndex + 1);
+                }
+                if (event.detail.key == 'enter') {
+                    var dropdown = this.$.dropdown;
+                    dropdown.hide();
+                    this._setBindData(this.focusItem);
+                }
+            },
+            /**
+             * 切换焦点到第n个元素，从0开始
+             * @param index
+             * @private
+             */
+            _switchFocusItemAt: function (index) {
+                var maxIndex = this.entityList.length;
+                this._clearFocus();
+                var newIndex = (maxIndex + index) % maxIndex;
+                var newFocusItem = this.querySelector("tr[id='" + newIndex + "']");
+                if (newFocusItem != null) {
+                    newFocusItem.style.backgroundColor = "#CAF1FF";
+                    this.focusItem = newFocusItem;
+                    this.focusIndex = newIndex;
+                }
+            },
+            /**
+             * 清除当前焦点
+             * @private
+             */
+            _clearFocus: function () {
+                if (this.focusItem) {
+                    this.focusItem.style.backgroundColor = "";
+                    this.focusItem = null;
+                }
+            },
+            /**
+             * 获取Input 宽度
+             * @param width
+             * @private
+             */
+            _getInputStyle: function (width) {
+                return "width:" + width;
+            },
+
+            /**
+             * 是否显示label noLabel = true 不显示
+             * @param noLabel
+             * @returns {boolean}
+             * @private
+             */
+            _hasShowLabel: function (noLabel) {
+                return !noLabel;
+            },
+            /**
+             * 获取数据项label
+             * @param value
+             */
+            getLabel: function (value) {
+                var self = this;
+                var temp = "";
+                this.localData.forEach(function (e) {
+                    if (e[self.valueField] == value) {
+                        temp = e[self.displayField];
+                        return;
+                    }
+                });
+                return temp;
+            },
+
+            /**
+             * 监听标签名改变
+             * @param label 标签名
+             * @private
+             */
+            _labelChange:function(label){
+                var labelElement = this.querySelector(".label-size");
+                if(labelElement){
+                    if(!label){
+                        labelElement.style.display= "none";
+                    }else{
+                        labelElement.style.display= "";
+                    }
+                }
+            },
+            ready: function () {
+                //热键
+                this.boundKeys = this.$.keys.keys.split(' ');
+            }
+        })
+    </script>
+</dom-module>

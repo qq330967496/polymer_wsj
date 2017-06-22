@@ -1,0 +1,26 @@
+<dom-module id="my-toolbar">
+
+    <style>
+        :host {
+            padding: 4px;
+            background-color: gray;
+        }
+        .title {
+            color: var(--my-toolbar-title-color,red);
+        }
+    </style>
+
+    <template>
+        <span class="title">{{title}}</span>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'my-toolbar',
+            properties: {
+                title: String
+            }
+        });
+    </script>
+
+</dom-module>

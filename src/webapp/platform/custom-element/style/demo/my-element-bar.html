@@ -1,0 +1,26 @@
+<dom-module id="my-element-bar">
+
+    <style>
+
+        /* Make all toolbar titles in this host green by default */
+        :host {
+            --my-toolbar-title-color: green;
+        }
+
+        /* Make only toolbars with the .warning class red */
+        .warning {
+            --my-toolbar-title-color: red;
+        }
+
+    </style>
+
+    <template>
+
+        <my-toolbar title="This one is green."></my-toolbar>
+        <my-toolbar title="This one is green too."></my-toolbar>
+
+        <my-toolbar class="warning" title="This one is red."></my-toolbar>
+
+    </template>
+
+</dom-module>

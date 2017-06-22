@@ -1,0 +1,214 @@
+<!--
+@author Jarek.li
+HCrudBehavior 提供了快速构建单表CRUD组件的最基本CRUD方法
+-->
+<script>
+    /**
+     * `Polymer.HCrudBehavior`
+     *
+     * @polymerBehavior Polymer.OCrudBehavior
+     */
+    HCrudBehaviorImple = {
+        properties: {
+            /**
+             * 列表需要展示的列包括：listColumn,formatF
+             * {
+                    tableName:"userTable",      //需要操作的数据库表
+                    column:{                    //数据库表对应的字段
+                        field1:{                //字段描述信息
+                            name:"name",
+                            type:String,
+                            comment:"名称",
+                            element:"elementName",
+                            format:function(val){}
+                                ...
+                        },
+                        field2:{
+                            name:"age",
+                            type:Number,
+                            comment:"年龄",
+                            element:"elementName",
+                            format:function(val){}
+                                ...
+                        },
+                        ...
+                    },
+                    createUrl:"/aa/bb/cc.do",    //新增接口 注意要使用全路径
+                    deleteUrl:"/aa/bb/cc.do"     //删除接口 注意要使用全路径
+                    queryUrl:"/aa/bb/cc.do",     //查询接口 注意要使用全路径
+                    updateUrl:"/aa/bb/cc.do",    //更新接口 注意要使用全路径
+                    ...
+                }
+             * @attribute listInfo
+             * @type{Object}
+             */
+            listInfo:{
+                type:Object,
+                value: function () { return {} }
+            },
+            /**
+             * 查询信息包括：searchColumn,queryUrl
+             * {
+                    tableName:"userTable",      //需要操作的数据库表
+                    column:{                    //数据库表对应的字段
+                        field1:{                //字段描述信息
+                            name:"name",
+                            type:String,
+                            comment:"名称",
+                            element:"elementName",
+                            elemVal:"Object",
+                                ...
+                        },
+                        field2:{
+                            name:"age",
+                            type:Number,
+                            comment:"年龄",
+                            element:"elementName",
+                            elemVal:"Array",
+                                ...
+                        },
+                        ...
+                    },
+                    createUrl:"/aa/bb/cc.do",    //新增接口 注意要使用全路径
+                    deleteUrl:"/aa/bb/cc.do"     //删除接口 注意要使用全路径
+                    queryUrl:"/aa/bb/cc.do",     //查询接口 注意要使用全路径
+                    updateUrl:"/aa/bb/cc.do",    //更新接口 注意要使用全路径
+                    ...
+                }
+             * @attribute searchInfo
+             * @type{Object}
+             */
+            searchInfo:{
+                type:Object,
+                value: function () { return {} }
+            },
+            /**
+             * 表单信息包括：formColumn,saveUrl,updateUrl
+             * {
+                    tableName:"userTable",      //需要操作的数据库表
+                    column:{                    //数据库表对应的字段
+                        field1:{                //字段描述信息
+                            name:"name",
+                            type:String,
+                            comment:"名称",
+                            element:"elementName"
+                                ...
+                        },
+                        field2:{
+                            name:"age",
+                            type:Number,
+                            comment:"年龄",
+                            element:"elementName"
+                                ...
+                        },
+                        ...
+                    },
+                    createUrl:"/aa/bb/cc.do",    //新增接口 注意要使用全路径
+                    deleteUrl:"/aa/bb/cc.do"     //删除接口 注意要使用全路径
+                    queryUrl:"/aa/bb/cc.do",     //查询接口 注意要使用全路径
+                    updateUrl:"/aa/bb/cc.do",    //更新接口 注意要使用全路径
+                    ...
+                }
+             * @attribute formInfo
+             * @type{Object}
+             */
+            formInfo:{
+                type:Object,
+                value: function () { return {} }
+            },
+            /**
+             * 列表实体：[entity,entity....]
+             * @attribute listEntity
+             * @type{Array}
+             */
+            listEntity:{
+                type:Array,
+                value: function () { return []; },
+                notify:true
+            }
+        },
+
+        /**
+         * 查询方法
+         * data-args='{"resetPaging":true}'
+         * @private
+         */
+        _queryList: function (e) {
+            var self = this;
+            var queryUrl = this.queryUrl || this.searchInfo.queryUrl;
+            console.log("queryUrl:",this.queryUrl);
+            if(!queryUrl){
+                throw new Error("queryUrl属性不存在，请检查...");
+            }
+            var args = this.getEventArgs(e);
+            if (args&&args.resetPaging) {
+                this.set("queryCondition.pageIndex",1);
+            }
+            this.query(queryUrl,this.queryCondition, function (data) {
+                //如果data == null or data.row == null
+                if((data && !data.rows && (typeof data.rows === 'object')) || !data){//null
+                    self.set("listEntity", [])
+                }else{
+                    self.set("listEntity", data.rows || data || []);
+                    self.set("queryCondition.results",data.results || 0);
+                }
+            });
+        },
+        /**
+         * 生成标签,并给标签赋默认值
+         * 目前支持：h-form-input,h-form-select,o-*-picker
+         * @param col
+         * @private
+         */
+        _getCustomerElement: function (col) {
+            var elem = null;
+            if (col['element']) {//如果自定了标签那么使用自定义标签
+                elem = document.createElement(col['element']);
+            } else {
+                elem = document.createElement("h-form-input");
+                elem.setAttribute("type", col['type']);
+            }
+            this._bindElemAttr(col, elem);//绑定属性值
+            elem.setAttribute("label", col['comment']);
+            elem.setAttribute("name", this._generatorName(col['name']));
+            elem.setAttribute("id", this._generatorName(col['name']));
+            return elem;
+        },
+        /**
+         * 绑定标签属性值
+         * @param col 列信息
+         * @param elem 标签元素
+         */
+        _bindElemAttr: function (col, elem) {
+            if (!this.isEmptyObject(col['elemAttr'])) {//标签属性集赋值
+                for (var p in col['elemAttr']) { //标签属性集
+                    elem[p] = col['elemAttr'][p]; //动态给标签赋值
+                }
+            }
+        },
+        /**
+         * 生成标签name值
+         * @param name
+         * @returns {*}
+         * @private
+         */
+        _generatorName: function (name) {
+            return "p_" + name;
+        },
+
+        /**
+         * 获取属性name值
+         * @param attrName
+         * @returns {*}
+         * @private
+         */
+        _getName: function (attrName) {
+            return attrName.substr(2, attrName.length);
+        },
+        _getElemVal:function(elem){
+            return elem.bindData || elem.selectedData;
+        }
+    };
+    /** @polymerBehavior */
+    HCrudBehavior = [OBaseBehavior,OCrudBehavior, OTipBehavior, HCrudBehaviorImple];
+</script>

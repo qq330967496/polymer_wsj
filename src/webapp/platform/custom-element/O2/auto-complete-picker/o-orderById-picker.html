@@ -1,0 +1,145 @@
+<!--订单组件-->
+<link rel="import" href="o-auto-complete-picker.html"/>
+<dom-module id="o-order-picker">
+    <style>
+        :host {
+            white-space:nowrap;
+            float: left;
+        }
+        :host label{
+            float: left;
+            line-height: 34px;
+        }
+    </style>
+    <template>
+        <o-auto-complete-picker id="order-complete" column-info="[[columnInfo]]" display-field="orderId"
+                                value-field="orderId" local-data="[[localData]]" demo="{{demo}}"
+                                placeholder="[[label]]"
+                                mode="{{mode}}"
+                                label="[[label]]"
+                                no-label="[[noLabel]]"
+                                data-url="/sys/memcache/findByKeyword.do?businessCode=order"
+                                bind-item-value="{{bindItemValue}}"
+                                bind-data="{{bindData}}"></o-auto-complete-picker>
+    </template>
+    <script>
+        Polymer({
+            is: 'o-order-picker',
+            behaviors:[OBaseBehavior],
+            properties: {
+                demo:{ //是否是演示模式
+                    type:Boolean,
+                    value:false
+                },
+                label:{ //组件label
+                    type:String
+                },
+                noLabel:{ //是否显示label
+                    type:Boolean,
+                    value:false
+                },
+                bindData:{
+                    type:String,
+                    notify: true,
+                    observer: '_getOrderEntity'
+                },
+                bindItemValue: {
+                    type: Object,
+                    notify: true
+                },
+                columnInfo: {
+                    type: Array,
+                    value: [{field: 'orderNo', label: '订单编号', width: '100'},
+                        {field: 'customerName', label: '客户名称', width: '80'},
+                        {field: 'customerCompanyName', label: '客户公司名称', width: '100'},
+                        {field:'totalAmount',label:'总金额',width:'80'},
+                        {field:'createdByName',label:'下单人',width:'90'}
+                    ]
+                },
+                /**
+                 * 模式 常量：'Edit','View'
+                 */
+                mode: {
+                    type: String,
+                    value: 'Edit'
+                },
+                localData: {
+                    type: Array,
+                    value: [{
+                        totalAmount: 40000,
+                        id: 24764,
+                        orderNo: "K2015101506698",
+                        customerName: "小周",
+                        customerCompanyName: "宁波市元弘贸易有限公司 ",
+                        createdByName: "祁凯玲"
+                    },
+                        {
+                            totalAmount: 0,
+                            id: 24763,
+                            orderNo: "K2015101506699",
+                            customerName: "小吴 ",
+                            customerCompanyName: "上海精发实业有限公司 ",
+                            createdByName: "曹亚梅"
+                        },
+                        {
+                            totalAmount: 0,
+                            id: 24762,
+                            orderNo: "K2015101506700",
+                            customerName: "蒋先生",
+                            customerCompanyName: "东莞市厚街留东包装制品加工店 ",
+                            createdByName: "何慧娟 "
+                        },
+                        {
+                            totalAmount: 1200,
+                            id: 24735,
+                            orderNo: "K2015072306591",
+                            customerName: "余小姐",
+                            customerCompanyName: "上海立道国际贸易有限公司",
+                            createdByName: "蔡先生"
+                        },
+                        {
+                            totalAmount: 1100,
+                            id: 24734,
+                            orderNo: "K2015072306592",
+                            customerName: "小张",
+                            customerCompanyName: "上海立道国际贸易有限公司 ",
+                            createdByName: "王先生"
+                        },]
+                }
+            },
+
+            /**
+             * 根据orderNo查询订单
+             * @param newBind
+             * @param oldBind
+             * @private
+             */
+            _getOrderEntity: function (newBind, oldBind) {
+                var self = this;
+                var url = this.getRoot() + '/sys/memcache/findByKeyword.do?businessCode=order&keyword='+newBind;
+                if (this.demo) {
+                    var complete = self.$['order-complete'];
+                    complete.set('keyword', complete.getLabel(newBind));
+                } else if (newBind) {
+                    var param = {};
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        data: param,
+                        dataType: "json",
+                        success: function (data) {
+                            self.$['order-complete'].set('keyword', data[0].orderId);
+                            self.$['order-complete'].set('bindItemValue', data[0]);
+                        },
+                        error: function (messge) {
+                            alert("查询失败：" + messge.responseText);
+                        }
+                    });
+                } else {
+                    self.$['order-complete'].set('keyword', null);
+                }
+            }
+
+        })
+    </script>
+</dom-module>

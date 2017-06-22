@@ -1,0 +1,132 @@
+<!--
+提示语
+-->
+<link rel="import" href="../../H2/dialog/h-tip-dialog.html"/>
+<script>
+
+    OTipBehavior = {
+        properties: {
+
+        },
+
+        hTip:{
+            timeouts: {
+                error:600000,
+                alert: 5000,
+                success: 1500,
+                msg: 1500
+            },
+            success: function (message) {
+                this.tip(message, "success");
+            },
+            alert: function (message) {
+                this.tip(message, "alert");
+            },
+            error: function (message) {
+                this.tip(message, "error");
+            },
+            tip: function (message, type) {
+                var self=this;
+                var a = document.createElement('h-tip-dialog');
+                var dialog = a.querySelector('#tip-dialog');
+                a.set('type',type);
+                a.set('message',message);
+                dialog.open();
+                a.addEventListener("click",function(e){
+                    a.remove();
+                })
+                document.body.appendChild(a);
+                setTimeout(function () {
+                    a.remove();
+                }, self.timeouts[type])
+            },
+            confirm: function (message,okFn) {
+                var a = document.createElement('h-tip-dialog');
+                var dialog = a.querySelector('#tip-dialog');
+                a.set('type','confirm');
+                a.set('message',message);
+                a.addEventListener("confirm-handler",function(e){
+                    okFn();
+                    a.remove();
+                });
+                document.body.appendChild(a);
+                dialog.open();
+            },
+            prompt: function (message,okFn) {
+                var a = document.createElement('h-tip-dialog');
+                var dialog = a.querySelector('#tip-dialog');
+                a.set('type','prompt');
+                a.set('message',message);
+                a.addEventListener("confirm-handler",function(e){
+                    if(okFn(e.detail.remark)==false){
+                        return;
+                    }
+                    a.remove();
+                });
+                document.body.appendChild(a);
+                dialog.open();
+            },
+            //桌面通知
+            notice:function(config){
+                // 初始化弹窗对象
+                var notification = (window.Notification || window.mozNotification || window.webkitNotification);
+                if(!notification) {
+                    // if browser version is unsupported, be silent
+                    return;
+                }
+                var cfg = $.extend({
+                    title : "消息提醒",
+                    msg : "",
+                    onclick : null,
+                    image : "/favicon.ico",
+                    outtime : null,
+                    onerror: null,
+                    onshow:null,
+                    onclose:null
+                }, config, true);
+
+                // if the user has not been asked to grant or deny notifications from this domain
+                if(notification.permission === 'default') {
+                    var me=this
+                    notification.requestPermission(function(value) {
+                        // callback this function once a permission level has been set
+                        notification.permission=value;
+                        me.showDeskNotice(notification,cfg);
+                    });
+                }
+                // if the user has granted permission for this domain to send notifications
+                else if(notification.permission === 'granted') {
+                    this.showDeskNotice(notification,cfg);
+                }
+                // if the user does not want notifications to come from this domain
+                else if(notification.permission === 'denied') {
+                    window.alert("设置浏览器允许开桌面通知");
+                    return;
+                }
+            },
+            showDeskNotice:function(notification,cfg){
+                var dialog = new notification(
+                        cfg.title,{body : cfg.msg,icon : cfg.image}
+                );
+                // remove the notification from Notification Center when it is clicked
+                dialog.onclick = function() {
+                    if(cfg.onclick){
+                        cfg.onclick();
+                    }
+                    this.close();
+                };
+
+                dialog.onclose = function() {
+
+                };
+                if(cfg.outtime){
+                    var timeout = setTimeout(function() {
+                        dialog.close();
+                        clearTimeout(timeout);
+                    }, cfg.outtime);
+                }
+            }
+        }
+    };
+
+</script>

@@ -1,0 +1,50 @@
+<!--自动收缩面板-->
+<link rel="import" href="../../o-resource.html" />
+<dom-module id="o-collapse">
+	<style>
+	</style>
+	<template>
+		<iron-collapse id="collapse">
+			<content></content>
+		</iron-collapse>
+		<paper-button style="float: right;" on-click="toggle">
+			<iron-icon id="collapse-iron" icon="icons:unfold-less"></iron-icon>
+		</paper-button>
+	</template>
+	<script>
+		Polymer({
+			is: 'o-collapse',
+			properties: {
+				counter: {
+					type: Object,
+					value: function() {
+						var counter = 0;
+						return {
+							getCounter: function() {
+								return counter++;
+							}
+						}
+					}
+				},
+                isOpen:{
+                    type:String,
+                    value:'true',
+                    observer:'_isOpenChange'
+                }
+			},
+            _isOpenChange:function(newVal){
+                if(newVal && newVal == 'true'){
+                    this.$['collapse'].toggle();
+                }
+            },
+			toggle: function() {
+				if (this.counter.getCounter() % 2 == 1) {
+					this.$['collapse-iron'].icon = "icons:unfold-less";
+				} else {
+					this.$['collapse-iron'].icon = "icons:unfold-more";
+				}
+				this.$['collapse'].toggle();
+			}
+		})
+	</script>
+</dom-module>

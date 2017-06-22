@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <title>neon-animated-pages demo: dropdown</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+
+    <link rel="import" href="../h-animated-dropdown.html">
+
+  </head>
+  <body>
+
+    <template is="dom-bind">
+
+      <button dropdown-id="dropdown" on-click="_onButtonClick">dropdown</button>
+      <br>
+      <div>123</div>
+      <div>123</div>
+      <div>123</div>
+      <div>123</div>
+      <h-animated-dropdown id="dropdown" on-click="_onDropdownClick">
+        <div>
+          1
+        </div>
+        <div>
+          1
+        </div>
+        <div>
+          1
+        </div>
+        <div>
+          1
+        </div>
+
+      </h-animated-dropdown>
+      <div>456</div>
+      <div>456</div>
+      <div>456</div>
+      <div>456</div>
+      <div>456</div>
+      <div>456</div>
+      <div>456</div>
+      <div>456</div>
+    </template>
+
+    <script>
+
+      var scope = document.querySelector('template[is="dom-bind"]');
+
+      scope._onButtonClick = function(event) {
+        var dropdown = document.querySelector('#' + event.target.getAttribute('dropdown-id'));
+        if (dropdown) {
+          dropdown.show();
+        }
+      };
+
+      scope._onDropdownClick = function(event) {
+        event.target.hide();
+      };
+
+    </script>
+
+  </body>
+</html>

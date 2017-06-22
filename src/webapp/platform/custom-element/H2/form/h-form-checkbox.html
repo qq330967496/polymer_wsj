@@ -1,0 +1,108 @@
+<!--
+	加载资源文件
+-->
+<link rel="import" href="../../o-resource.html" />
+<!--
+	这里的id和下面的is属性的值要保持一致，最好也和html文件的名字保持一直。
+	表示的是html标签的名字。
+-->
+<dom-module id="h-form-checkbox">
+	<!--/**
+	 * 样式表
+	 */-->
+	<style>
+		:host {
+			display: inline-block;
+			line-height: 34px;
+			vertical-align: middle;
+		}
+	</style>
+	<!--/**
+	 * 组件的Local MOM
+	 */-->
+	<template>
+		<div>
+			<label class="label-size"><span>[[label]]</span>：</label>
+			<template is="dom-repeat" items="{{checkboxItems}}">
+				<paper-checkbox checked="{{item.selected}}">{{item.label}}</paper-checkbox>
+			</template>
+		</div>
+	</template>
+</dom-module>
+
+<script>
+	Polymer({
+		is: 'h-form-checkbox',
+		properties: {
+			/**
+			 * checkbox 前面的标签名字
+			 *
+			 * @attribute label
+			 * @type {String}
+			 */
+			label: {
+				type: String
+			},
+			/**
+			 * checkbox 组成项，例如：[{name:'薄膜',value:0,selected:true},{name:'纤维',value:1}]
+			 * 我们会根据数据项的selected值来决定当前这个checkbox是否选定
+			 *
+			 * @attribute checkboxItems
+			 * @type {Array}
+			 */
+			checkboxItems: {
+				type: Array
+			},
+			/**
+			 * chebox当前选中的值。是checkboxItems属性的value值的子集的字符串表示。
+			 * checkboxItems.map(function(x){return x.value}).join(",").includes(selectedValue)==true
+			 * 使用标签的时候如果给这个属性赋初始值的话那么会有相应的复选框被选定。
+			 *
+			 * @attribute selectedValue
+			 * @type {String}
+			 */
+			selectedValue: {
+				type: String,
+				notify:true,
+				observer: '_selectedValueChanged'
+			}
+		},
+		observers: [
+			'_checkboxItemsChanged(checkboxItems.*)'
+		],
+		_selectedValueChanged: function(newValue,oldValue) {
+			var items = [];
+			//这里一定要使用深拷贝，浅拷贝的时候checkboxItems会跟着变化。this.set("checkboxItems",items);将不会通知Polymer checkboxItems有改变。
+			$.extend(true,items,this.checkboxItems);
+			if(this.selectedValue&&this.selectedValue.length>0){
+				this.selectedValue.split(",").forEach(function(value,i) {
+					items.forEach(function(e) {
+						if (e.value == value) {
+							e.selected=true;
+						}else if(i==0){
+							e.selected=false;
+						}
+					});
+				});
+			}else{
+				items.forEach(function(e){
+					e.selected=false;
+				})
+			}
+			this.set("checkboxItems",items);
+		},
+		_checkboxItemsChanged: function(changeItems) {
+			//这里存在可优化空间
+			var newItems = changeItems.base;
+			var newSelectedValue = [];
+			if (newItems && newItems.length > 0) {
+				newItems.forEach(function(item) {
+					if (item.selected) {
+						newSelectedValue.push(item.value);
+					}
+				});
+				this.set("selectedValue", newSelectedValue.join());
+			}
+		}
+	});
+</script>

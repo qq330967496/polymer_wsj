@@ -1,0 +1,105 @@
+<link rel="import" href="../../o-resource.html"/>
+<dom-module id="h-date-picker">
+   <!-- <link rel="import" href="../../o-style.html"/>-->
+    <script type="text/javascript" src="bootstrap.min.js"></script>
+    <link rel="import" href="../../../../bower_components/polymer/polymer.html">
+    <script type="text/javascript" src="bootstrap-datetimepicker.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+    <link rel="stylesheet" type="text/css" href="bootstrap-datetimepicker.css">
+
+    <style>
+        :host{
+            padding: 0 15px;
+        }
+
+    </style>
+    <template>
+        <div>
+            <div class="container" id="container">
+                <input type="text" readonly  id="datetimepicker">
+                <span class="add-on"><i class="icon-remove"></i></span>
+                <span class="add-on"><i class="icon-calendar"></i></span>
+            </div>
+        </div>
+    </template>
+    <script>
+        Polymer({
+            //link to    http://www.bootcss.com/p/bootstrap-datetimepicker/
+            is: "h-date-picker",
+            properties:{
+                minView:{//选择刻度 0：精确到分；1：精确到时；2：精确到日
+                    type:Number,
+                    value:2
+                },
+                language:{//"zh-CN" 、en
+                    type:String,
+                    value:"zh-CN"
+                },
+                bindData:{
+                    type:Number,
+                    notify:true,
+                    observer:"_dateChange"
+                },
+                format:{//支持 "yyyy-mm-dd hh:ii:ss" 、"yyyy-mm-dd"
+                  type:String,
+                  value:function(){
+                      return "yyyy-mm-dd";
+                  },
+                  notify:true
+
+                },
+                startDate:{//允许最早时间
+                    type:Date,
+                    notify:true,
+                    value:null
+                },
+                endDate:{//允许最晚时间
+                    type:Date,
+                    notify:true,
+                    value:null
+                }
+            },
+            ready:function(){
+                this.async(this.initData(), 100);
+            },
+            initData:function(){
+                var self=this;
+                $('#datetimepicker').datetimepicker({
+                    format: self.format,
+                    autoclose: true,
+                    minView: self.minView,// //选0：分；1：时；2：日
+                    startView: 2,//0<=>hour,1<=>day,2<=>month (the default),3 <=>year,4<=>decade(10-year)
+                    maxView: 'decade',//4<=> 'decade'
+                    todayBtn: true,
+                    todayHighlight:true,
+                    pickerPosition: "bottom-left",
+                    language: self.language,
+                    showMeridian:false
+
+                }).on('changeDate', function(ev){
+                    debugger
+                    if (ev.date.valueOf()){
+                       self.set("bindData",ev.date.valueOf());
+                    }
+                });
+                if(this.startDate){
+                    $('#datetimepicker').datetimepicker('setStartDate', this.startDate);
+                }
+                if(this.endDate){
+                    $('#datetimepicker').datetimepicker('setEndDate', this.endDate);
+                }
+            },
+            _dateChange:function(newDate,oldDate){
+                if(newDate== oldDate){
+                    return;
+                }
+                if(newDate==null){
+                    $('#datetimepicker').datetimepicker('setDate',null);
+                }else if(newDate){
+                    $('#datetimepicker').datetimepicker('setDate',new Date(Number(newDate)));
+                }
+            }
+
+        })
+    </script>
+</dom-module>

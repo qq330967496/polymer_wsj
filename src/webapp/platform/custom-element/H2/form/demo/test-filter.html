@@ -1,0 +1,87 @@
+<link rel="import" href="../../../o-resource.html"/>
+<dom-module id="customer-location">
+    <template>
+        <template is="dom-repeat" items="{{customers}}" filter="isCustomerFound" >
+            <span>{{item.cuname}}</span><br>
+            <template is="dom-repeat" items="{{item.branches}}" as="row">
+               <span>subItem:</span><span>{{row.branch}}</span><br>
+            </template>
+        </template>
+    </template>
+</dom-module>
+<script>
+    (function () {
+        Polymer({
+            // define element prototype here
+            is: 'customer-location',
+            properties: {
+                latlngcombo: {type: String},
+                cname: {type: String}
+            },
+
+            isCustomerFound: function (item) {
+//                var dm = this.$$("#maxp").innerHTML;
+                return item.cuname=="msi";
+            },
+
+            ready: function () {
+                this.customers = [
+                    {
+                        "cuname": "msi",
+                        "name": "Microsoft India",
+                        "addr": "2, Strand Road",
+                        "addr2": "Kolkata, IN",
+                        "phone": "332.245.9910",
+                        "lat": "22.589091",
+                        "lng": "88.352359",
+                        "branches": [
+                            {
+                                "branch": "Hyderabad",
+                                "email": "hydho@cyfoxpapers.com",
+                                "phone": "1582012244",
+                                "address": "69/A, Twisted Road, Banjara Hills, Hyderabad: 600001",
+                                "code": "CPHYD"
+                            }
+                        ]
+                    },
+                    {
+                        "cuname": "googindia",
+                        "name": "Google India Inc.",
+                        "addr": "6/B, Pragati Apartment",
+                        "addr2": "Pitampura, New Delhi, IN",
+                        "phone": "493.050.2010",
+                        "lat": "28.61598",
+                        "lng": "77.244382"
+                    },
+                    {
+                        "cuname": "gabonint",
+                        "name": "Gabon Internationl",
+                        "addr": "187 Kabi Kirandhan Road",
+                        "addr2": "Bhadrakali, IN",
+                        "phone": "983.193.3166",
+                        "lat": "22.665979",
+                        "lng": "88.348134"
+                    },
+                    {
+                        "cuname": "itg",
+                        "name": "India Tour Guides",
+                        "addr": "115/5 Palash Sarani",
+                        "addr2": "Amritsar, India",
+                        "phone": "943.390.9166",
+                        "lat": "31.604877",
+                        "lng": "74.572276"
+                    },
+                    {
+                        "cuname": "creatad",
+                        "name": "Creative Ad Agency",
+                        "addr": "25 BPMB Saranai",
+                        "addr2": "McLeodganj, Dharamsala. IN",
+                        "phone": "943.390.9166",
+                        "lat": "32.232596",
+                        "lng": "76.324327"
+                    }
+                ];
+            }
+        });
+    })();
+</script>

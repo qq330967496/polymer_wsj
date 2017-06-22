@@ -1,0 +1,274 @@
+<link rel="import" href="../../o-resource.html" />
+<dom-module id="h-img-upload">
+	<link rel="import" type="css" href="ks-img-upload.css" />
+	<style>
+		:host{
+			display: inline-block;
+		}
+		:host paper-button[raised].colorful {
+			background: var(--paper-button-backgrount, #4285f4);
+			color: var(--paper-button-color, #fff);
+		}
+		#pasted-pane{
+			-webkit-user-select:initial;
+		}
+		#copy-tip{
+			-webkit-user-select:initial;
+		}
+		.file-input-div{
+			width: 30px;
+			position: absolute;
+			bottom: 5px;
+			/*right: 0;*/
+			right: 5px;
+		}
+	</style>
+	<template>
+		<div class="ks-image-upload-wrap clearfix">
+
+			<div class="ks-image-pane">
+				<div class="ks-image-pasted-pane" id="pasted-pane" >
+						<div id="copy-tip" style="height:100%;width:100%;" ><span>拖拽文件或者复制到这里</span></div>
+						<img class="result-img" id="result-img" />
+					<div class="toolbar" style="width:100%;" >
+						<template is="dom-if" if="{{cancelBtn}}">
+							<button class="btn btn-success btn-sm" on-click="cancelChange">取消</button>
+						</template>
+						<template is="dom-if" if="{{changeBtn}}">
+							<button class="btn btn-success btn-sm" on-click="changeImage" >更换</button>
+						</template>
+						<template is="dom-if" if="{{viewBtn}}">
+							<button class="btn btn-success btn-sm" on-click="viewZoom" >查看大图</button>
+						</template>
+						<template is="dom-if" if="{{openBtn}}">
+							<div class="file-input-div">
+								<iron-icon icon="icons:folder-open">
+								</iron-icon>
+								<input type="file" on-change="chooseFile" id="ks-image-choose" class="ks-image-choose">
+							</div>
+						</template>
+					</div>
+				</div>
+			</div>
+		</div>
+	</template>
+	<script>
+		Polymer({
+			is:"h-img-upload",
+			properties: {
+				imgStyle:Object,
+				imgHeight: {
+					type: Number,
+					value: 150,
+					observer:'_setImageHeight'
+				},
+				imgWidth: {
+					type: Number,
+					value: 150,
+					observer:'_setImageWidth'
+				} ,
+
+				loaded:{
+					type:Boolean,
+					value:false,
+					reflectToAttribute:false,
+					notify:true,
+					observer:'_showPaneStyle'
+				},
+				src:{
+					type:String,
+					value:null,
+					observer:'_changeSrc'
+				},
+				changing:{
+					type:Boolean,
+					reflectToAttribute:false,
+					value:false,
+					observer:'_showPaneStyle'
+				},
+				imgData:{
+					type:Object,
+					notify:true
+				},
+				/**
+				 * 是否可编辑模式：true->可编辑,false->不可编辑
+				 */
+				editable:{
+					type:Boolean,
+					value:false,
+					notify:true,
+					reflectToAttribute:true,
+					observer:'_showPaneStyle'
+				},
+				cancelBtn:{
+					reflectToAttribute:false,
+					type:Boolean,
+					value:true
+				},
+				changeBtn:{
+					reflectToAttribute:false,
+					type:Boolean,
+					value:true
+				},
+				viewBtn:{
+					reflectToAttribute:false,
+					type:Boolean,
+					value:true
+				},
+				openBtn:{
+					reflectToAttribute:false,
+					type:Boolean,
+					value:true
+				}
+
+
+			},
+
+			chooseFile:function(e){
+		   	var self = this;
+		   		var file=e.target.files[0];
+		   		var reader=new FileReader();
+				this.loaded=true;
+		   		reader.onload = function (e) {
+					self.changing = false;
+                	self.$["result-img"].setAttribute("src", this.result);
+                
+           		 }
+           	 	reader.readAsDataURL(file);
+				this.imgData =file ;
+
+		   },
+			changeImage:function(e){
+				this.changing = true;
+			},
+			cancelChange:function(){
+				this.changing = false;
+			},
+			_setImageWidth:function(newValue,oldValue){
+				if(newValue)
+					this.$['pasted-pane'].style.width=newValue+"px";
+			},
+			_setImageHeight:function(newValue,oldValue){
+				if(newValue){
+
+					this.$['pasted-pane'].style.height=newValue+"px";
+					this.$['copy-tip'].style.lineHeight=newValue+"px";
+				}
+			},
+			_showPaneStyle:function(){
+				if((!this.loaded && !this.src) || this.changing){
+					this.$['copy-tip'].style.display="";
+					this.$['result-img'].style.display="none";
+				}else{
+					this.$['copy-tip'].style.display="none";
+					this.$['result-img'].style.display="";
+				}
+				this.set("cancelBtn",this.editable && !!this.src &&  this.changing);
+				this.set("changeBtn",this.editable && !!this.src && !this.changing);
+				this.set("viewBtn",!this.loaded && this.src);
+				this.set("openBtn",this.editable);
+			},
+
+			_panelListener: function () {
+				var self = this;
+				var ele = this.$['pasted-pane']
+				ele.addEventListener("dragenter", function (e) {
+					e.stopPropagation();
+					e.preventDefault();
+					if (!self.editable) {
+						return;
+					}
+
+				}, false);
+
+				ele.addEventListener("dragleave", function (e) {
+					e.stopPropagation();
+					e.preventDefault();
+					if (!self.editable) {
+						return;
+					}
+
+				}, false);
+
+				ele.addEventListener('dragover', function (e) {
+					e.stopPropagation();
+					e.preventDefault();
+					if (!self.editable) {
+						return;
+					}
+				}, false);
+				ele.addEventListener('drop', function (event) {
+
+					if (!self.editable) {
+						return;
+					}
+					self.handleDrop(event, ele);
+				}, false);
+
+
+				// 黏贴事件，处理图片
+				ele.addEventListener('paste', function (event) {
+					if (!self.editable) {
+						return;
+					}
+					self.pasteIntoTextArea(event, ele);
+
+				}, false);
+			},
+			//拖曳
+			handleDrop: function (e, ele) {
+				e.stopPropagation();
+				e.preventDefault();
+				var self = this;
+				var fileList = e.dataTransfer.files,//获取拖拽文件
+						reader = new FileReader();
+				if(!fileList || fileList.length<=0 || fileList[0].type.indexOf("image")==-1){
+					return;
+				}
+
+				reader.onload = function (e) {
+					self.$["result-img"].setAttribute("src", this.result);
+					self.loaded = true;
+					self.imgData = fileList[0]
+					self.changing = false;
+				}
+				reader.readAsDataURL(fileList[0]);
+			},
+
+			_changeSrc: function (newValue, oldValue) {
+				if (newValue) {
+					this.$["result-img"].setAttribute("src", newValue);
+					this._showPaneStyle();
+				}
+			},
+			//粘贴
+			pasteIntoTextArea: function (event, ele) {
+				var self = this;
+				var clipboardData = event.clipboardData;
+				for (var i = 0; i < clipboardData.items.length; i++) {
+					var item = clipboardData.items[i];
+					if (item.kind == 'file' && item.type.match(/^image\//i)) {
+						var blob = item.getAsFile(), reader = new FileReader();
+						reader.onload = function (e) {
+							self.$["result-img"].setAttribute("src", e.target.result);
+							self.loaded = true;
+						}
+						reader.readAsDataURL(blob);
+						self.loaded = true;
+						self.imgData=blob;
+						self.changing = false;
+					}
+				}
+			},
+			//查看大图
+			viewZoom:function(){
+				if(this.src)
+					window.open(this.src)
+			},
+			ready:function(){
+				this._panelListener();
+			}
+
+		});
+	</script>
+</dom-module>

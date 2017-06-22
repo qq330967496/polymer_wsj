@@ -1,0 +1,138 @@
+/*信息列表*/
+.list-wrap{
+    padding: 10px 0 10px 25px;
+}
+.list-box{
+    overflow: hidden;
+}
+.list-box li{
+    line-height: 30px;
+    width: 300px;
+    display: inline-block;
+    text-align: left;
+    float: left;
+}
+.list-box li.item-company{
+    width: 500px;
+}
+.summary-info{
+    text-align: left;
+    font-size: 14px;
+    margin: 10px 10px;
+    border-bottom: 1px dashed #EDD157;
+    height: 40px;
+    line-height: 40px;
+}
+.summary-info .value{
+    padding-right: 20px;
+}
+.ks-operator {
+    margin-bottom: 10px;
+    border-bottom: 1px dashed #ddd;
+    overflow: hidden;
+    text-align: left;
+    height: 20px;
+    line-height: 20px;
+}
+.ks-operator span {
+    display: inline-block;
+    padding: 0 50px 0 10px;
+    color: #ccc;
+}
+.ks-operator span.last-time{
+    color: #00b300;
+}
+.ks-operator label {
+    font-style: italic;
+    color: #ccc;
+    font-size: 12px;
+    display: inline-block;
+    margin-bottom: 5px;
+    height: 20px;
+    line-height: 20px;
+}
+.l-h-default{
+    line-height: 34px;
+}
+/*分隔线*/
+hr.border-dashed, .border-dashed{
+    border:none;
+    border-bottom: 1px dashed #cccccc;
+    margin: 20px 0;
+}
+.inline-display{
+    display: inline-block;
+}
+.vertical-top{
+    vertical-align: top;
+}
+.vertical-middle{
+    vertical-align: middle;
+}
+/*查询外壳*/
+.search-wrap {
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.row-info-view{
+    margin-bottom: 10px;
+    line-height: 34px;
+}
+img.list-pic-view{
+    width:100px ;
+    height: auto;
+}
+ul.cell-list li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    /*height: 18px;*/
+    /*line-height: 18px;*/
+}
+ul.cell-list li label{
+    font-size: 12px;
+}
+hr.space-line{
+    border:none;
+    border-bottom: #dddddd 1px dashed;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.ks-quick-helper {
+    color: #e8841e;
+    font-size: 10px;
+    left: 240px;
+    margin-top: 10px;
+    position: absolute;
+}
+.tree-title {
+    background: #595959;
+    height: 40px;
+    line-height: 40px;
+    color: #fff;
+    text-indent: 1em;
+    border: 1px solid #595959;
+    margin: 1px 0 0 0;
+}
+.box-wrap{
+    border: solid 1px #dddddd;
+}
+.side-left{
+    width: 400px;
+}
+.side-right{
+    min-width: 400px;
+}
+/*幻灯片箭头*/
+.slide-box{
+    display: flex; width: 100%; align-items: center;
+}
+iron-icon.slide-arrow{
+    width: 60px;
+    height: 60px;
+}
+a.slide-link:hover{
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+
+}

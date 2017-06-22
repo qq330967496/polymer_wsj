@@ -1,0 +1,23 @@
+<!--所有客户-->
+<dom-module id="customer-index">
+    <template>
+        <div class="search-wrap vertical-box form-wrap flex-wrap">
+            <o-auto-complete-picker label="客户姓名" class="inline-block search-item" display-field="label" id="ddd"
+                                    value-field="label" column-info="[[customerCols]]"  keyword="{{orderKeyword}}"
+                                    local-data="[[customerNames]]"
+                                    bind-data="{{queryCondition.name}}" demo>
+                </o-auto-complete-picker>
+            <div class="inline-block search-item">
+                <h-form-input label="注册时间" type="date" bind-data="{{queryCondition.startTime}}"></h-form-input>
+                <h-form-input label="至" class="endTime-label" type="date"
+                              bind-data="{{queryCondition.endTime}}"></h-form-input>
+            </div>
+            <div class="vertical-top search-submit inline-block search-item">
+                <paper-button type="button" class="btn btn-primary float-l" on-click="findSimpleCompanies">查询</paper-button>
+                <paper-button type="button" class="btn btn-primary float-l" on-click="resetFormSmsQC">重置</paper-button>
+            </div>
+        </div>
+        <customer-list company-list="[[companyList]]"  query-condition="[[queryCondition]]"></customer-list>
+    </template>
+    <script type="text/javascript" src="assets/js/customer-index.js"></script>
+</dom-module>

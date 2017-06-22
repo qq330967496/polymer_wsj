@@ -1,0 +1,74 @@
+<link rel="import" href="../../../o-resource.html" />
+<link rel="import" href="sub-item.html"/>
+<dom-module id="test-pe-grid">
+	<template>
+		<h-simple-grid on-paging>
+			<h-simple-grid-header>
+				<h-simple-grid-header-cell>
+					子项
+				</h-simple-grid-header-cell>
+				<h-simple-grid-header-cell>
+					姓名
+				</h-simple-grid-header-cell>
+				<h-simple-grid-header-cell>
+					年龄
+				</h-simple-grid-header-cell>
+				<h-simple-grid-header-cell>
+					性别
+				</h-simple-grid-header-cell>
+				<h-simple-grid-header-cell>
+					余额
+				</h-simple-grid-header-cell>
+				<h-simple-grid-cell>
+					时间
+				</h-simple-grid-cell>
+			</h-simple-grid-header>
+			<h-simple-grid-body>
+				<h-simple-grid-row sub-item="sub-item">
+					<h-simple-grid-row-cell on-click="openSubItem">打开</h-simple-grid-row-cell>
+					<h-simple-grid-row-cell >
+						李晶莹
+					</h-simple-grid-row-cell>
+					<h-simple-grid-row-cell format="number">
+						25
+					</h-simple-grid-row-cell>
+					<h-simple-grid-row-cell>
+						男
+					</h-simple-grid-row-cell>
+					<h-simple-grid-row-cell format="currency">
+						501240.22
+					</h-simple-grid-row-cell>
+					<h-simple-grid-cell format="date|yyyy-MM-dd HH:mm:ss">
+						1439185283575
+					</h-simple-grid-cell>
+				</h-simple-grid-row>
+				<h-simple-grid-row>
+					<h-simple-grid-row-cell>
+						李晶莹
+					</h-simple-grid-row-cell>
+					<h-simple-grid-row-cell>
+						25
+					</h-simple-grid-row-cell>
+					<h-simple-grid-row-cell>
+						男
+					</h-simple-grid-row-cell>
+					<h-simple-grid-row-cell format="currency|¥">
+						7893544.25
+					</h-simple-grid-row-cell>
+					<h-simple-grid-cell format="date|yyyy/MM/dd">
+						1439185283575
+					</h-simple-grid-cell>
+				</h-simple-grid-row>
+			</h-simple-grid-body>
+		</h-simple-grid>
+	</template>
+	<script>
+		Polymer({
+			is:"test-pe-grid",
+			behaviors:[OBaseBehavior],
+			test:function(e){
+				console.log(e);
+			}
+		});
+	</script>
+</dom-module>

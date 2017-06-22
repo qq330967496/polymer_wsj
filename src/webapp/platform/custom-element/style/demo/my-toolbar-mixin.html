@@ -1,0 +1,24 @@
+<dom-module id="my-toolbar-mixin">
+
+    <style>
+        :host {
+            padding: 4px;
+            background-color: gray;
+            /* apply a mixin */
+            @apply(--my-toolbar-theme)
+        }
+        .title {
+            @apply(--my-toolbar-title-theme)
+        }
+    </style>
+
+    <template>
+        <span class="title">{{title}}</span>
+    </template>
+
+</dom-module>
+<script>
+    Polymer({
+        is:'my-toolbar-mixin'
+    })
+</script>

@@ -1,0 +1,124 @@
+<!--加载资源文件-->
+<link rel="import" href="../../o-resource.html" />
+<dom-module id="h-crud-list">
+    <style>
+        :host{
+
+        }
+    </style>
+    <template>
+        <h-simple-grid paging="{{queryCondition}}" on-select-page="_queryList">
+            <h-simple-grid-header>
+                <template is="dom-repeat" items="{{headerColumn}}">
+                    <h-simple-grid-header-cell class="row-cell-default flex-grow-one">{{item.comment}}</h-simple-grid-header-cell>
+                </template>
+                <h-simple-grid-header-cell class="row-cell-button row-cell-button-3x">操作</h-simple-grid-header-cell>
+            </h-simple-grid-header>
+            <h-simple-grid-body>
+                <template is="dom-repeat" items="{{listEntity}}" as="row">
+                    <h-simple-grid-row>
+                        <template is="dom-repeat" items="{{headerColumn}}" as="column">
+                            <h-simple-grid-row-cell class="row-cell-default flex-grow-one">
+                                <span>[[_getValue(row,column)]]</span>
+                            </h-simple-grid-row-cell>
+                        </template>
+                        <h-simple-grid-row-cell is-option class="row-cell-button row-cell-button-3x">
+                            <h-dialog-button class="btn btn-primary" label="编辑" is-button
+                                             content-element="h-crud-form" dialog-param="[[formInfo]]"
+                                             entity="[[row]]" mode="Edit"></h-dialog-button>
+                            <paper-button type="button" class="btn btn-danger" data-args="{{row.id}}"
+                                          on-click="_deleteEntity">删除</paper-button>
+
+                        </h-simple-grid-row-cell>
+                    </h-simple-grid-row>
+                </template>
+            </h-simple-grid-body>
+        </h-simple-grid>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: 'h-crud-list',
+        behaviors: [HCrudBehavior],
+        properties: {
+            /**
+             * 列表头信息{name:'age',column:'年龄'}
+             * @attribute listInfo
+             * @type{Array}
+             */
+            headerColumn:{
+                type:Array,
+                value:function(){ return [] }
+            },
+            /**
+             * 查询实体的url
+             * @attribute queryUrl
+             * @type{String}
+             */
+            queryUrl:{
+                type:String
+            },
+            /**
+             * 删除实体的url
+             * @attribute queryUrl
+             * @type{String}
+             */
+            deleteUrl:{
+                type:String
+            }
+
+        },
+        observers:['_listInfoChange(listInfo)'],
+        /**
+         * 初始列表头信息
+         * @param searchInfo
+         * @private
+         */
+        _listInfoChange: function (listInfo) {
+            var headerColumn = [];
+            if(!this.isEmptyObject(listInfo)){
+                var i = 0;
+                var columnInfo = listInfo['column'];//列表列信息
+                for(var column in columnInfo){
+                    headerColumn[i++]={name:columnInfo[column]['name'],comment:columnInfo[column]['comment'],format:columnInfo[column]['format']};
+                }
+                this.set("queryUrl",listInfo.queryUrl);
+                this.set("deleteUrl",listInfo.deleteUrl);
+            }
+            this.set('headerColumn',headerColumn);
+        },
+
+        /**
+         * 获取列值
+         * @param row
+         * @param column
+         * @private
+         */
+        _getValue:function(row,column){
+            if(column.format){
+                return column.format(row[column.name]);
+            }else{
+                return row[column.name];
+            }
+        },
+        /**
+         * 删除实体
+         * @param e 事件对象
+         * @private
+         */
+        _deleteEntity: function (e) {
+            var self = this;
+            var id = e.currentTarget.dataArgs;
+            if(!id){
+                throw new Error("被删除的实体没有id，不支持这种操作....");
+            }
+            this.hTip.confirm("是否确认删除当前记录？",function(){
+                self.deleteEntity(self.deleteUrl,{id:id},function(){
+                    self.hTip.success("删除成功");
+                })
+            })
+        }
+
+    });
+</script>

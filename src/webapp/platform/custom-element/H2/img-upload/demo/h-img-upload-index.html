@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="import" href="../h-img-upload.html"/>
+		<style>
+			.upload-css{
+				width: 200px;
+				height: 250px;
+			}
+		</style>
+		<script>
+			this.imgData=null;
+			function test(){
+				var abc=document.getElementById("uploadPick").imgData
+				window.console.log("```````",abc);
+			}
+		</script>
+	</head>
+	<body>
+		<h-img-upload id="uploadPick" img-height="300" editable src="http://localhost:8080/management/attachments/3355.do" img-width="300"></h-img-upload>
+		<button onclick="test()">get</button>
+	</body>
+</html>

@@ -1,0 +1,140 @@
+<!--系统-->
+<dom-module id="finance-index">
+    <template>
+        <div class="top-bar">
+            <div class="pull-left logo">logo</div>
+            <div class="pull-left">
+                <paper-tabs class="nav-bar" selected="{{tabindex}}" noink no-bar>
+                    <paper-tab id="home" on-click="_openOtherPage">
+                        <!--<iron-icon icon="icons:home"></iron-icon>-->
+                        <span class="img-icon img-icon-home"></span>
+                        首页
+                    </paper-tab>
+                    <paper-tab>
+                        <!--<iron-icon icon="editor:attach-money"></iron-icon>-->
+                        <span class="img-icon img-icon-business"></span>
+                        金融业务
+                    </paper-tab>
+                    <paper-tab>
+                        <!--<iron-icon icon="social:person"></iron-icon>-->
+                        <span class="img-icon img-icon-customer"></span>
+                        客户
+                    </paper-tab>
+                    <paper-tab id="credit" on-click="_openOtherPage">
+                        <!--<iron-icon icon="icons:credit-card"></iron-icon>-->
+                        <span class="img-icon img-icon-credit"></span>
+                        信用
+                    </paper-tab>
+                    <paper-tab id="fund" on-click="_openOtherPage">
+                        <!--<iron-icon icon="icons:work"></iron-icon>-->
+                        <span class="img-icon img-icon-capital"></span>
+                        资金
+                    </paper-tab>
+                </paper-tabs>
+            </div>
+            <div class="pull-right user-drawer">
+                <!--<iron-icon class="user-icon" icon="icons:perm-identity"></iron-icon>-->
+                你好，<span>张三</span>
+                <!--<span>zhangsan</span>-->
+                <paper-icon-button class="icon" icon="icons:arrow-drop-down"></paper-icon-button>
+            </div>
+        </div>
+        <div style="margin: 20px 0 0 66px">
+            <div class="left-side pull-left">
+                <template is="dom-if" if="{{showTabIndex(0,tabindex)}}">
+                    <div class="menu-title"><span class="img-icon img-icon-home"></span><b>首页</b></div>
+                </template>
+                <template is="dom-if" if="{{showTabIndex(1,tabindex)}}">
+                    <div class="menu-title"><span class="img-icon img-icon-business"></span><b>金融业务</b></div>
+                    <paper-menu class="menu-list">
+                        <paper-icon-item id="approval" on-click="_openFinancialPage">
+                            <!--<iron-icon icon="fullscreen-exit" item-icon></iron-icon>-->
+                            <span class="img-icon menu-business1"></span>
+                            待审核
+                        </paper-icon-item>
+                        <paper-icon-item id="pendingPayment" on-click="_openFinancialPage">
+                            <!--<iron-icon icon="fullscreen-exit" item-icon></iron-icon>-->
+                            <span class="img-icon menu-business2"></span>
+                            待放款
+                        </paper-icon-item>
+                        <paper-icon-item id="dueToday" on-click="_openFinancialPage">
+                            <!--<iron-icon icon="fullscreen-exit" item-icon></iron-icon>-->
+                            <span class="img-icon menu-business3"></span>
+                            本日到期
+                        </paper-icon-item>
+                        <paper-icon-item id="pendingReceipt" on-click="_openFinancialPage">
+                            <!--<iron-icon icon="fullscreen-exit" item-icon></iron-icon>-->
+                            <span class="img-icon menu-business4"></span>
+                            进行中
+                        </paper-icon-item>
+                        <paper-icon-item id="overdue" on-click="_openFinancialPage">
+                            <!--<iron-icon icon="fullscreen-exit" item-icon></iron-icon>-->
+                            <span class="img-icon menu-business5"></span>
+                            逾期
+                        </paper-icon-item>
+                        <paper-icon-item id="historyOrder" on-click="_openFinancialPage">
+                            <!--<iron-icon icon="fullscreen-exit" item-icon></iron-icon>-->
+                            <span class="img-icon menu-business6"></span>
+                            历史订单
+                        </paper-icon-item>
+                    </paper-menu>
+                </template>
+                <template is="dom-if" if="{{showTabIndex(2,tabindex)}}">
+                    <div class="menu-title"><span class="img-icon img-icon-customer"></span><b>客户</b></div>
+                    <paper-menu class="menu-list">
+                        <paper-icon-item id="allCustomer" on-click="_openCustomerPage">
+                            <iron-icon icon="fullscreen-exit" item-icon></iron-icon>
+                            所有客户
+                        </paper-icon-item>
+                    </paper-menu>
+                </template>
+                <template is="dom-if" if="{{showTabIndex(3,tabindex)}}">
+                    <div class="menu-title"><span class="img-icon img-icon-credit"></span><b>信用</b></div>
+                    <paper-menu class="menu-list">
+                        <paper-icon-item>
+                            <iron-icon icon="fullscreen-exit" item-icon></iron-icon>
+                            授信管理
+                        </paper-icon-item>
+                        <paper-icon-item>
+                            <iron-icon icon="fullscreen-exit" item-icon></iron-icon>
+                            授度管理
+                        </paper-icon-item>
+                        <paper-icon-item>
+                            <iron-icon icon="fullscreen-exit" item-icon></iron-icon>
+                            授信用户
+                        </paper-icon-item>
+                        <paper-icon-item>
+                            <iron-icon icon="fullscreen-exit" item-icon></iron-icon>
+                            授信模型
+                        </paper-icon-item>
+                        <paper-icon-item>
+                            <iron-icon icon="fullscreen-exit" item-icon></iron-icon>
+                            额度系数
+                        </paper-icon-item>
+                    </paper-menu>
+                </template>
+                <template is="dom-if" if="{{showTabIndex(4,tabindex)}}">
+                    <div class="menu-title"><span class="img-icon img-icon-capital"></span><b>资金</b></div>
+                    <paper-menu class="menu-list">
+                        <paper-icon-item>
+                            <iron-icon icon="fullscreen-exit" item-icon></iron-icon>
+                            资金池
+                        </paper-icon-item>
+                        <paper-icon-item>
+                            <iron-icon icon="fullscreen-exit" item-icon></iron-icon>
+                            所有资金
+                        </paper-icon-item>
+                        <paper-icon-item>
+                            <iron-icon icon="fullscreen-exit" item-icon></iron-icon>
+                            资金转让
+                        </paper-icon-item>
+                    </paper-menu>
+                </template>
+            </div>
+            <div>
+                <main-index id="mainIndex"></main-index>
+            </div>
+        </div>
+    </template>
+    <script type="text/javascript" src="assets/js/finance-index.js"></script>
+</dom-module>

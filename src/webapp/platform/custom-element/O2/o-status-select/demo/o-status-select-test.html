@@ -1,0 +1,59 @@
+<link rel="import" href="../../../o-resource.html"/>
+<dom-module id="o-status-select-test">
+    <style>
+    </style>
+    <template>
+        <o-status-select selected="1" status-items="[[statusItems]]" label="状态" on-status-selected="onItemsSelected"></o-status-select>
+    </template>
+    <script>
+        Polymer({
+            is: "o-status-select-test",
+            properties:{
+                /**
+                 *
+                 * 初始选择项和statusItems的value值相对应
+                 * eg：
+                 *
+                 * @attribute selected
+                 * @type {String}
+                 */
+                selected:{
+                    type:Number,
+                    value:1
+                },
+                /**
+                 *
+                 * 需要展示的数据项
+                 * eg：
+                 *
+                 * @attribute statusItems
+                 * @type {Array}
+                 */
+                statusItems:{
+                    type:Array,
+                    value:[{
+                        value:1,
+                        label:"全部",
+                        count:"19"
+                    },{
+                        value:2,
+                        label:"已认领",
+                        count:"10"
+                    },{
+                        value:3,
+                        label:"未认领",
+                        count:"5"
+                    },{
+                        value:4,
+                        label:"部分认领",
+                        count:"4"
+                    }]
+                }
+
+            },
+            onItemsSelected:function(e){
+                console.log(e, e.detail);
+            }
+        })
+    </script>
+</dom-module>

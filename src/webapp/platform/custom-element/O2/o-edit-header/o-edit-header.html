@@ -1,0 +1,186 @@
+<link rel="import" href="../../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../behaviors/common/o-base-behavior.html">
+<link rel="import" href="../../behaviors/common/o-tip-behavior.html">
+<link rel="import" href="../../behaviors/common/o-format-behavior.html">
+<link rel="import" href="../../behaviors/common/o-crud-behavior.html">
+<!--编辑窗口页眉-->
+<dom-module id="o-edit-header">
+    <style>
+        :host {
+
+        }
+        :host .ks-operator {
+            margin-bottom: 10px;
+            border-bottom: 1px dashed #ddd;
+            text-align: left;
+            height: 20px;
+            line-height: 20px;
+        }
+        :host .ks-operator span {
+            display: inline-block;
+            padding: 0 35px 0 10px;
+            color: #ccc;
+        }
+        :host .ks-operator .last-time,.last-operator{
+            color: #00b300;
+        }
+        :host .ks-operator .last-operator{
+            color: #00b300;
+        }
+        :host .ks-operator label {
+            font-style: italic;
+            color: #ccc;
+            font-size: 12px;
+            display: inline-block;
+            margin-bottom: 5px;
+            height: 20px;
+            line-height: 20px;
+        }
+    </style>
+    <template>
+        <div class="ks-operator">
+            <label>创建人：</label><span>[[operators.creator.name]]</span>
+            <label>创建时间：</label><span>[[formatDate(entity.createdAt,"yyyy-MM-dd HH:mm:ss","")]]</span>
+            <label>最后修改：</label><span class="last-time">[[formatDate(entity.updatedAt,"yyyy-MM-dd HH:mm:ss","")]]</span>
+            <template is="dom-if" if="[[showUpdateName(noUpdateName)]]">
+                <label>修改人：</label><span class="last-operator">[[operators.innovator.name]]</span>
+            </template>
+        </div>
+    </template>
+    <script>
+        Polymer({
+            is: "o-edit-header",
+            behaviors: [ OCrudBehavior, OFormatBehavior],
+            properties: {
+                entity: {
+                    type: Object,
+                    notify: true,
+                    observer:'queryOperatorNames'
+                },
+                operators:{//操作人（创建人，修改人）
+                    type: Object,
+                    reflectToAttribute: false,
+                    notify: true
+                },
+                noUpdateName:{
+                    type:Boolean,
+                    value:function(){
+                        return false;
+                    },
+                    notify:true
+                },
+                demo:{//是否是demo
+                    type:Boolean,
+                    value:function(){
+                        return false;
+                    },
+                    notify:true
+                }
+            },
+          //  observers:['queryOperatorNames(entity.*)'],
+            queryOperatorNames2: function (entity) {//服务接口不支持多个id一起查询
+                if(!entity || !entity.value){
+                    return ;
+                }
+                var obj=new Object();
+                var staffIds=[];
+                var value=entity.value;
+                debugger
+                if(value.createdByName){
+                    obj['creator']={id:value.createdBy,name:value.createdByName};
+                }else if(value.createdBy && value.createdBy>0){
+                    obj['creator']={id:value.createdBy};
+                    staffIds.push(value.createdBy);
+                }
+                if(value.updatedByName){//更新人
+                    obj['innovator']={id:value.updatedBy,name:value.updatedByName};
+                }else if(value.updatedBy && value.updatedBy>0){
+                    obj['innovator']={id:value.updatedBy};
+                    staffIds.push(value.updatedBy);
+                }
+                var self=this;
+                self.set("operators",obj);
+                if (staffIds && staffIds.length > 0) {
+                    this.query("/uc/basic/staffs/findStaffNamesByIds.do", {ids:staffIds}, function (res) {
+                        for (var i = 0; res && i < res.length; i++)
+                            for (var p in obj) {
+                                if (p && p['id'] == staffIds[i]) {
+                                    obj[p]['name']=res[i];
+                                }
+                            }
+                        self.set("operators",obj);
+                    }, function (res) {
+
+                    });
+                }
+
+            },
+            queryOperatorNames: function (value) {//entity
+                if(!value){
+                    return ;
+                }
+                var obj=new Object();
+                if(value.createdByName){
+                    obj['creator']={id:value.createdBy,name:value.createdByName};
+                }else if(value.createdBy && value.createdBy>0){
+                    obj['creator']={id:value.createdBy};
+                   this._queryStaffName(value.createdBy,1);
+                }
+                if(!this.noUpdateName && value.updatedByName){//更新人
+                    obj['innovator']={id:value.updatedBy,name:value.updatedByName};
+                }else if(!this.noUpdateName && value.updatedBy && value.updatedBy>0){
+                    obj['innovator']={id:value.updatedBy};
+                    this._queryStaffName(value.updatedBy,2);
+                }
+                this.set("operators",obj);
+            },
+            /**
+             * 查询员工名称
+             * @param staffId
+             * @param type 操作员类型 1：创建者，2：修改者
+             */
+            _queryStaffName:function(staffId,type){
+                if(!staffId){
+                    return;
+                }
+                var self=this;
+                this.query("/uc/user/staffs/"+staffId+".do", {}, function (res) {
+                    if(type==1){
+                        self.set("operators.creator.name",res.name);
+                    }else if(type==2){
+                        self.set("operators.innovator.name",res.name);
+                    }
+                }, function (res) {
+
+                });
+            },
+            _getCreator: function (createdByName, createdBy) {
+                if(createdByName){
+                    return createdByName;
+                }
+                if(createdBy && createdBy>0){
+
+                }
+            },
+            ready:function(){
+                if(this.demo){
+                    this.initDemoData();
+                }
+            },
+            showUpdateName:function(noUpdateName){
+              return !noUpdateName;
+            },
+            initDemoData: function () {
+                this.set("entity", {
+                    createdByName: "张三",
+                    createdBy: 1,
+                    createdByName: "赵本山",
+                    createdAt: 1456890568071,
+                    updatedAt: 1456890568071,
+                    updatedBy: 101,
+                    updatedByName: "郭德纲"
+                });
+            }
+        })
+    </script>
+</dom-module>

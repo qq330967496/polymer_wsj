@@ -1,0 +1,19 @@
+<!--加载资源文件-->
+<link rel="import" href="o-resource.html" />
+<link rel="import" href="o-style.html" />
+<!--
+	这里的id和下面的is属性的值要保持一致，最好也和html文件,js文件的名字保持一直。
+	表示的是html标签的名字。
+-->
+<dom-module id="dialog-element">
+    <style>
+        /* 组件样式 */
+    </style>
+    <template>
+        <!-- 组件Local DOM -->
+        <h-form-select is-button on-button-selected="openDia" label="销售合同"
+                       select-items="[[buttonItems]]"></h-form-select>
+    </template>
+    <script type="text/javascript" src="dialog-element.js"></script>
+</dom-module>
+

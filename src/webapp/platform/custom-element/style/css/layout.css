@@ -1,0 +1,310 @@
+.mr-5{
+    margin-right: 5px;
+}
+.mr-10,
+.marginR10 {
+    margin-right: 10px;
+}
+
+.margin-r10 {
+    margin-right: 10px;
+}
+
+.marginR20 {
+    margin-right: 20px;
+}
+.mr-40{
+    margin-right: 40px;
+}
+.marginR50 {
+    margin-right: 50px;
+}
+
+.ml-10,
+.ml-30{
+    margin-left: 30px;
+}
+.ml-40{
+    margin-left: 40px;
+}
+.marginL10 {
+    margin-left: 10px;
+}
+
+.margin-left-10 {
+    margin-left: 10px;
+}
+
+.marginL20 {
+    margin-left: 20px;
+}
+
+.marginL80 {
+    margin-left: 80px;
+}
+.mb-5{
+    margin-bottom: 5px;
+}
+.mb-10{
+    margin-bottom: 10px;
+}
+.marginB5 {
+    margin-bottom: 5px;
+}
+.mb-10,
+.marginB10 {
+    margin-bottom: 10px;
+}
+.mb-20,
+.marginB20 {
+    margin-bottom: 20px;
+}
+
+.marginB50 {
+    margin-bottom: 50px;
+}
+.mt-10{
+    margin-top: 10px;
+}
+.mt-15{
+    margin-top: 15px;
+}
+.mt-20{
+    margin-top: 20px;
+}
+.marginT20 {
+    margin-top: 20px;
+}
+.mt-10,
+.marginT10 {
+    margin-top: 10px;
+}
+
+.margin-t5 {
+    margin-top: 5px;
+}
+.margin-t10 {
+    margin-top: 10px;
+}
+
+.margin-t20 {
+    margin-top: 10px;
+}
+
+.margin-t10 {
+    margin-top: 10px;
+}
+.margin5 {
+    margin: 5px;
+}
+.margin10 {
+    margin: 10px;
+}
+
+.margin20 {
+    margin: 20px;
+}
+.mt-25,
+.box-part h4.mt-25{
+    margin-top: 25px;
+}
+.mt-f-18{
+    margin-top: -18px;
+}
+
+.padding-left-10 {
+    padding-left: 10px;
+}
+
+.padding-t20 {
+    padding-top: 10px;
+}
+
+.padding-t10 {
+    padding-top: 10px;
+}
+
+.padding-b20 {
+    padding-bottom: 10px;
+}
+
+.btn-bar {
+
+}
+
+.dialog-cont-sm {
+    width: 600px;
+    margin-left: 20px;
+    padding: 10px 0 10px 0;
+}
+
+/*弹窗内容尺寸*/
+.dialog-cont-sm {
+    width: 600px;
+    margin-left: 20px;
+    padding: 10px 0 10px 0;
+}
+
+.dialog-cont-full {
+    width: 100%;
+    padding: 20px;
+    /*padding: 5px 20px 10px 20px;*/
+}
+
+.vertical_t {
+    vertical-align: top;
+}
+
+.align-c {
+    text-align: center;
+}
+
+/*状态*/
+.row.statusBar {
+    padding: 0 10px 5px 10px;
+    border-bottom: 0;
+    overflow: hidden;
+    height: auto;
+    line-height: normal;
+    margin-top: 10px;
+}
+
+.row:before {
+    display: table;
+    content: "";
+}
+
+.row:after {
+    clear: both;
+}
+
+.tableTopbar {
+    padding: 0 10px 5px 10px;
+    border-bottom: 0;
+    overflow: hidden;
+    height: auto;
+    line-height: normal;
+    text-align: left;
+}
+
+.tableTopbar:before {
+    display: table;
+    content: "";
+}
+
+.tableTopbar:after {
+    clear: both;
+}
+.clearfix {
+    clear: both;
+}
+.clear:after {
+    clear: both;
+}
+
+/**/
+.w100 {
+    width: 100%;
+}
+
+.col-x3-1 {
+    width: 33%;
+}
+
+.col-x3-2 {
+    width: 66%;
+}
+
+.col-x2 {
+    width: 50%;
+}
+
+/*公司名称*/
+.form-company-w2 {
+    width: 522px;
+}
+
+.float-l {
+    float: left;
+}
+
+.pull-left {
+    float: left;
+}
+
+.pull-right {
+    float: right;
+}
+
+.position-r {
+    position: relative;
+}
+
+.position-a {
+    position: absolute;
+}
+
+.inline {
+    display: inline;
+}
+
+.inline-flex {
+    display: inline-flex;
+}
+
+.box-part {
+    padding-bottom: 10px;
+
+}
+
+.box-part h4 {
+    font-size: 14px;
+    text-align: left;
+    border-bottom: #dddddd 1px solid;
+    margin: 0 0 10px 0;
+}
+
+.box-part.space-line h4 {
+    border-bottom: #dddddd 1px dashed;
+}
+
+.float-box {
+    overflow: hidden;
+}
+
+.float-row {
+    overflow: hidden;
+    line-height: 34px;
+}
+
+.list-box-info {
+
+}
+.info-list {
+    overflow: hidden;
+}
+.info-list li{
+    line-height: 30px;
+    display: inline-block;
+    text-align: left;
+    float: left;
+}
+.li-w-s li{
+    width: 200px;
+}
+.li-w-m li{
+    width: 300px;
+}
+.info-list li.w-full{
+    width: 100%;
+}
+ul.info-list li.company-item{
+    width: 300px;
+}
+ul.info-list li.phone-item{
+    width: 250px;
+}
+.line-dashed{
+    border-top: 0;
+    border-bottom: 1px #ccc dashed;
+}

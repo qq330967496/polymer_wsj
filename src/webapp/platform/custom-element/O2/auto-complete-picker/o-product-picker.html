@@ -1,0 +1,144 @@
+<!--产品详细信息组件首次查询返回中补充具有id、分类、生产商id、牌号等弥补o-productLine-picker的生产商缺失和产品id缺失问题-->
+<link rel="import" href="o-auto-complete-picker.html"/>
+<dom-module id="o-product-picker">
+    <link rel="import" type="css" href="../../style/css/input-group.css"/>
+    <style>
+        :host {
+            white-space:nowrap;
+        }
+        :host label{
+            float: left;
+            line-height: 34px;
+        }
+    </style>
+    <template>
+        <o-auto-complete-picker id="product-complete" column-info="[[columnInfo]]" display-field="category"
+                                bind-item-value="{{bindItemValue}}"
+                                value-field="id" local-data="[[localData]]"
+                                placeholder="[[label]]"
+                                mode="{{mode}}"
+                                label="[[label]]"
+                                data-url="[[getDataUrl(businessCode)]]"
+                                bind-data="{{bindData}}"
+                                no-label="[[noLabel]]"
+                                width="{{width}}"
+                ></o-auto-complete-picker>
+    </template>
+    <script>
+        Polymer({
+            is: 'o-product-picker',
+            behaviors: [OBaseBehavior],
+            properties: {
+                businessCode:{
+                    type:String,
+                    value:"product"
+                },
+                demo:{ //是否是演示模式
+                    type:Boolean,
+                    value:false
+                },
+                label:{ //组件label
+                    type:String
+                },
+                noLabel:{ //是否显示label
+                    type:Boolean,
+                    value:false
+                },
+                bindData: {
+                    type: String,
+                    notify: true,
+                    observer: '_getEntity'
+                },
+                bindItemValue: {
+                    type: Object,
+                    notify: true
+                },
+                columnInfo: {
+                    type: Array,
+                    value: [
+                        {field: 'category', label: '种类', width: '100'},
+                        {field: 'designation', label: '牌号', width: '100'},
+                        {field: 'manufacturerName', label: '生产商', width: '100'},
+                        {field: 'originCountryName', label: '产地', width: '100'},
+                        {field: 'verified', label: '认证状态', width: '100', align: "left",format : function(value){
+                            if(value.verified == 1){ return '已认证' } else { return '' }
+                        }}
+                    ]
+                },
+                /**
+                 * 模式 常量：'Edit','View'
+                 */
+                mode: {
+                    type: String,
+                    value: 'Edit'
+                },
+                localData: {
+                    type: Array,
+                    value: [{
+                        category: "PPHM",
+                        designation: "AB502N",
+                        manufacturerName: "天津联合",
+                        originCountry: "北京",
+                        id: 398
+                    }, {
+                        category: "PPCP",
+                        designation: "BB502N",
+                        manufacturerName: "福建联合",
+                        originCountry: "北京",
+                        id: 399
+                    }, {
+                        category: "PEC",
+                        designation: "15292081609",
+                        manufacturerName: "福建联合",
+                        originCountry: "上海",
+                        id: 400
+                    }, {
+                        category: "PPA",
+                        designation: "CC502N",
+                        manufacturerName: "抚顺石化",
+                        originCountry: "于水林",
+                        id: 401
+                    }, {
+                        category: "POM",
+                        designation: "EE502N",
+                        manufacturerName: "天津联合",
+                        originCountry: "广东",
+                        id: 402
+                    }]
+                }
+            },
+            _getEntity: function (newBind, oldBind) {
+                var self = this;
+                var url = this.getRoot() + '/crm/crmcustomersnew/findProductInfoById/' + newBind + '.do';
+                if (this.demo) {
+                    console.log("本地查询");
+//                    self.$['customer-complete'].set('keyword','test');
+                } else if (newBind) {
+                    var param = {};
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        data: param,
+                        dataType: "json",
+                        success: function (data) {
+                            console.log(data);
+                            var keyword = data.category + "|" + data.designation + "|" +
+                                    data.manufacturerName + "|" + data.originCountryName;
+                            self.$['product-complete'].set('keyword', keyword);
+                            self.$['product-complete'].set('bindItemValue', data);
+                        },
+                        error: function (messge) {
+                            throw Error("查询失败：" + messge.responseText);
+                        }
+                    });
+                } else {
+                    self.$['product-complete'].set('keyword', null);
+                }
+            },
+            getDataUrl:function(bussCode){
+                return "/sys/memcache/findByKeyword.do?businessCode="+bussCode;
+            }
+
+        })
+    </script>
+</dom-module>

@@ -1,0 +1,34 @@
+<!--资产转让列表-->
+<!--收款-->
+<dom-module id="fund-asset-transfer-receipt">
+    <template>
+        <h2 class="dialog-title"><span class="title-text">资产转让-收款</span></h2>
+
+        <form is="iron-form">
+            <div class="dialog-cont-full">
+                <div class="float-box">
+                    <ul class="col-2 view-list pull-left">
+                        <li>资产编号：<span>KS20163213123</span></li>
+                        <li>资产金额：<span class="t-lightblue">¥ 100,000.00</span> 元</li>
+                        <li>转让方：<span>备用金</span></li>
+                        <li>受让方：<span>铜板街</span></li>
+                    </ul>
+                </div>
+                <div class="form-wrap flex-form-wrap">
+                    <div class="form-row">
+                        <label class="upload-label">收款凭证：</label>
+                        <h-img-upload id="uploadPick" img-height="200" img-width="200" src="{{imageSrc}}"
+                                      img-data={{inputFile}} open-btn editable></h-img-upload>
+
+                    </div>
+                </div>
+            </div>
+            <div class="buttons dialog-btn">
+                <paper-button class="colorful btn btn-primary" on-click="saveOrder">确认</paper-button>
+                <paper-button class="btn btn-warning" dialog-dismiss>取消</paper-button>
+            </div>
+        </form>
+    </template>
+    <script type="text/javascript" src="assets/js/fund-asset-transfer-receipt.js"></script>
+</dom-module>
+

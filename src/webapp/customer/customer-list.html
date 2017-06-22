@@ -1,0 +1,47 @@
+<!--所有客户列表-->
+<dom-module id="customer-list">
+    <style>
+        :host {
+            display: table;
+            width: 100%;
+        }
+    </style>
+    <template>
+        <h-simple-grid class="multi-line-text" paging="{{queryCondition}}" on-select-page="findSimpleCompanies">
+            <h-simple-grid-header>
+                <h-simple-grid-header-cell class="row-cell-orderNumber">客户编号</h-simple-grid-header-cell>
+                <h-simple-grid-header-cell class="row-cell-company white-space-normal">客户名称</h-simple-grid-header-cell>
+                <h-simple-grid-header-cell class="row-cell-default">登录名</h-simple-grid-header-cell>
+                <h-simple-grid-header-cell class="row-cell-default">联系人</h-simple-grid-header-cell>
+                <h-simple-grid-header-cell class="row-cell-default">法人</h-simple-grid-header-cell>
+                <h-simple-grid-header-cell class="row-cell-type">渠道来源</h-simple-grid-header-cell>
+                <h-simple-grid-header-cell class="row-cell-date">信用等级</h-simple-grid-header-cell>
+                <h-simple-grid-header-cell class="row-cell-type">上次登录</h-simple-grid-header-cell>
+                <h-simple-grid-header-cell class="row-cell-date">注册时间</h-simple-grid-header-cell>
+                <h-simple-grid-header-cell class="row-cell-button row-cell-button-min flex-grow-one">操作</h-simple-grid-header-cell>
+            </h-simple-grid-header>
+            <h-simple-grid-body>
+                <template is="dom-repeat" items="[[companyList]]">
+                    <h-simple-grid-row>
+                        <h-simple-grid-row-cell class="row-cell-orderNumber"><span></span></h-simple-grid-row-cell>
+                        <h-simple-grid-row-cell class="row-cell-company white-space-normal">
+                            <a on-click="openTabCompanyDetail" name$="[[item.id]]" company-name="[[item.companyName]]">[[item.companyName]]</a>
+                        </h-simple-grid-row-cell>
+                        <h-simple-grid-row-cell class="row-cell-default"><span>[[item.loginName]]</span></h-simple-grid-row-cell>
+                        <h-simple-grid-row-cell class="row-cell-default"><span>[[item.customerName]]</span></h-simple-grid-row-cell>
+                        <h-simple-grid-row-cell class="row-cell-default"><span></span></h-simple-grid-row-cell>
+                        <h-simple-grid-row-cell class="row-cell-type"><span>快塑网</span></h-simple-grid-row-cell>
+                        <h-simple-grid-row-cell class="row-cell-date"><span></span></h-simple-grid-row-cell>
+                        <h-simple-grid-row-cell class="row-cell-type"><span>[[formatDate(item.lastLoginTime,"yyyy-MM-dd")]]</span></h-simple-grid-row-cell>
+                        <h-simple-grid-row-cell class="row-cell-date"><span>[[formatDate(item.createAtTime,"yyyy-MM-dd")]]</span></h-simple-grid-row-cell>
+                        <h-simple-grid-row-cell is-option class="row-cell-button row-cell-button-min flex-grow-one">
+                            <h-dialog-button label="编辑" class="btn btn-default" is-button
+                                             content-element="customer-edit"></h-dialog-button>
+                        </h-simple-grid-row-cell>
+                    </h-simple-grid-row>
+                </template>
+            </h-simple-grid-body>
+        </h-simple-grid>
+    </template>
+    <script type="text/javascript" src="assets/js/customer-list.js"></script>
+</dom-module>

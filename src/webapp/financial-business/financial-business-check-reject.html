@@ -1,0 +1,23 @@
+<!--审核通过-->
+<dom-module id="financial-business-check-reject">
+    <template>
+        <h2 class="dialog-title"><span class="title-text">驳回</span>
+            <paper-icon-button noink class="icon pull-right" icon="icons:close" dialog-dismiss></paper-icon-button>
+        </h2>
+
+        <form is="iron-form">
+            <div class="dialog-cont-full">
+                <div>驳回原因：</div>
+                <div><textarea class="form-control" class="w100" rows="4" placeholder="请输入驳回原因..."
+                               id="remark"></textarea>
+                </div>
+            </div>
+            <div class="buttons dialog-btn">
+                <paper-button class="colorful btn btn-primary" on-click="_reject">保存</paper-button>
+                <paper-button class="btn btn-warning" dialog-dismiss>取消</paper-button>
+            </div>
+        </form>
+    </template>
+    <script type="text/javascript" src="assets/js/financial-business-check-reject.js"></script>
+</dom-module>
+

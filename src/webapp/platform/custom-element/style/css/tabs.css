@@ -1,0 +1,16 @@
+paper-tabs, paper-toolbar {
+    color: #666;
+    /*border-bottom: 1px solid #dddddd;*/
+    padding-left: 20px;
+}
+
+paper-toolbar paper-tabs {
+    box-shadow: none;
+}
+
+paper-tabs[noink][no-bar].tab-bar paper-tab.iron-selected {
+    /*color: #337ab7;*/
+    font-weight: bold;
+    /*background-color: #ffffff;*/
+    color: #0b5fd1;
+}

@@ -1,0 +1,122 @@
+<!--物流公司组件-->
+<link rel="import" href="o-auto-complete-picker.html"/>
+<dom-module id="o-logistic-picker">
+    <link rel="import" type="css" href="../../style/css/input-group.css"/>
+    <style>
+        :host {
+            white-space:nowrap;
+        }
+        :host label{
+            float: left;
+            line-height: 34px;
+        }
+    </style>
+    <template>
+        <o-auto-complete-picker id="logistics-complete" column-info="[[columnInfo]]" display-field="name"
+                                bind-item-value="{{bindItemValue}}"
+                                value-field="id" local-data="[[localData]]"
+                                placeholder="[[label]]"
+                                mode="{{mode}}"
+                                label="[[label]]"
+                                data-url="[[getDataUrl(businessCode)]]"
+                                bind-data="{{bindData}}"
+                                no-label="[[noLabel]]"
+                                width="{{width}}"
+                ></o-auto-complete-picker>
+    </template>
+    <script>
+        Polymer({
+            is: 'o-logistic-picker',
+            behaviors: [OBaseBehavior],
+            properties: {
+                businessCode:{
+                    type:String,
+                    value:"logistic"
+                },
+                demo:{ //是否是演示模式
+                    type:Boolean,
+                    value:false
+                },
+                label:{ //组件label
+                    type:String
+                },
+                noLabel:{ //是否显示label
+                    type:Boolean,
+                    value:false
+                },
+                bindData: {
+                    type: String,
+                    notify: true,
+                    observer: '_getEntity'
+                },
+                bindItemValue: {
+                    type: Object,
+                    notify: true
+                },
+                columnInfo: {
+                    type: Array,
+                    value: [
+                        {field: 'id', label: 'ID', width: '50'},
+                        {field: 'name', label: '公司名称', width: '200'},
+                        {field: 'weizhiCode', label: '唯智code', width: '50'}
+                    ]
+                },
+                /**
+                 * 模式 常量：'Edit','View'
+                 */
+                mode: {
+                    type: String,
+                    value: 'Edit'
+                },
+                aid: String,           //助攻者
+                localData: {
+                    type: Array,
+                    value: [{
+                        id: "1",
+                        name: "顺丰",
+                        weizhiCode: "1234",
+                    }, {
+                        id: "2",
+                        name: "申通",
+                        weizhiCode: "1234",
+                    }]
+                }
+            },
+            _getEntity: function (newBind, oldBind) {
+                var self = this;
+                var url = this.getRoot() + '/sys/memcache/fetchByPrimaryKey.do?businessCode=logistic&primaryKey=' + newBind;
+                if (this.demo) {
+                    console.log("本地查询");
+//                    self.$['customer-complete'].set('keyword','test');
+                } else if (newBind) {
+                    var param = {};
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        data: param,
+                        dataType: "json",
+                        success: function (data) {
+                            console.log(data);
+                            if(data&& data.length>0){
+                                var keyword = data[0].name;
+                                self.$['logistics-complete'].set('keyword', keyword);
+                                self.$['logistics-complete'].set('bindItemValue', data[0]);
+                            } else {
+                                self.$['logistics-complete'].set('keyword', self.aid);      //助攻者
+                            }
+                        },
+                        error: function (messge) {
+                            throw Error("查询失败：" + messge.responseText);
+                        }
+                    });
+                } else {
+                    self.$['logistics-complete'].set('keyword', null);
+                }
+            },
+            getDataUrl:function(bussCode){
+                return "/sys/memcache/findByKeyword.do?businessCode="+bussCode;
+            }
+
+        })
+    </script>
+</dom-module>

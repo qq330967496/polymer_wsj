@@ -1,0 +1,100 @@
+<link rel="import" href="../h-pagination.html"/>
+<dom-module is="product-category-list1">
+	<style>
+		:host table {
+			border: 1px #c0c0c0 solid;
+			text-align: center;
+			margin-left: auto;
+			margin-right: auto;
+			width: 100%;
+			float: none;
+		}
+		:host table td {
+			border: 1px #c0c0c0 solid;
+			padding: 0px 10px 0px 10px;
+			height: 45px;
+		}
+		:host table th {
+			border: 1px #c0c0c0 solid;
+			padding: 0px 10px 0px 10px;
+			height: 45px;
+		}
+	</style>
+	<template>
+		<div id='product-category-div-2'>
+			<table id="category-table">
+				<thead>
+					<tr>
+						<th>产品品种</th>
+						<th>英文名</th>
+						<th>中文名</th>
+						<th>应用类型</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<template is="dom-repeat" items="{{currentDate}}">
+						<tr>
+							<td>{{item.categoryName}}</td>
+							<td>{{item.categoryEnName}}</td>
+							<td>{{item.categoryCnName}}</td>
+							<td>{{item.categoryApp}}</td>
+							<td>
+								<button>编辑</button>
+							</td>
+						</tr>
+					</template>
+				</tbody>
+			</table>
+		</div>
+		<h-pagination paging="{{paging}}" on-select-page="onSelectPage"></h-pagination>
+	</template>
+	
+</dom-module>
+<script>
+		Polymer({
+			is: "product-category-list1",
+			properties: {
+				currentDate: {
+					type: Array,
+					value: [{
+						index: 0,
+						categoryName: 'PPP',
+						categoryEnName: 'PPP',
+						categoryCnName: '聚乙烯',
+						categoryApp: '薄膜'
+					}, {
+						index: 1,
+						categoryName: 'HHH',
+						categoryEnName: 'HHH',
+						categoryCnName: '聚碳酸酯',
+						categoryApp: '注塑'
+					}, {
+						index: 2,
+						categoryName: 'DDDD',
+						categoryEnName: 'DDDD',
+						categoryCnName: '聚丙烯',
+						categoryApp: '薄膜, 涂覆, 中空, 管材, 注塑'
+					}],
+					notify: true
+				},
+				perationType:{
+					type:String
+				},
+				paging:{
+					type:Object,
+					value:{
+						limit:15,
+						start:0,
+						pageIndex:1,
+						results:300
+					},
+					notify:true
+				}
+			},
+			onSelectPage:function(){
+				console.log(456)
+			}
+			
+		})
+	</script>

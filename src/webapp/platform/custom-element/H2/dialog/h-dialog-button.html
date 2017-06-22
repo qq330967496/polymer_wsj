@@ -1,0 +1,218 @@
+<link rel="import" href="../../o-resource.html"/>
+<dom-module id="h-dialog-button">
+    <style>
+        :host paper-button[raised].colorful {
+            background: var(--paper-button-backgrount, #4285f4);
+            color: var(--paper-button-color, #fff);
+        }
+
+        :host .dialog-container {
+            /*min-height: 475px;*/
+        }
+
+        :host iron-icon {
+            height: 18px;
+            width: 18px;
+        }
+
+    </style>
+    <template>
+        <template is="dom-if" if="[[isButton]]">
+            <paper-button  tabindex="0" raised on-click="_openDialog" >
+                <template is="dom-if" if="{{hasIcon(icon)}}">
+                    <iron-icon icon="[[icon]]"></iron-icon>
+                </template>
+                <span>{{label}}</span>
+            </paper-button>
+        </template>
+        <template is="dom-if" if="[[isA]]">
+            <a href="javascript:void(0)" tabindex="0" raised on-click="_openDialog">
+                <span>{{label}}</span>
+            </a>
+        </template>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'h-dialog-button',
+            behaviors: [OBaseBehavior],
+            properties: {
+                label: String,
+                contentElement: String,
+                entity: {
+                    type: Object,
+                    value: function () {
+                        return {};
+                    }
+                },
+                /**
+                 * 当前窗口的参数
+                 * @attribute dialogParam
+                 * @type{Object}
+                 */
+                dialogParam:{
+                    type: Object,
+                    value: function () {
+                        return {};
+                    }
+                },
+                /**
+                 * 当前窗口的宽度，默认值900px;
+                 * @attribute width
+                 * @type{String}
+                 */
+                width: {
+                    type: String,
+                    value: '900px'
+                },
+                /**
+                 * 当前窗口的高度，默认值自适应（flex）;
+                 * @attribute height
+                 * @type{String}
+                 */
+                height: {
+                    type: String
+                },
+                /**
+                 * 当前窗口的模式 可选值 Edit,Add,View
+                 * @attribute mode
+                 * @type{String}
+                 */
+                mode: {
+                    type: String,
+                    value: 'Edit'
+                },
+                /**
+                 * isTrue显示样式为按钮样式
+                 * @attribute isButton
+                 * @type{Boolean}
+                 */
+                isButton: {
+                    type: Boolean
+                },
+                /**
+                 * isTrue显示样式为链接样式
+                 * @attribute isA
+                 * @type{Boolean}
+                 */
+                isA: {
+                    type: Boolean
+                },
+                /**
+                 * 图标，可选值bower_components/iron-icons/demo/index.html 里面所有的值
+                 * eg: icon = "maps:local-shipping"
+                 * @attribute icon
+                 * @type{String}
+                 */
+                icon:String,
+                /**
+                 * 操作权限，isTrue展示，否则不展示。默认True
+                 * @attribute permission
+                 * @type{String}
+                 */
+                permission:{
+                    type:Boolean,
+                    value:true,
+                    observer:'_permissionChange'
+                }
+            },
+            /**
+             * 移除已经存在的dialog 防止内存泄露
+             */
+            removeOldDialog:function(){
+                var contentElement = document.querySelector(this.contentElement);
+                if(contentElement){
+                    var parentNode = contentElement.parentNode;
+                    while(parentNode && (parentNode.tagName != "PAPER-DIALOG")){
+                        parentNode = parentNode.parentNode;
+                    }
+                    if(parentNode){
+                        parentNode.remove();
+                    }
+                }
+            },
+            /**
+             * 打开一个模态窗口
+             */
+            _openDialog: function () {
+                this.openDialogByConfig({
+                    contentElement: this.contentElement,
+                    dialogParam: this.dialogParam,
+                    mode: this.mode,
+                    width: this.width || '900px',
+                    height: this.height || '475px',
+                    entity: jQuery.extend(true,{}, this.entity)
+                });
+
+//                this.removeOldDialog();
+//                var dialog = document.createElement("paper-dialog");
+//                if (Polymer.dom(this.root).querySelector('paper-dialog')) {
+//                    var temp = Polymer.dom(this.root).querySelector('paper-dialog');
+//                    temp.innerHTML = "";
+//                    Polymer.dom(this.root).removeChild(temp);
+//                }
+//                var container = document.createElement("paper-dialog-scrollable");
+//
+//                var contElement = document.createElement(this.contentElement);
+//
+//                contElement.set("mode", this.mode);
+//
+//                //绑定编辑对象初始值
+//                if (!this.isEmptyObject(this.entity)) {
+//                    contElement.set("entity", this.entity);
+//                }
+//                contElement.set("dialogParam", this.dialogParam);
+//                var hInput = contElement.querySelectorAll("h-form-input");
+//                for (var i = 0; i < hInput.length; i++) {
+//                    var e = hInput.item(i);
+//                    e.mode = (e.mode)?e.mode:this.mode;
+//                }
+//
+//                //添加到容器里面
+//                Polymer.dom(container).appendChild(contElement);
+//                Polymer.dom(dialog).appendChild(container);
+//                Polymer.dom(dialog).classList.add('paper-dialog');
+//                dialog.style.maxWidth = window.screen.width + 'px';
+//                dialog.style.width = this.width || '900px';
+//                dialog.style.padding = '15px';
+//                dialog.style.position = 'fixed';
+//                dialog.style.top = '16px';
+//                dialog.style.minHeight = this.height || '475px';
+////                dialog.style.height = 'auto';
+//                dialog.style.overflow = 'auto';
+//                Polymer.dom(container).classList.add('dialog-container');
+//                dialog.set('withBackdrop', true);
+//                Polymer.dom(dialog).setAttribute('entry-animation', 'scale-up-animation');
+//                Polymer.dom(dialog).setAttribute('exit-animation', 'fade-out-animation');
+//                Polymer.dom(dialog).setAttribute('id', 'animated');
+//                Polymer.dom(this).node.domHost.appendChild(dialog);
+//                Polymer.dom.flush();
+//                dialog.open();
+            },
+//            isEmptyObject: function (obj) {
+//                for (var n in obj) {
+//                    return false
+//                }
+//                return true;
+//            },
+            /**
+             * 是否有图标
+             */
+            hasIcon:function(icon){
+                return icon != undefined || icon != "";
+            },
+            /**
+             * if perm is true , the element has showed .
+             * @param perm display permission
+             * @private
+             */
+            _permissionChange:function(perm){
+                if(perm!=true){
+                    this.style.display='none';
+                }else{
+                    this.style.display='inline-block';
+                }
+            }
+        });
+    </script>
+</dom-module>

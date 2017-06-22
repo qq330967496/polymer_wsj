@@ -1,0 +1,128 @@
+<!--script-->
+<script type="text/javascript" src="../resource/jquery/jquery-1.8.1.js"></script>
+<!--<script type="text/javascript" src="../resource/jquery/jquery.tagsinput.js"></script>-->
+<script type="text/javascript" src="../resource/numeral/numeral.js"></script>
+<script type="text/javascript" src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+
+<!--
+加载常用资源，个别业务才需要的资源不要在这里加载
+-->
+<!--原生资源-->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-form/iron-form.html" />
+<link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html" />
+<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html"/>
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html"/>
+<link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html"/>
+<link rel="import" href="../../bower_components/paper-item/paper-item.html"/>
+<link rel="import" href="../../bower_components/paper-button/paper-button.html" />
+<!--<link rel="import" href="../../bower_components/paper-date-picker/paper-date-picker.html">-->
+<link rel="import" href="../../bower_components/iron-input/iron-input.html" />
+<link rel="import" href="../../bower_components/paper-radio-button/paper-radio-button.html">
+<link rel="import" href="../../bower_components/paper-radio-group/paper-radio-group.html">
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
+<link rel="import" href="../../bower_components/neon-animation/neon-animation-runner-behavior.html">
+<link rel="import" href="../../bower_components/neon-animation/neon-animations.html">
+<link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="../../bower_components/iron-a11y-keys/iron-a11y-keys.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/classes/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<!--无此组件,屏蔽报错-->
+<!--<link rel="import" href="../../bower_components/paper-tabs/paper-scroll-area.html">-->
+<link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu-shared-styles.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-submenu.html">
+<!--icons-->
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/av-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/communication-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/device-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/editor-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/hardware-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/image-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/maps-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/notification-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/social-icons.html">
+
+<!--通用组件义资源-->
+<link rel="import" href="behaviors/common/o-base-behavior.html">
+<link rel="import" href="behaviors/common/o-tip-behavior.html">
+<link rel="import" href="behaviors/common/o-format-behavior.html">
+<link rel="import" href="behaviors/common/o-crud-behavior.html">
+<link rel="import" href="behaviors/common/o-staff-permission-behavior.html">
+
+<link rel="import" href="behaviors/common/o-dialog-behavior.html">
+<link rel="import" href="H2/dialog/h-dialog-button.html">
+<link rel="import" href="H2/dialog/h-dialog.html">
+<link rel="import" href="H2/grid/h-simple-grid.html">
+<link rel="import" href="H2/grid/h-simple-grid-body.html">
+<link rel="import" href="H2/grid/h-simple-grid-header.html">
+<link rel="import" href="H2/grid/h-simple-grid-header-cell.html">
+<link rel="import" href="H2/grid/h-simple-grid-row.html">
+<link rel="import" href="H2/grid/h-simple-grid-row-cell.html">
+<link rel="import" href="H2/grid/h-simple-grid-option-cell.html">
+<link rel="import" href="H2/layout/h-v-box.html">
+<link rel="import" href="H2/layout/h-v-box-cell.html">
+<link rel="import" href="H2/pagination/h-pagination.html">
+<link rel="import" href="H2/form/h-form-checkbox.html">
+<link rel="import" href="H2/form/h-form-textarea.html">
+<link rel="import" href="H2/form/h-form-input.html">
+<link rel="import" href="H2/form/h-form-input2.html">
+<link rel="import" href="H2/form/h-form-radio.html">
+<link rel="import" href="H2/form/h-input-select.html">
+<link rel="import" href="H2/img-upload/h-img-upload.html">
+<link rel="import" href="H2/form/h-form-select.html">
+<link rel="import" href="H2/form/h-form-menu.html">
+<link rel="import" href="H2/animated/h-animated-dropdown.html">
+<!--业务组件资源-->
+<link rel="import" href="O2/auto-complete-picker/o-auto-complete-picker.html">
+<!--客户姓名-->
+<link rel="import" href="O2/auto-complete-picker/o-customer-picker.html">
+<!--产品信息-->
+<link rel="import" href="O2/auto-complete-picker/o-productLine-picker.html">
+<!--产品详细信息-->
+<link rel="import" href="O2/auto-complete-picker/o-product-picker.html">
+<!--员工-->
+<link rel="import" href="O2/auto-complete-picker/o-staff-picker.html">
+<!-- 多项选着业务组件包括：区域,产品线,省份城市-->
+<link rel="import" href="O2/auto-complete-picker/o-business-picker.html">
+<!--省份城市组件-->
+<link rel="import" href="O2/auto-complete-picker/o-address-picker.html">
+<!--公司名称-->
+<link rel="import" href="O2/auto-complete-picker/o-company-picker.html">
+<!--状态筛选-->
+<link rel="import" href="O2/o-status-select/o-status-select.html">
+<!--收展-->
+<link rel="import" href="O2/o-collapse/o-collapse.html">
+<!--生产商组件-->
+<link rel="import" href="O2/auto-complete-picker/o-manufacturer-picker.html"/>
+<!--产品分类-->
+<link rel="import" href="O2/auto-complete-picker/o-category-picker.html">
+<!--产品牌号分类组件-->
+<link rel="import" href="O2/auto-complete-picker/o-designation-picker.html"/>
+<!--仓库组件-->
+<link rel="import" href="O2/auto-complete-picker/o-warehouse-picker.html"/>
+<!--订单组件-->
+<link rel="import" href="O2/auto-complete-picker/o-order-picker.html"/>
+<!--采购合同组件-->
+<link rel="import" href="O2/auto-complete-picker/o-purchaseContract-picker.html"/>
+<!--采购子单组件-->
+<link rel="import" href="O2/auto-complete-picker/o-purchaseitem-picker.html"/>
+<!--公司银行组件-->
+<link rel="import" href="O2/auto-complete-picker/o-company-bank-picker.html"/>
+<!--物流公司组件-->
+<link rel="import" href="O2/auto-complete-picker/o-logistic-picker.html"/>
+<!--司机组件 -->
+<link rel="import" href="O2/auto-complete-picker/o-driver-picker.html"/>
+<!--编辑窗口页眉-->
+<link rel="import" href="O2/o-edit-header/o-edit-header.html"/><!-- 关联供应商组件 -->
+<link rel="import" href="O2/auto-complete-picker/o-company-select-picker.html">
+<!--单个省份或城市组件-->
+<link rel="import" href="O2/auto-complete-picker/o-singleaddress-picker.html"/>
+<!--动态行增加、删除、编辑每个框、保存等页面demo展示-->
+<!--<link rel="import" href="H2/grid/h-list-grid.html">-->
+

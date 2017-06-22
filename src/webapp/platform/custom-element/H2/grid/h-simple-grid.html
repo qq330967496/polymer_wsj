@@ -1,0 +1,44 @@
+<link rel="import" href="../../o-resource.html" />
+<dom-module id="h-simple-grid">
+	<link rel="import" type="css" href="h-simple-grid.css"/>
+	<template>
+		<div class="simple-grid">
+			<content></content>
+			<template is="dom-if" if="{{isShowPaging(noPaging)}}">
+				<div class="simple-grid-footer">
+					<h-pagination paging="{{paging}}"></h-pagination>
+				</div>
+			</template>
+
+		</div>
+	</template>
+	<script>
+		Polymer({
+			is:"h-simple-grid",
+			properties:{
+				paging:{
+					type:Object,
+					value: function(){
+                        return {
+                            limit:15,
+                            start:0,
+                            pageIndex:1,
+                            results:0
+                        }
+                    },
+					notify:true,
+					reflectToAttribute:true
+				},
+				noPaging:{
+					type:Boolean,
+					notify:true,
+					value:false
+				}
+			},
+			isShowPaging:function(noPaging){
+				return !noPaging;
+			}
+
+		})
+	</script>
+</dom-module>

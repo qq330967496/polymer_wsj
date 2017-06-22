@@ -1,0 +1,140 @@
+<!--采购合同组件-->
+<link rel="import" href="o-auto-complete-picker.html"/>
+<dom-module id="o-purchaseContract-picker">
+    <style>
+        :host {
+            white-space: nowrap;
+        }
+
+        :host label {
+            float: left;
+            line-height: 34px;
+        }
+    </style>
+    <template>
+        <o-auto-complete-picker id="purchaserContract-complete" column-info="[[columnInfo]]"
+                                display-field="purchaseContractNo"
+                                value-field="purchaseContractNo" local-data="[[localData]]" demo="{{demo}}"
+                                placeholder="[[label]]"
+                                mode="{{mode}}"
+                                label="[[label]]"
+                                no-label="[[noLabel]]"
+                                data-url="[[_getQueryUrl()]]"
+                                bind-item-value="{{bindItemValue}}"
+                                bind-data="{{bindData}}"></o-auto-complete-picker>
+    </template>
+    <script>
+        Polymer({
+            is: 'o-purchaseContract-picker',
+            behaviors: [OBaseBehavior],
+            properties: {
+                demo: {
+                    type: Boolean,
+                    value: false
+                },
+                label: {
+                    type: String
+                },
+                noLabel: { //是否显示label
+                    type: Boolean,
+                    value: false
+                },
+                bindData: {
+                    type: String,
+                    notify: true,
+                    observer: '_getPOrderEntity'
+                },
+                bindItemValue: {
+                    type: Object,
+                    notify: true
+                },
+                columnInfo: {
+                    type: Array,
+                    value: [{field: 'purchaseContractNo', label: '合同编号', width: '100'},
+                        {field: 'supplierCompanyName', label: '供应商公司名称', width: '100'},
+                        {field: 'totalAmount', label: '采购总金额', width: '80'}
+                    ]
+                },
+                /**
+                 * 模式 常量：'Edit','View'
+                 */
+                mode: {
+                    type: String,
+                    value: 'Edit'
+                },
+                localData: {
+                    type: Array,
+                    value: [{
+                        totalAmount: 9999,
+                        id: 24764,
+                        purchaseContractNo: "K2015101506698",
+                        supplierCompanyName: "宁波市元弘贸易有限公司 "
+                    },
+                        {
+                            totalAmount: 8888,
+                            id: 24763,
+                            purchaseContractNo: "K2015101506699",
+                            supplierCompanyName: "上海精发实业有限公司 "
+                        },
+                        {
+                            totalAmount: 6666,
+                            id: 24762,
+                            purchaseContractNo: "K2015101506700",
+                            supplierCompanyName: "东莞市厚街留东包装制品加工店 "
+
+                        },
+                        {
+                            totalAmount: 1200,
+                            id: 24735,
+                            purchaseContractNo: "K2015072306591",
+                            supplierCompanyName: "上海精发实业有限公司 "
+                        },
+                        {
+                            totalAmount: 1100,
+                            id: 24734,
+                            purchaseContractNo: "K2015072306592",
+                            supplierCompanyName: "上海立道国际贸易有限公司 "
+                        }]
+                }
+            },
+            _getQueryUrl: function () {
+                return '/sys/memcache/findByKeyword.do?businessCode=purchaseOrder'
+            },
+            /**
+             * 根据id查询员工
+             * @param newBind
+             * @param oldBind
+             * @private
+             */
+            _getPOrderEntity: function (newBind, oldBind) {
+                var self = this;
+                var url = this.getRoot() + '/sys/memcache/findByKeyword.do?businessCode=purchaseOrder&keyword=' + newBind;
+                if (this.demo) {
+                    console.log("demo:", newBind);
+                } else if (newBind) {
+                    console.log(newBind);
+                    var param = {};
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        data: param,
+                        dataType: "json",
+                        success: function (data) {
+                            if (!!data && data.length > 0) {
+                                self.$['purchaserContract-complete'].set('keyword', data[0].purchaseContractNo);
+                                self.$['purchaserContract-complete'].set('bindItemValue', data[0]);
+                            }
+                        },
+                        error: function (messge) {
+                            alert("查询失败：" + messge.responseText);
+                        }
+                    });
+                } else {
+                    console.log("newBind is null ");
+                    self.$['purchaserContract-complete'].set('keyword', null);
+                }
+            }
+
+        })
+    </script>
+</dom-module>

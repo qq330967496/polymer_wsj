@@ -1,0 +1,107 @@
+<link rel="import" href="../../../o-resource.html" />
+<dom-module id='edit-product-category'>
+	<style>
+		:host {
+			display: block;
+			/*height: 1000px;*/
+		}
+		:host paper-button{
+			background-color: var(--google-grey-300);
+			}
+		:host paper-button:hover {
+			background-color: var(--paper-light-blue-200);
+	    }
+		input{
+
+		}
+	</style>
+	<template>
+		<!-- <category-edit-form></category-edit-form> <-->
+		<h2>新增产品分类</h2>
+		<div class="form-group-horizontal">
+			<h-form-input class="form-group" label="品种" input-value="PE"></h-form-input>
+			<h-form-input class="form-group" label="英文名" input-value="PE"></h-form-input>
+			<h-form-input class="form-group" label="中文名"  input-value="塑料"></h-form-input>
+			<h-form-input class="form-group" label="应用类型"  input-value="原料"></h-form-input>
+		</div>
+
+		
+		<div class="buttons">
+	        <template is="dom-if" if="[[actionList.0.show]]">
+				<paper-button on-click="add"><iron-icon icon="add"></iron-icon>添加</paper-button>
+			</template>
+			<template is="dom-if" if="{{actionList.1.show}}">
+				<paper-button on-click="edit"><iron-icon icon="edit"></iron-icon>修改</paper-button>
+			</template>
+			<paper-button dialog-dismiss><iron-icon icon="cancel"></iron-icon>取消</paper-button>
+			<h-dialog-button label="测试" is-button mode="Edit" content-element="edit-product-category"></h-dialog-button>
+      </div>
+		
+		
+	</template>
+	<script>
+		Polymer({
+			is:'edit-product-category',
+			properties:{
+				editEntity:{	//
+					type:Object
+				},
+				operationType:{
+					type:String
+				},
+				actionList:{
+					type: Array,
+					value:[{
+						name:'add',
+						show:true,
+						callFunction:'add'
+					},{
+						name:'edit',
+						show:true,
+						callFunction:'edit'
+					},{
+						name:'cancel',
+						show:true,
+						callFunction:'cancel'
+					}]
+				}
+			},
+			//编辑方法
+			edit:function(event, detail, sender){
+				//do something update datebase
+				console.log("edit celled");
+				var evt = document.createEvent('Event'); 
+				evt.initEvent('dialog-edit',true,true); 
+				var elem = event.target;
+				elem.dispatchEvent(evt); 
+			},
+			//添加方法
+			add:function(event, detail, sender){
+				/*
+				 *
+				 * ajax 存储数据->success(){
+				 * 	isChange=true;
+				 * }
+				 * 
+				 * */
+				console.log("add celled");
+				var evt = document.createEvent('Event'); 
+				evt.initEvent('dialog-add',true,true); 
+				var elem = event.target;
+				elem.dispatchEvent(evt); 
+
+			},
+			//关闭窗口
+			cancel:function(){
+				var dialog = document.getElementById('animated');
+				if (dialog) {
+					dialog.close();
+				}
+			},
+			arrayItem: function(change, index, path) {
+		        return this.get(path, change.base[index]);
+      		}
+		})
+	</script>
+
+</dom-module>

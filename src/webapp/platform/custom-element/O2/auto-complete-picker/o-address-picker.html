@@ -1,0 +1,382 @@
+<!-- 地区城市关联组件-->
+<link rel="import" href="../../o-resource.html"/>
+<dom-module id="o-address-picker">
+    <style>
+        :host {
+            /*测试版本号*/
+            /*组件自动换行*/
+            white-space: normal;
+            /*重新定义组件内容排版，因父层定义会影响组件子项排版*/
+            text-align: left;
+            display: inline;
+            width: 100%;
+            word-break: break-all;
+        }
+    </style>
+    <template>
+        <h-input-select class="province" label="省" select-items="[[provincesItems]]"
+                        selected-list="{{selectedProvince}}"
+                        selected-data="{{province}}"></h-input-select>
+        <template is="dom-if" if="{{_hasShow(level,2)}}">
+            <h-input-select class="city" label="市" select-items="[[cityItems]]" selected-list="{{selectedCity}}"
+                            selected-data="{{city}}"></h-input-select>
+        </template>
+        <template is="dom-if" if="{{_hasShow(level,3)}}">
+            <h-input-select class="zone" label="县/区" select-items="[[zoneItems]]" selected-list="{{selectedZone}}"
+                            selected-data="{{zone}}"></h-input-select>
+        </template>
+        <template is="dom-if" if="{{_hasShow(level,4)}}">
+            <h-input-select class="street" label="镇/街道" select-items="[[streetItems]]"
+                            selected-list="{{selectedStreet}}"
+                            selected-data="{{street}}"></h-input-select>
+        </template>
+    </template>
+    <script>
+        Polymer({
+            is: 'o-address-picker',
+            behaviors: [OCrudBehavior],
+            properties: {
+                /**
+                 * 是否是演示模式
+                 */
+                demo: Boolean,
+                province: {
+                    type: String,
+                    notify: true
+                },
+                /**
+                 * 下拉省份列表
+                 */
+                selectedProvince: {
+                    type: Array,
+                    value: function () {
+                        return []
+                    }
+                },
+                city: {
+                    type: String,
+                    notify: true
+                },
+                /**
+                 * 下拉城市列表
+                 * */
+                selectedCity: {
+                    type: Array,
+                    value: function () {
+                        return []
+                    },
+                    notify: true
+                },
+                zone: {
+                    type: String,
+                    notify: true
+                },
+                /**
+                 * 下拉区域列表
+                 * */
+                selectedZone: {
+                    type: Array,
+                    value: function () {
+                        return []
+                    },
+                    notify: true
+                },
+                street: {
+                    type: String,
+                    notify: true
+                },
+                /**
+                 * 选下拉街道列表
+                 * */
+                selectedStreet: {
+                    type: Array,
+                    value: function () {
+                        return []
+                    },
+                    notify: true
+                },
+                /**
+                 *地区编号
+                 **/
+                areaCode: {
+                    type: String,
+                    value: function () {
+                        return null;
+                    },
+                    notify: true
+                },
+                /**
+                 * 下拉项省份
+                 */
+                provincesItems: {
+                    type: Array,
+                    value: function () {
+                        return []
+                    }
+                },
+                /**
+                 * 下拉项城市
+                 */
+                cityItems: {
+                    type: Array,
+                    notify: true,
+                    value: function () {
+                        return []
+                    }
+                },
+                /**
+                 * 选中的城市
+                 */
+                selectedCityItems: {
+                    type: Array,
+                    notify: true,
+                    value: function () {
+                        return []
+                    }
+                },
+                /**
+                 * 本地数据省份
+                 */
+                localProvincesItems: {
+                    type: Array,
+                    value: [{
+                        label: '广东',
+                        value: '44'
+                    }, {
+                        label: '福建',
+                        value: '35'
+                    }, {
+                        label: '湖南',
+                        value: '43'
+                    }],
+                    readonly: true
+                },
+                /**
+                 * 本地数据城市
+                 */
+                localCityItems: {
+                    type: Array,
+                    value: [{
+                        label: '广州',
+                        value: '4401'
+                    }, {
+                        label: '佛山',
+                        value: '4406'
+                    }, {
+                        label: '深圳',
+                        value: '4403'
+                    }],
+                    readonly: true
+                },
+                /**
+                 * 本地数据 区
+                 */
+                localZoneItems: {
+                    type: Array,
+                    value: [{
+                        label: '白云区',
+                        value: '440111'
+                    }, {
+                        label: '海珠区',
+                        value: '440105'
+                    }, {
+                        label: '天河区',
+                        value: '440106'
+                    }],
+                    readonly: true
+                },
+                /**
+                 * 本地数据 街道
+                 */
+                localStreetItems: {
+                    type: Array,
+                    value: [{
+                        label: '猎德街道',
+                        value: '440106013'
+                    }, {
+                        label: '元岗街道',
+                        value: '440106015'
+                    }, {
+                        label: '五山街道',
+                        value: '440106001'
+                    }],
+                    readonly: true
+                },
+                level: {//级联数,2：二级地址(省、市)，4：四级地址（省、市、区、街道）
+                    type: Number,
+                    value: function () {
+                        return 4;
+                    }
+                },
+                counter: {
+                    type: Object,
+                    value: function () {
+                        var counter = 1;
+                        return {
+                            getCounter: function () {
+                                return counter++;
+                            }
+                        }
+                    }
+                }
+
+            },
+            observers: [
+                '_provinceChange(province)', '_cityChange(city)', '_zoneChange(zone)', '_streetChange(street)'
+            ],
+
+            _provinceChange: function (province) {
+                if (!province) {
+                    return;
+                }
+                this.set('city', null);
+                this.set("cityItems", []);
+                this.set('zone', null);
+                this.set("zoneItems", []);
+                this.set('street', null);
+                this.set("streetItems", []);
+                this.getAreaItems(province, 2);
+                if (province && (!this.areaCode || province != this.areaCode.substring(0, 2))) {
+                    this.set('areaCode', province);
+                }
+            },
+            _cityChange: function (city) {
+                if (!city) {
+                    return;
+                }
+                this.set('zone', null);
+                this.set("zoneItems", []);
+                this.set('street', null);
+                this.set("streetItems", []);
+                this.getAreaItems(city, 3);
+                if (city && (!this.areaCode || city != this.areaCode.substring(0, 4))) {
+                    this.set('areaCode', city);
+                }
+            },
+            _zoneChange: function (zone) {
+                if (!zone) {
+                    return;
+                }
+                this.set('street', null);
+                this.set("streetItems", []);
+                this.getAreaItems(zone, 4);
+                if (zone && (!this.areaCode || zone != this.areaCode.substring(0, 6))) {
+                    this.set('areaCode', zone);
+                }
+            },
+            _streetChange: function (street) {
+                if (!street) {
+                    return;
+                }
+
+                if (street && (!this.areaCode || street != this.areaCode.substring(0, 9))) {
+                    this.set('areaCode', street);
+                }
+                this.getAreaItems(street, 5);//获取街道详情
+            },
+            /**
+             * 根据父区域编号查询区域列表
+             * @param parentCode 父区域编号
+             * @level 查询区域级别 1：省份，2：市级，3：县级(区)，4：街道
+             * */
+            getAreaItems: function (parentCode, level) {
+                if (!parentCode && parentCode !== "0") {
+                    return;
+                }
+                var self = this;
+                if (this.demo) {
+                    if (level == 1) {
+                        self.set("provincesItems", this.localProvincesItems);
+                    } else if (level == 2) {
+                        self.set("cityItems", this.localCityItems);
+                    } else if (level == 3) {
+                        self.set("zoneItems", this.localZoneItems);
+                    } else if (level == 4) {
+                        self.set("streetItems", this.localStreetItems);
+                    }
+                    return;
+                }
+                var areaUrl = "/pdm/cities/findAreasByParentCode/" + parentCode + ".do";
+                $.ajax({
+                    type: "GET",
+                    url: self.getRoot() + areaUrl,
+                    data: {},
+                    dataType: "json",
+                    success: function (data) {
+
+                        if (!data) {
+                            return;
+                        }
+
+                        if (level == 5) {//更新街道详情
+                            var temp = self.get('selectedStreet');
+                            self.set("selectedStreet", []);
+                            temp[0]['fullName'] = data['fullName'];
+                            self.set("selectedStreet", temp);
+                            return;
+                        }
+                        if (!data.childrenJson || data.childrenJson.length <= 2) {
+                            return;
+                        }
+                        var areas = JSON.parse(data.childrenJson);
+                        switch (level) {
+                            case 1://省
+                                var temp = areas.map(function (e) {
+                                    return {label: e.name, value: e.code};
+                                });
+                                self.set("provincesItems", temp);
+                                if (self.areaCode && self.areaCode.length >= 2) {
+                                    self.set('province', self.areaCode.substring(0, 2));
+                                }
+                                break;
+                            case 2://市
+                                var temp = areas.map(function (e) {
+                                    return {label: e.name, value: e.code};
+                                });
+                                self.set("cityItems", temp);
+                                if (self.areaCode && self.areaCode.length >= 4) {
+                                    self.set('city', self.areaCode.substring(0, 4));
+                                }
+                                break;
+                            case 3://区
+                                var temp = areas.map(function (e) {
+                                    return {label: e.name, value: e.code};
+                                });
+                                self.set("zoneItems", temp);
+                                if (self.areaCode && self.areaCode.length >= 6) {
+                                    self.set('zone', self.areaCode.substring(0, 6));
+                                }
+                                break;
+                            case 4://街道
+                                var temp = areas.map(function (e) {
+                                    return {label: e.name, value: e.code};
+                                });
+                                self.set("streetItems", temp);
+                                if (self.areaCode && self.areaCode.length >= 9) {
+                                    self.set('street', self.areaCode.substring(0, 9));
+                                }
+                                break;
+                        }
+
+
+                    },
+                    error: function (messge) {
+                        throw Error("查询失败：" + messge.responseText);
+                    }
+                });
+            },
+            /**
+             * 需要展示的层级判断
+             * @param level
+             * @private
+             */
+            _hasShow: function (level, index) {
+                return level >= index;
+            },
+            ready: function () {
+                this.getAreaItems("0", 1)
+            }
+        })
+    </script>
+
+</dom-module>

@@ -1,0 +1,224 @@
+<!--客户组件-->
+<link rel="import" href="o-auto-complete-picker.html"/>
+<dom-module id="o-customer-picker">
+    <link rel="import" type="css" href="../../style/css/input-group.css"/>
+    <style>
+        :host {
+            white-space: nowrap;
+            float: left;
+        }
+
+        :host label {
+            float: left;
+            line-height: 34px;
+        }
+    </style>
+    <template>
+        <o-auto-complete-picker id="customer-complete" column-info="[[_getColumnInfo(customerType)]]"
+                                display-field="{{displayField}}"
+                                bind-item-value="{{bindItemValue}}"
+                                placeholder="[[label]]"
+                                mode="{{mode}}"
+                                label="[[label]]"
+                                no-label="[[noLabel]]"
+                                value-field="id" local-data="[[localData]]" demo="{{demo}}"
+                                data-url="[[_computeDataUrl(customerType, queryType)]]"
+                                bind-data="{{bindData}}"></o-auto-complete-picker>
+    </template>
+    <script>
+        Polymer({
+            is: 'o-customer-picker',
+            behaviors: [OBaseBehavior,OTipBehavior],
+            properties: {
+                demo:{ //是否是演示模式
+                    type:Boolean,
+                    value:false
+                },
+                label:{ //组件label
+                    type:String
+                },
+                noLabel:{ //是否显示label
+                    type:Boolean,
+                    value:false
+                },
+                displayField:{
+                    type: String,
+                    value:'name',
+                    notify: true
+                },
+                bindData: {
+                    type: String,
+                    notify: true,
+                    observer: '_getEntity'
+                },
+                bindItemValue: {
+                    type: Object,
+                    notify: true
+                },
+
+                queryType: {//查询类型 0：全部 1：查询自己的客户和内部客户 2：查询客户新增需求的客户 3:查询已被领用的客户, 4:queryAllCustomer
+                    type: Number,
+                    value: 0,
+                    notify: true
+                },
+                customerType: {//客户类型 1：买家 2：卖家
+                    type: Number,
+                    value: 1,
+                    notify: true
+                },
+                /**
+                 * 模式 常量：'Edit','View'
+                 */
+                mode: {
+                    type: String,
+                    value: 'Edit'
+                },
+                localData: {
+                    type: Array,
+                    value: [{
+                        name: "诸吉峰",
+                        phone: "15292081609",
+                        companyName: "宁波范斯高进出口有限公司",
+                        salesOperatorNames: "于水林",
+                        companyId: 137,
+                        id: 237
+                    }, {
+                        name: "劳凯",
+                        phone: "15142818592",
+                        companyName: "宁波市元弘贸易有限公司",
+                        salesOperatorNames: "陈立巍",
+                        companyId: 138,
+                        id: 238
+                    }, {
+                        name: "张颖",
+                        phone: "13742715650",
+                        companyName: "浙江物产化工集团宁波有限公司",
+                        salesOperatorNames: "程凯",
+                        companyId: 139,
+                        id: 239
+                    }, {
+                        name: "林庆波",
+                        phone: "15547570686",
+                        companyName: "浙江华布岛进出口有限公司",
+                        salesOperatorNames: "张威",
+                        companyId: 140,
+                        id: 240
+                    }, {
+                        name: "沈建波",
+                        phone: "18677405656",
+                        companyName: "远大石化有限公司",
+                        salesOperatorNames: "张三",
+                        companyId: 141,
+                        id: 241
+                    }, {
+                        name: "张全蛋",
+                        phone: "15513456204",
+                        companyName: "浙江凯勒聚合材料科技有限公司",
+                        salesOperatorNames: "诸葛励志",
+                        companyId: 142,
+                        id: 242
+                    }, {
+                        name: "唐马儒",
+                        phone: "13573736602",
+                        companyName: "宁波范斯高进出口有限公司",
+                        salesOperatorNames: "欧阳武陵",
+                        companyId: 143,
+                        id: 243
+                    }, {
+                        name: "紊流",
+                        phone: "13573736602",
+                        companyName: "宁波范斯高进出口有限公司",
+                        salesOperatorNames: "欧阳武陵",
+                        companyId: 143,
+                        id: 243
+                    }]
+                }
+            },
+            _getEntity: function (newBind, oldBind) {
+                var self = this;
+
+                if(newBind && newBind <= 0) return  //无客户公司下的客户id为负数
+
+                var url = this.getRoot() + '/crm/crmcustomers/buyers/' + newBind + '.do';
+                if (this.demo) {
+//                    self.$['customer-complete'].set('keyword','test');
+                } else if (newBind) {
+                    var param = {};
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        data: param,
+                        dataType: "json",
+                        success: function (data) {
+                            if(data){
+                                self.$['customer-complete'].set('keyword', data[self.displayField]);
+                                self.$['customer-complete'].set('bindItemValue', data);
+                            }else{
+                                console.log("没有客户的公司")
+                            }
+                        },
+                        error: function (messge) {
+                            throw Error("查询失败：" + messge.responseText);
+                        }
+                    });
+                } else {
+                    self.$['customer-complete'].set('keyword', null);
+                }
+            },
+            _computeDataUrl: function (customerType, queryType) {
+                if (!customerType || customerType == 1) {//买家（全部客户）
+                    if (!queryType) {
+                        return "/crm/crmcustomers/findBuyersByKeyword.do?virtualized=2";
+                    } else if (queryType == 1) {
+                        return "/crm/crmcustomers/findBuyersByKeyword.do?allocatedStaffId=1&virtualized=2";
+                    } else if (queryType == 2) {
+                        return "/crm/crmcustomers/findBuyersByKeyword.do?allocatedStaffId=1&queryPermissions=ROLE_UC_ADD_ANY_REQUIREMENTS&virtualized=2";
+                    } else if (queryType == 4){ //查询所有的有客户的公司和无客户的公司，目前只有修改交易公司抬头用到
+                        return "/crm/crmcustomers/findBuyersByKeyword.do?queryAllCustomer=true";
+                    }
+                } else if (customerType == 2) {//卖家
+                    if (queryType == 3) {
+                        return "/crm/crmcustomers/findSellersByKeyword.do?hasAllocated=1&virtualized=2";
+                    } else {//查询有采购员的卖家
+                        return "/crm/crmcustomers/findSellersByKeyword.do?virtualized=2";
+                    }
+                }
+                return "/crm/crmcustomers/findBuyersByKeyword.do";
+            },
+            //组件列属性
+            _getColumnInfo: function (customerType) {
+                if (customerType == 2) {//卖家
+                    return [{field: 'name', label: '客户姓名', width: '80'},
+                        {field: 'phone', label: '客户联系方式', width: '100'},
+                        {field: 'companyName', label: '客户公司名称', width: '100'},
+                        {
+                            field: 'transOperatorNames', label: '采购员', width: '100',
+                            format: function (item) {
+                                if (item.virtualized == 1) {//内部客户
+                                    return "内部客户";
+                                }
+                                return item['transOperatorNames'];
+                            }
+                        }
+                    ]
+
+                }
+                return [
+                    {field: 'name', label: '客户姓名', width: '80'},
+                    {field: 'phone', label: '客户联系方式', width: '100'},
+                    {field: 'companyName', label: '客户公司名称', width: '100'},
+                    {
+                        field: 'salesOperatorNames', label: '交易员', width: '100',
+                        format: function (item) {
+                            if (item.virtualized == 1) {//内部客户
+                                return "内部客户";
+                            }
+                            return item.salesOperatorNames;
+                        }
+                    }
+                ]
+
+            }
+        })
+    </script>
+</dom-module>

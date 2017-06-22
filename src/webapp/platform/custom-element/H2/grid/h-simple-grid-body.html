@@ -1,0 +1,32 @@
+<link rel="import" href="../../o-resource.html" />
+<dom-module id="h-simple-grid-body">
+	<link rel="import" type="css" href="h-simple-grid.css"/>
+	<style>
+		:host ::content h-simple-grid-row .row:hover{
+			background-color: #CAF1FF;
+		}
+		/*定义偶数行背景*/
+		:host ::content h-simple-grid-row:nth-child(even){
+			background: #efefef;
+		}
+		:host ::content h-simple-grid-row h-simple-grid-body h-simple-grid-row:nth-child(even){
+			background: #f9f9f9;
+		}
+		:host ::content h-simple-grid-row:nth-child(even) .row:hover{
+			background: #CAF1FF;
+		}
+		:host .body{
+			border-top:1px solid #dddddd;
+		}
+	</style>
+	<template>
+		<div class="body ellipsis" style="overflow: visible;">
+			<content></content>
+		</div>
+	</template>
+	<script>
+		Polymer({
+			is:"h-simple-grid-body"
+		})
+	</script>
+</dom-module>

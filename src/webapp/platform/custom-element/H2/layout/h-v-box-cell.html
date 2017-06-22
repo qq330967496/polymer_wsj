@@ -1,0 +1,34 @@
+<link rel="import" href="../../o-resource.html" />
+<dom-module id='h-v-box-cell'>
+	<style>
+		:host {
+			background: red;
+		}
+	</style>
+	<template>
+		<div>
+			<content></content>
+		</div>
+	</template>
+	<script>
+		Polymer({
+			is: 'h-v-box-cell',
+			properties:{
+			},
+			ready: function() {
+				this._resize();
+			},
+			_resize: function() {
+				
+			},
+			getWinHeight: function() {
+				var de = document.documentElement;
+				return this.innerHeight || (de && de.clientHeight) || document.body.clientHeight;
+			},
+			getWinWidth: function() {
+				var de = document.documentElement;
+				return self.innerWidth || (de && de.clientWidth) || document.body.clientWidth;
+			}
+		})
+	</script>
+</dom-module>

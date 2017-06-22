@@ -1,0 +1,195 @@
+<!--
+@author Jarek.li
+BaseBehavior提供了构建组件的最基本属性和样式
+-->
+<script>
+    /**
+     * `Polymer.OFormatBehavior`
+     *
+     * @demo demo/format-behavior-index.html
+     * @polymerBehavior Polymer.OFormatBehavior
+     */
+    OFormatBehavior = {
+        properties: {
+            format:{
+                type:String
+            },
+            formatValue:{
+                type:String
+            }
+        },
+//        observers: [
+//            '_formatByPattern(format,bindData)'
+//        ],
+        _formatByPattern:function(format,bindData){
+//        	console.log("this.bindData1",this.bindData,'this.format',this.format);
+			var format = this.format;
+            var formatValue = '';
+            var value = bindData;
+            var fp = format.split('|');
+            var type = fp[0].trim();
+            var pattern = (fp[1]||'').trim();
+            if(type=='date'){
+                pattern= pattern||'yyyy-MM-dd';
+                return formatValue = this.formatDate(value,pattern);
+            }else if(type=="number"){
+                pattern=pattern||'0,0.00';
+                return formatValue = numeral(value).format(pattern);
+            }else if(type=='currency'){
+                pattern=(pattern||'$');
+                return formatValue=pattern+numeral(value).format('0,0.00');
+            }
+            this.set('bindData',formatValue);
+//            console.log("this.bindData2",this.bindData);
+        },
+        /**
+         * 格式化日期
+         * @param date 时间戳（毫秒）
+         * @param fmt 显示格式，默认为'yyyy-MM-dd HH:mm:ss'
+         * @param emptyReturn 默认空值返回数据
+         */
+        formatDate:function(date,fmt,emptyReturn){
+            if(!date && emptyReturn){
+                return emptyReturn;
+            }
+            date = date || new Date().getTime();
+            fmt=fmt||'yyyy-MM-dd HH:mm:ss';
+            date = new Date(Number(date));
+            var  o  =   {
+                "M+" :  date.getMonth()  +  1, // 月份   
+                "d+" :  date.getDate(), // 日  
+                "H+" :  date.getHours(), // 小时   
+                "m+" :  date.getMinutes(), // 分   
+                "s+" :  date.getSeconds(), // 秒    
+                "q+" :  Math.floor((date.getMonth()  +  3)  /  3), // 季度   
+                "S" :  date.getMilliseconds()   // 毫秒   
+            };
+            if  (/(y+)/.test(fmt))  {
+                fmt  =  fmt.replace(RegExp.$1,   (date.getFullYear()  +  "")     .substr(4  -  RegExp.$1.length));
+            }
+            for  ( var  k  in  o)
+                if  (new  RegExp("("  +  k  +  ")").test(fmt))  {
+                    fmt  =  fmt.replace(RegExp.$1,   (RegExp.$1.length  ==  1)  ?  (o[k])       :  (("00"  +  o[k]).substr((""  +  o[k]).length)));
+                }
+            return  fmt;
+        },
+        /**
+         * 格式化数字
+         */
+        formatNum:function(num,label,fmt){
+        	fmt=fmt||'0,0.00';
+        	label=label||'';
+            return numeral(num).format(fmt)+label;
+        },
+        /**
+         * 格式化货币，默认人民币
+         */
+        formatCurrency:function(currency,fmt){
+            fmt = (fmt=='CNY')?'¥':(fmt=='USD')?'$':fmt?fmt:'¥';
+            return fmt+numeral(currency).format('0,0.00');
+        },
+        /**
+         * 将对象转换为字符串
+         * @param num
+         * @returns {*}
+         */
+        formatNumToStr:function(obj){
+            return obj?obj.toString():"";
+        },
+        /**
+         * @param num,unit
+         * 格式化添加单位，如吨，克，元
+         */
+        formatUnit:function(newVal,unit){
+
+            return newVal+unit;
+        },
+        /**
+         *人民币转换
+         * @param money 数字人名币
+         * @return 大写中文人民币
+         */
+
+        /**
+         * 转换人民币,返回大写金额
+         * @param money 阿拉伯金额
+         * @returns {string}
+         */
+        intToChinese: function (money) {
+            var cnNums = new Array("零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"); //汉字的数字
+            var cnIntRadice = new Array("", "拾", "佰", "仟"); //基本单位
+            var cnIntUnits = new Array("", "万", "亿", "兆"); //对应整数部分扩展单位
+            var cnDecUnits = new Array("角", "分", "毫", "厘"); //对应小数部分单位
+            var cnInteger = "整"; //整数金额时后面跟的字符
+            var cnIntLast = "元"; //整型完以后的单位
+            var maxNum = 999999999999999.9999; //最大处理的数字
+            var IntegerNum; //金额整数部分
+            var DecimalNum; //金额小数部分
+            var ChineseStr = ""; //输出的中文金额字符串
+            var parts; //分离金额后用的数组，预定义
+            if (money == "") {
+                return "";
+            }
+
+            money = parseFloat(money);
+            //alert(money);
+            if (money >= maxNum) {
+                $.alert('超出最大处理数字');
+                return "";
+            }
+            if (money == 0) {
+                ChineseStr = cnNums[0] + cnIntLast + cnInteger;
+                //document.getElementById("show").value=ChineseStr;
+                return ChineseStr;
+            }
+            money = money.toString(); //转换为字符串
+            if (money.indexOf(".") == -1) {
+                IntegerNum = money;
+                DecimalNum = '';
+            } else {
+                parts = money.split(".");
+                IntegerNum = parts[0];
+                DecimalNum = parts[1].substr(0, 4);
+            }
+            if (parseInt(IntegerNum, 10) > 0) { //获取整型部分转换
+                var zeroCount = 0;
+                var IntLen = IntegerNum.length;
+                for (var i = 0; i < IntLen; i++) {
+                    var n = IntegerNum.substr(i, 1);
+                    var p = IntLen - i - 1;
+                    var q = p / 4;
+                    var m = p % 4;
+                    if (n == "0") {
+                        zeroCount++;
+                    } else {
+                        if (zeroCount > 0) {
+                            ChineseStr += cnNums[0];
+                        }
+                        zeroCount = 0; //归零
+                        ChineseStr += cnNums[parseInt(n)] + cnIntRadice[m];
+                    }
+                    if (m == 0 && zeroCount < 4) {
+                        ChineseStr += cnIntUnits[q];
+                    }
+                }
+                ChineseStr += cnIntLast;
+                //整型部分处理完毕
+            }
+            if (DecimalNum != '') { //小数部分
+                var decLen = DecimalNum.length;
+                for (var i = 0; i < decLen; i++) {
+                    var n = DecimalNum.substr(i, 1);
+                    if (n != '0') {
+                        ChineseStr += cnNums[Number(n)] + cnDecUnits[i];
+                    }
+                }
+            }
+            if (ChineseStr == '') {
+                ChineseStr += cnNums[0] + cnIntLast + cnInteger;
+            } else if (DecimalNum == '') {
+                ChineseStr += cnInteger;
+            }
+            return ChineseStr;
+        },
+    };
+</script>

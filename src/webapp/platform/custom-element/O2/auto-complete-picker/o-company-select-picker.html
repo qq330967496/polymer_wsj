@@ -1,0 +1,249 @@
+<!-- 多项选择供应商、采购商或者全部-->
+<link rel="import" href="../../o-resource.html"/>
+<dom-module id="o-company-select-picker">
+    <style>
+        :host h-input-select{
+            display: block;
+        }
+    </style>
+    <template>
+        <h-input-select label="[[label]]" multi="{{multi}}"
+                        select-items="[[selectItems]]"
+                        select-items-local="{{selectItemsLocal}}"
+                        selected-list="{{selectedList}}"
+                        search-local="{{searchLocal}}"
+                        keyword="{{keyword}}"
+                        mode="{{mode}}"
+                        width="{{width}}" selected-data="{{selectedData}}"></h-input-select>
+    </template>
+    <script>
+        var pinyin = window.ks.pinyin.newInstance();
+        Polymer({
+            is: 'o-company-select-picker',
+            behaviors: [OCrudBehavior],
+            properties: {
+                label: {
+                    type: String
+                },
+                multi: Boolean,
+                width: String,
+                /**
+                 * 是否是演示模式
+                 */
+                demo: Boolean,
+                searchLocal: Boolean,
+
+                /**
+                 * 绑定到客户端的数据
+                 */
+                selectedData: {
+                    type: String,
+                    notify: true
+                },
+                /**
+                 * 业务类型，Enum：'category-all','category-purchase-all',
+                 * 'category-purchase','category-sell',
+                 * 'districts-all','districts-sell',
+                 * 'province-all',city-all,receipt-account
+                 * 'country-all
+                 */
+                type:{//1 采购商 , 2 供应商 , 3 所有
+                    type:Number,
+                    value:3,
+                    observer: "_typeChange"
+                },
+                needSupplier:{//0:不需要快速协议供应商参数，1：需要
+                    type:Number,
+                    value:1,
+                },
+                /**
+                 * 下拉项
+                 */
+                selectItems: {
+                    type: Array,
+                    value: function () {
+                        return []
+                    }
+                },
+                /**
+                 * 被选中的数据项集合
+                 */
+                selectedList: {
+                    type: Array,
+                    notify: true,
+                    value: function () {
+                        return [];
+                    },
+
+                },
+                ajaxCompany:{//编辑页面首次加载时候根据companyIds，ajax批量获取公司集合，目的是通过监听把集合添加到selectItems到下拉组件（可参考etrade-special-edit.html）
+                    type: Array,
+                    notify: true,
+                    value: function () {
+                        return [];
+                    },
+                    observer: "_ajaxCompanyChange"
+                },
+                /**
+                 * 下拉项总数据
+                 */
+                selectItemsLocal: {
+                    type: Array,
+                    value: function () {
+                        return []
+                    }
+                },
+                /**
+                 * 模式 常量：'Edit','View'
+                 */
+                mode: {
+                    type: String,
+                    value: 'Edit'
+                },
+                keyword: {
+                    type: String,
+                    notify: true,
+                    observer: "_keywordChange"
+                },
+                //{filterField:[....],filterFun:function}
+                filter: Object,//过滤函数
+                /**
+                 * 本地数据
+                 */
+                localData: {
+                    type: Array,
+                    value: [{
+                        value: "0",
+                        label: "广州中储国际贸易有限公司"
+                    }, {
+                        value: "1",
+                        label: "德区宝剑贸易有限公司"
+                    }, {
+                        value: "2",
+                        label: "鹏塑料化工有限公司"
+                    }, {
+                        value: "3",
+                        label: "晖塑料有限公司"
+                    }, {
+                        value: "4",
+                        label: "广州验收塑料制品有限公司"
+                    }]
+                }
+            },
+            _keywordChange: function (newVal) {
+                var self = this;
+                if (this.demo) {
+                    self.set("selectItems", this.localData);
+                    return;
+                }
+                if (newVal) {
+                    var param = {
+                        keyword: newVal
+                    };
+                    self._getEntities(param);
+                    }
+//                self.set("selectItems", self.selectItemsLocal);
+            },
+            /**
+             * 监听类型的变化
+             */
+            _typeChange: function(type) {
+                var param = {};
+                if(type){
+                    param.type = type;
+                    if(type == 2){
+                        param.kuaisuSupplierType = 2;
+                    }
+                    this._getEntities(param);
+                }
+            },
+
+            _ajaxCompanyChange: function(newVal) {
+            var param = {};
+            if(newVal){
+                this._getEntities(param);
+            }
+        },
+            /**
+             * 获取查询的实体
+             * @param param
+             * @private
+             */
+            _getEntities: function(param){
+                var self = this;
+                var dataParam = {};
+                if (this.demo) {
+                    self.set("selectItems", this.localData);
+                    return;
+                }
+                //如果是查询供应商，则只需要查询出普通的供应商
+                if(self.type){
+                    var url = '/crm/crmcustomersnew/findCompaniesByKeyword.do';
+                    $.extend(dataParam,param);
+                    dataParam.type=self.type;
+                    if(self.type == 2&self.needSupplier!=0){//需要快速协议供应商参数
+                        dataParam.kuaisuSupplierType = 2;
+                    }
+                    $.ajax({
+                        type: "GET",
+                        url: self.getRoot() + url,
+                        data: dataParam,
+                        dataType: "json",
+                        success: function (data) {
+                            var temp = data.rows.map(function(e){
+                                return {label: e.name,value: e.id};
+                            });
+                            if (self.filter) {
+                                temp = temp.filter(function (elem) {
+                                    var args = [];
+                                    if (self.filter.filterField) {
+                                        self.filter.filterField.forEach(function (e, i) {
+                                            args[i] = elem[e];
+                                        });
+                                    }
+                                    return self.filter.filterFun.call(self, args);
+                                })
+                            }
+//                            temp.forEach(function (e) {
+//                                pinyin.setCache([e.label], JSON.stringify(e));
+//                            });
+                            if(self.selectedList && self.selectedList.length){
+                                temp = temp.concat(self.selectedList);
+                                temp.sort();
+                                var re =[temp[0]];
+                                for(var i = 1; i < temp.length; i++) {
+                                    if (temp[i] != re[re.length - 1]) {
+                                        re.push(temp[i]);
+                                    }
+                                }
+                                temp = re;
+                            }
+                            if(!(self.selectedList && self.selectedList.length)&&self.ajaxCompany && self.ajaxCompany.length){//编辑时加载组建时动态获取了companyList，则把comnpanyList加入到selectItems中
+                                temp = temp.concat(self.ajaxCompany);
+                                temp.sort();
+                                var re =[temp[0]];
+                                for(var i = 1; i < temp.length; i++) {
+                                    if (temp[i] != re[re.length - 1]) {
+                                        re.push(temp[i]);
+                                    }
+                                }
+                                temp = re;
+                            }
+                            self.set("selectItemsLocal", temp);
+                            self.set("selectItems", temp);
+                        },
+                        error: function (messge) {
+                            throw Error("查询失败：" + messge.responseText);
+                        }
+                    });
+                }
+
+            },
+            combinSelectItems: function(){
+                if(this.selectedList){
+
+                }
+            }
+        })
+    </script>
+</dom-module>

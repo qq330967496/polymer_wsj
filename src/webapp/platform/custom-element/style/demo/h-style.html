@@ -1,0 +1,46 @@
+<dom-module id="h-style">
+  
+  <style>
+    :host {
+      display: block;
+      border: 1px solid red;
+    }
+    #child-element {
+      background: yellow;
+    }
+    /* styling elements distributed to content (via ::content) requires */
+    /* selecting the parent of the <content> element for compatibility with */
+    /* shady DOM . This can be :host or a wrapper element. */
+    .content-wrapper > ::content .special {
+      background: orange;
+    }
+    .content-wrapper > .test {
+      background: darkred;
+    }
+    :host h-form-input{
+      border: 1px solid chocolate;
+    }
+    :host h-form-input label{
+      border: 1px solid red;
+    }
+  </style>
+  
+  <template>
+    <div id="child-element">In local DOM!</div>
+    <div class="content-wrapper">
+      <div class="test">hahaha</div>
+    </div>
+    <div class="content-wrapper"><content></content></div>
+    <h-form-input label="测试"></h-form-input>
+    <my-toolbar title="my-toolbar"></my-toolbar>
+  </template>
+  
+</dom-module>
+
+<script>
+
+    Polymer({
+        is: 'h-style'
+    });
+
+</script>

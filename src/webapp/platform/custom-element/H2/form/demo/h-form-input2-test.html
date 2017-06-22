@@ -1,0 +1,160 @@
+<link rel="import" href="../h-form-checkbox.html"/>
+<link rel="import" href="../h-form-radio.html"/>
+<link rel="import" href="../h-form-select.html"/>
+<link rel="import" href="../h-form-input.html"/>
+<link rel="import" href="../h-form-input2.html"/>
+
+<link rel="import" href="../h-form-span.html"/>
+<link rel="import" href="../h-form-textarea.html"/>
+<link rel="import" href="../../../o-resource.html"/>
+<link rel="import" href="../../dialog/demo/edit-product-category.html"/>
+<link rel="import" href="form-test.html"/>
+
+<link rel="import" href="test-filter.html"/>
+
+<dom-module id="h-form-input2-test">
+    <link rel="import" type="css" href="../../../style/css/input-group.css"/>
+    <!--/**
+     * 样式表
+     */-->
+    <style>
+        :host {
+            display: block;
+        }
+        :host .row{
+            clear: both;
+        }
+    </style>
+
+    <!--/**
+     * 组件的Local MOM
+     */-->
+    <template>
+        <iron-a11y-keys
+                id="keys"
+                keys="pageup pagedown left right down up shift+a alt+a home end space enter"
+                target="[[target]]"
+                on-keys-pressed="_updatePressed">
+        </iron-a11y-keys>
+        <form-test on-aa-bb="aa"></form-test>
+    </template>
+</dom-module>
+
+<script>
+    (function () {
+        Polymer({
+            is: 'h-form-input2-test',
+            behaviors: [OFormatBehavior, OBaseBehavior],
+            properties: {
+                textValue: {
+                    type: String,
+                    value: 'aa'
+                },
+                checkboxItems: {
+                    type: Array,
+                    value: [{
+                        label: '薄膜',
+                        value: 1
+                    }, {
+                        label: '纤维',
+                        value: 2
+                    }, {
+                        label: '管材 ',
+                        value: 3
+                    }]
+                },
+                radioItems: {
+                    type: Array,
+                    value: [{
+                        label: '站内站内站内',
+                        contentElement: 'edit-product-category',
+                        value: 1
+                    }, {
+                        label: '站外站外站外',
+                        value: 2,
+                        permission: true
+                    }, {
+                        label: '系统系统系统',
+                        value: 3,
+                        permission: false
+                    }]
+                },
+                /**
+                 * 权限列表
+                 */
+                permItem: {
+                    type: Array,
+                    value: function () {
+                        return {"站内": false, "站外": false, "系统": true};
+                    }
+                },
+                selectedValue: {
+                    type: String,
+                    value: "1,2"
+                },
+                entity: {
+                    type: Object,
+                    value: {
+                        name: '李晶莹',
+                        age: '25',
+                        amount: '4009804.78',
+                        createdAt: '1439214282169'
+                    }
+                },
+                boundKeys: {
+                    type: Array
+                },
+                target: {
+                    type: Object,
+                    value: function () {
+                        return document.body;
+                    }
+                }
+            },
+            aa: function (e) {
+                console.log('aa is called:', e.detail);
+//                var dialog = document.createElement("paper-dialog");
+//                var span = document.createElement("span");
+//                span.textContent="hahah";
+//                dialog.appendChild(span);
+//                Polymer.dom(this.root).appendChild(dialog);
+//                dialog.open();
+                this.openDialog("edit-product-category");
+            },
+            bb: function (e) {
+                console.log('bb is called:', e);
+            },
+            getName: function (name) {
+                this.$.aa.functionName();
+                return 'Lijingying:' + name
+            },
+            _updatePressed: function (event) {
+                console.log(event.detail);
+                if (event.detail.key == 'up') {
+                    console.log('up');
+//				this._switchFocusItemAt(this.focusIndex-1);
+                }
+                if (event.detail.key == 'down') {
+                    console.log('down');
+//				this._switchFocusItemAt(this.focusIndex+1);
+                }
+                if (event.detail.key == 'left') {
+                    console.log('left');
+                }
+                if (event.detail.key == 'right') {
+                    console.log('right');
+                }
+            },
+            testItems: function (radioItems) {
+                return radioItems;
+            },
+            ready: function () {
+//                this.boundKeys = this.$.keys.keys.split(' ');
+            },
+            filterPermission: function (radioItems) {
+                return radioItems;
+            }
+
+        });
+    })();
+</script>

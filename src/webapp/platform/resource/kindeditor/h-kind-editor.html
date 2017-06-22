@@ -1,0 +1,90 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../platform/custom-element/behaviors/common/o-base-behavior.html">
+<script type="text/javascript" charset="utf-8" src="kindeditor.js?version=${version}"></script>
+<!--<link rel="stylesheet" href="themes/default/default.css?version=${version}"/>
+<link rel="stylesheet" href="plugins/code/prettify.css?version=${version}"/-->>
+<script type="text/javascript" charset="utf-8" src="lang/zh_CN.js?version=${version}"></script>
+<script type="text/javascript" charset="utf-8" src="plugins/code/prettify.js?version=${version}"></script>
+<dom-module id="h-kind-editor">
+    <style>
+    </style>
+    <template>
+        <textarea id="html_area"></textarea>
+    </template>
+    <script>
+        Polymer({
+            is:"h-kind-editor",
+            behaviors: [OBaseBehavior],
+            properties: {
+                mode:{
+                    type:String,
+                    value:function(){
+                        return "Edit";
+                    }
+                },
+                bindData:{//html文本内容
+                    type:String,
+                    value:function(){
+                        return '';
+                    },
+                    notify:true
+                },
+                width: {
+                    type: Number,
+                    value: function () {
+                        return 500;
+                    }
+                },
+                height: {
+                    type: Number,
+                    value: function () {
+                        return 400;
+                    }
+                }
+
+            },
+            observers: [
+
+            ],
+            ready:function(){
+                this.async(this.initFrame.bind(this), 100);
+            },
+            initFrame:function(){
+                var _config = {
+                    width: this.width,
+                    height:this.height,
+                    autoHeightMode: false,
+                    basePath : this.getRoot()+'/platform/resource/kindeditor/',
+//                    cssPath:  ['themes/default/default.css?version','plugins/code/prettify.css'],
+                    uploadJson: this.getRoot()+'/platform/resource/kindeditor/jsp/upload_json.jsp',
+                    fileManagerJson: this.getRoot()+'/platform/resource/kindeditor/jsp/file_manager_json.jsp',
+                    allowFileManager: true,
+                    filterMode:false,
+//                    urlType:'relative',
+                    afterCreate: function () {
+                        this.loadPlugin('autoheight');
+                    }
+                };
+
+                var editorEle = this.$['html_area']
+
+                var me=this;
+                var firstLoaded=true;
+                _config.afterChange = function () {
+                    if(this.edit && !firstLoaded){
+                        me.set('bindData',this.edit.html());
+                    }
+                    firstLoaded=false;
+                }
+                if (KindEditor) {
+                    KindEditor.formatUrl = this._formatUrl;
+                    var myEditor=KindEditor.create(editorEle, _config);
+                    if(this.bindData){
+                        myEditor.html(this.bindData);
+                    }
+                }
+            }
+
+        });
+    </script>
+</dom-module>

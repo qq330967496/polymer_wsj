@@ -1,0 +1,4 @@
+<div class="ks-enum-item inline-block">
+<select style="width: 100%;" ng-show="!readonly" class="ks-enum-select input-sm" ng-change="onSelect(this.selectedValue)" ng-model="selectedValue" ng-options="item[code] as item[label] for item in options"></select>
+<span style="width: 100%;" ng-show="readonly" class="ks-enum-label inline-block" >{{ selectedItem[label]}}</span>
+</div>

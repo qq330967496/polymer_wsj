@@ -1,0 +1,24 @@
+<!--
+@author Jarek.li
+BaseBehavior提供了构建组件的最基本属性和样式
+-->
+<script>
+    /**
+     * `Polymer.O2BaseBehavior`
+     *
+     * @demo demo/base-behavior-index.html
+     * @polymerBehavior Polymer.OBaseBehavior
+     */
+    ODialogBehavior = {
+        properties: {},
+        attached: function () {
+            var self = this;
+            this.async(function () {
+                console.log("element attached", self);
+                var bound = self.getBoundingClientRect();//html 盒子
+                var scrollable = self.parentElement;
+                scrollable.style.height = bound.height;
+            })
+        }
+    };
+</script>

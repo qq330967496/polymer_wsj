@@ -1,0 +1,62 @@
+paper-menu{
+    font-size: 12px;
+}
+paper-submenu iron-collapse{
+
+}
+/*二级菜单*/
+paper-menu paper-submenu paper-menu paper-submenu paper-item,
+paper-menu paper-submenu paper-menu paper-item{
+    padding-left:15px ;
+}
+/*三级菜单*/
+paper-menu paper-submenu paper-menu paper-submenu paper-menu paper-submenu paper-item,
+paper-menu paper-submenu paper-menu paper-submenu paper-menu paper-item{
+    padding-left:30px ;
+}
+/*四级菜单*/
+paper-menu paper-submenu paper-menu paper-submenu paper-menu paper-submenu paper-menu paper-submenu paper-item,
+paper-menu paper-submenu paper-menu paper-submenu paper-menu paper-submenu paper-menu paper-item{
+    padding-left:45px ;
+}
+/*五级菜单*/
+paper-menu paper-submenu paper-menu paper-submenu paper-menu paper-submenu paper-menu paper-submenu paper-menu paper-submenu paper-item,
+paper-menu paper-submenu paper-menu paper-submenu paper-menu paper-submenu paper-menu paper-submenu paper-menu paper-item{
+    padding-left:60px ;
+}
+paper-item{
+    padding: 0px;
+}
+paper-item.paper-item-0{
+    font-size: 12px;
+    min-height: 16px;
+}
+paper-menu .expand-btn{
+    line-height: 18px;
+}
+paper-menu .expand-btn .fa {
+    margin-left: -2px;
+}
+paper-menu.menu-list iron-icon{
+    width: 18px;
+    height: 18px;
+}
+paper-menu.menu-list iron-icon.icon-add{
+    color: #999999;
+}
+.ks-tree-item-icon.not-leaf, paper-menu.menu-list iron-icon.icon-not-leaf {
+    color: #f69c1e;
+    font-size: 14px;
+}
+.ks-tree-item-icon.leaf, paper-menu.menu-list iron-icon.icon-leaf {
+    color: #b06187;
+}
+paper-menu paper-checkbox paper-ripple.circle{
+    border: none;
+}
+paper-menu paper-checkbox #checkboxContainer.paper-checkbox{
+    width: 14px;
+    height: 14px;
+    min-width: 14px;
+    margin-top: -3px;
+}

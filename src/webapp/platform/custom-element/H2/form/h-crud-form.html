@@ -1,0 +1,276 @@
+<!--加载资源文件-->
+<link rel="import" href="../../o-resource.html" />
+<dom-module id="h-crud-form">
+    <style>
+        :host{
+
+        }
+        :host .edit-content {
+            padding-top: 15px;
+        }
+        :host .row-container{
+            float: left;
+        }
+    </style>
+    <template>
+        <h2 class="dialog-title">{{_getTitle(isCreate,isUpdate)}}</h2>
+        <div id="edit-content" class="edit-content" ></div>
+        <div class="buttons dialog-btn marginT20" style="clear: left">
+            <template is="dom-if" if="{{isCreate}}">
+                <paper-button class="btn btn-primary" on-click="_createEntity">创建</paper-button>
+            </template>
+            <template is="dom-if" if="{{isUpdate}}">
+                <paper-button class="btn btn-primary" on-click="_updateEntity">更新</paper-button>
+            </template>
+            <paper-button class="btn btn-warning" dialog-dismiss>取消</paper-button>
+        </div>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: 'h-crud-form',
+        behaviors: [HCrudBehavior],
+        properties: {
+            dialogParam:{
+                type: Object,
+                value: function () {
+                    return {};
+                }
+            },
+            /**
+             * 表单实体信息包括
+             * @attribute entity
+             * @type{Object}
+             */
+            entity:{
+                type:Object,
+                value: function () { return {} }
+            },
+            /**
+             * 创建实体的url
+             * @attribute createUrl
+             * @type{String}
+             */
+            createUrl:{
+                type:String
+            },
+            /**
+             * 更新实体的url
+             * @attribute updateUrl
+             * @type{String}
+             */
+            updateUrl:{
+                type:String
+            },
+            /**
+             * 当前窗口的模式
+             * @attribute mode
+             * @type{String}
+             */
+            mode:{
+                type:String,
+                observer:'_modeChange'
+            },
+            /**
+             * 表示当前是创建窗口
+             * @attribute isCreate
+             * @type{Boolean}
+             */
+            isCreate:{
+                type:Boolean
+            },
+            /**
+             * 表示当前是更新窗口
+             * @attribute isUpdate
+             * @type{Boolean}
+             */
+            isUpdate:{
+                type:Boolean
+            }
+        },
+        observers:['_formInfoChange(dialogParam,entity)'],
+        /**
+         * 初始化表单信息
+         * @param formInfo form表单信息
+         * @param entity form表单实体
+         * @private
+         */
+        _formInfoChange: function (formInfo,entity) {
+            if(!this.isEmptyObject(formInfo)){
+                var editForm = [];//表单页面标签容器
+                var columnInfo = formInfo['column'];//表单列信息
+                for(var column in columnInfo){//页面字段
+                    var elem = this._getCustomerElement(columnInfo[column]);//生成表单标签
+                    this._initElementVal(entity, elem, columnInfo[column]); //初始化标签值
+                    editForm.push(elem);//添加标签到form表单里面
+                    this._bindEvents(elem,columnInfo[column]);
+                }
+                this._addElemToForm(editForm); //将标签添加到form表单里面
+                this.set("updateUrl",formInfo.updateUrl);
+                this.set("createUrl",formInfo.createUrl);
+                this.set("formInfo",formInfo);
+            }
+        },
+        /**
+         * 创建方法
+         * @private
+         */
+        _createEntity: function () {
+            var self = this;
+            console.log("createUrl:",this.createUrl);
+            if(!this.createUrl){
+                throw new Error("createUrl属性不存在，请检查...");
+            }
+            this._refreshEntityVal();//重新刷新表单实体属性的值
+            this.saveEntity(this.createUrl,this.entity, function () {
+                self.hTip.success("创建成功");
+                self.cancel();
+            });
+        },
+        /**
+         * 更新方法
+         * @private
+         */
+        _updateEntity: function () {
+            var self = this;
+            console.log("updateUrl:",this.updateUrl);
+            if(!this.updateUrl){
+                throw new Error("updateUrl属性不存在，请检查...");
+            }
+            this._refreshEntityVal();//重新刷新表单实体属性的值
+            this.updateEntity(this.updateUrl,this.entity, function () {
+                self.hTip.success("更新成功");
+                self.cancel();
+            });
+        },
+
+        /**
+         * 获取弹窗标题
+         * @param isCreate 是否新增
+         * @param isUpdate 是否更新
+         * @returns {*}
+         * @private
+         */
+        _getTitle: function (isCreate, isUpdate) {
+            if(isCreate){
+                return "创建";
+            } else if(isUpdate){
+                return "更新";
+            } else{
+                throw new SyntaxError("语法错误：请给is-create或者is-update赋值");
+            }
+        },
+        /**
+         * 监听模式的改变
+         * @param newVal
+         * @private
+         */
+        _modeChange: function(newVal) {
+            if (newVal == "Edit") {
+                this.set("isUpdate", true);
+                this.set("isCreate", false);
+            } else if(newVal == "Add"){
+                this.set("isUpdate", false);
+                this.set("isCreate", true);
+            }
+        },
+        /**
+         * 初始化表单标签的值
+         * @param entity 实体对象
+         * @param elem 标签对象
+         * @param col 列信息
+         * @private
+         */
+        _initElementVal: function (entity, elem, col) {
+            if (!this.isEmptyObject(entity)) {//如果实体对象不为空那么给标签对应的字段赋值
+                if ('bindData' in elem) {
+                    elem.bindData = entity[col['name']];
+                }
+                if ('selectedData' in elem) {
+                    elem.selectedData = entity[col['name']];
+                }
+            }
+        },
+        /**
+         * 将标签添加到表单容器中去
+         * @param editForm 表单标签数组
+         * @private
+         */
+        _addElemToForm: function (editForm) {
+            var self = this;
+            var formContainer = document.createDocumentFragment();
+            if(editForm.length>0){
+                var rowContainer = this._createRowContainer(); //行容器
+                editForm.forEach(function (elem,i) {
+                    var tagName = elem.tagName;
+                    if((tagName == "H-FORM-INPUT" || tagName == "H-INPUT-SELECT") && (i+1)%3!=0){
+                        rowContainer.appendChild(elem);
+                        return ;
+                    }
+                    if((tagName == "H-FORM-INPUT" || tagName == "H-INPUT-SELECT") && (i+1)%3==0){
+                        rowContainer.appendChild(elem);
+                        formContainer.appendChild(rowContainer);
+                        rowContainer = self._createRowContainer(); //行容器
+                        return ;
+                    }
+                    if(!(tagName == "H-FORM-INPUT" || tagName == "H-INPUT-SELECT") && rowContainer.firstChild){
+                        formContainer.appendChild(rowContainer);
+                        rowContainer = self._createRowContainer(); //行容器
+                        rowContainer.appendChild(elem);
+                        formContainer.appendChild(rowContainer);
+                        rowContainer = self._createRowContainer(); //行容器
+                        return ;
+                    }
+                    if(!(tagName == "H-FORM-INPUT" || tagName == "H-INPUT-SELECT") && !rowContainer.firstChild){
+                        rowContainer.appendChild(elem);
+                        formContainer.appendChild(rowContainer);
+                        rowContainer = self._createRowContainer(); //行容器
+                        return ;
+                    }
+                });
+                if(rowContainer.firstChild){
+                    formContainer.appendChild(rowContainer);
+                }
+            }
+            this.$['edit-content'].appendChild(formContainer);
+        },
+        /**
+         * 创建一个form表单的行容器
+         * @private
+         */
+        _createRowContainer:function(){
+            var div = document.createElement('div'); //行容器
+            div.setAttribute('style','text-align: left;');
+            return div;
+        },
+
+        /**
+         * 重新刷新实体属性
+         * @private
+         */
+        _refreshEntityVal: function () {
+            if(!this.isEmptyObject(this.formInfo)){
+                var columnInfo = this.formInfo['column'];//表单列信息
+                for(var column in columnInfo){//页面字段
+                    var elem =this.querySelector("#"+this._generatorName(columnInfo[column]["name"]));
+                    var val = this._getElemVal(elem);
+                    this.entity[columnInfo[column]["name"]]=val;
+                }
+            }
+        },
+
+        /**
+         * 给标签绑定事件感兴趣的事件
+         * @param elem
+         * @param col
+         * @private
+         */
+        _bindEvents:function(elem,col){
+            if(col['onChange']){
+                var callBack = col['onChange'].bind(this.entity)
+                elem.addEventListener("data-change",callBack);
+            }
+        }
+    });
+</script>

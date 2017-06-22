@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="import" href="../h-crud.html"/>
+</head>
+<body>
+<!--<h-form-checkbox label="应用类型" checkbox-items="[1,2,3]" selected-value="1,2"></h-form-checkbox>-->
+    <!--<h-crud ></h-crud>-->
+<script>
+    HTMLImports.whenReady(function() {
+        Polymer({
+            is: 'x-test',
+            properties: {
+                searchInfo: {
+                    type: Object,
+                    value: {
+                        column: {
+                            'sellerId': {
+                                name: 'sellerId',
+                                comment: '公司名字',
+                                type: 'string',
+                                element: 'o-company-picker'
+                            },
+                            'category': {
+                                name: 'category',
+                                comment: '分类',
+                                type: 'number',
+                                element: 'h-input-select',
+                                elemAttr: {
+                                    "selectItems": [{
+                                        value: -1,
+                                        label: "===全部==="
+                                    }, {
+                                        value: 1,
+                                        label: "1F"
+                                    }, {
+                                        value: 2,
+                                        label: "2F"
+                                    }, {
+                                        value: 3,
+                                        label: "3F"
+                                    }],
+                                    "selectedData":-1
+                                }
+                            }
+                        },
+                        queryUrl: '/management/starSellers.do'
+                    }
+                },
+                listInfo: {
+                    type: Object,
+                    value: {
+                        column: {
+                            'name': {
+                                name: 'name',
+                                comment: '公司名字',
+                                type: 'string'
+                            },
+                            'category': {
+                                name: 'category',
+                                comment: '分类',
+                                type: 'number',
+                                format: function (val) {
+                                    if (val == 1) {
+                                        return "1F"
+                                    }
+                                    if (val == 2) {
+                                        return "2F"
+                                    }
+                                    if (val == 3) {
+                                        return "3F"
+                                    }
+                                }
+                            }
+                        },
+                        queryUrl: '/management/starSellers.do',
+                        deleteUrl:'/management/starSellers/delete.do'
+                    }
+                },
+                formInfo: {
+                    type: Object,
+                    value: {
+                        column: {
+                            'sellerId': {
+                                name: 'sellerId',
+                                comment: '公司名字',
+                                type: 'string',
+                                element: 'o-company-picker',
+
+                            },
+                            'orderNo': {
+                                name: 'orderNo',
+                                comment: '显示序号',
+                                type: 'number'
+                            },
+                            'category': {
+                                name: 'category',
+                                comment: '分类',
+                                element: 'h-input-select',
+                                elemAttr: {
+                                    "selectItems": [{
+                                        value: -1,
+                                        label: "===全部==="
+                                    }, {
+                                        value: 1,
+                                        label: "1F"
+                                    }, {
+                                        value: 2,
+                                        label: "2F"
+                                    }, {
+                                        value: 3,
+                                        label: "3F"
+                                    }]
+                                }
+                            },
+                            'remark': {
+                                name: 'remark',
+                                comment: '备注',
+                                type: 'string',
+                                element:'h-form-textarea'
+                            }
+                        },
+                        updateUrl: '/management/starSellers/update.do',
+                        createUrl: '/management/starSellers/add.do'
+                    }
+                }
+            },
+            ready: function () {
+                var crud = document.createElement('h-crud-search');
+                crud.searchInfo = this.searchInfo;
+                crud.listInfo = this.listInfo;
+                crud.formInfo = this.formInfo;
+                Polymer.dom(this.root).appendChild(crud);
+            }
+        });
+    });
+</script>
+
+<x-test></x-test>
+</body>
+</html>
+

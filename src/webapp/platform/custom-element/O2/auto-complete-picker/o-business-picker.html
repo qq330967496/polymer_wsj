@@ -1,0 +1,215 @@
+<!-- 多项选着业务组件包括：区域,产品线,省份城市-->
+<link rel="import" href="../../o-resource.html"/>
+<dom-module id="o-business-picker">
+    <style>
+        :host h-input-select{
+            display: block;
+        }
+    </style>
+    <template>
+        <h-input-select label="[[label]]" multi="{{multi}}"
+                        select-items="[[selectItems]]"
+                        select-items-local="{{selectItemsLocal}}"
+                        selected-list="{{selectedList}}"
+                        keyword="{{keyword}}"
+                        mode="{{mode}}"
+                        width="{{width}}" selected-data="{{selectedData}}"></h-input-select>
+    </template>
+    <script>
+       // var pinyin = window.ks.pinyin.newInstance();
+        Polymer({
+            is: 'o-business-picker',
+            behaviors: [OCrudBehavior],
+            properties: {
+                label: {
+                    type: String
+                },
+                pinyin :{
+                    type:Object,
+                    value:function(){
+                        return window.ks.pinyin.newInstance();
+                    }
+                },
+                multi: Boolean,
+                width: String,
+                /**
+                 * 是否是演示模式
+                 */
+                demo: Boolean,
+                /**
+                 * 绑定到客户端的数据
+                 */
+                selectedData: {
+                    type: String,
+                    notify: true
+                },
+                /**
+                 * 业务类型，Enum：'category-all','category-purchase-all',
+                 * 'category-purchase','category-sell',
+                 * 'districts-all','districts-sell',
+                 * 'province-all',city-all,receipt-account
+                 * 'country-all
+                 */
+                business: {
+                    type: String,
+                    observer: "_businessChange"
+                },
+                /**
+                 * 下拉项
+                 */
+                selectItems: {
+                    type: Array,
+                    value: function () {
+                        return []
+                    }
+                },
+                /**
+                 * 被选中的数据项集合
+                 */
+                selectedList: {
+                    type: Array,
+                    notify: true,
+                    value: function () {
+                        return [];
+                    }
+                },
+                /**
+                 * 下拉项总数据
+                 */
+                selectItemsLocal: {
+                    type: Array,
+                    value: function () {
+                        return []
+                    }
+                },
+                /**
+                 * 模式 常量：'Edit','View'
+                 */
+                mode: {
+                    type: String,
+                    value: 'Edit'
+                },
+                keyword: {
+                    type: String,
+                    notify: true,
+                    observer: "_keywordChange"
+                },
+                //{filterField:[....],filterFun:function}
+                filter: Object,//过滤函数
+                /**
+                 * 本地数据
+                 */
+                localData: {
+                    type: Array,
+                    value: [{
+                        label: '薄膜',
+                        value: '1'
+                    }, {
+                        label: '纤维',
+                        value: '2'
+                    }, {
+                        label: '管材 ',
+                        value: '3'
+                    }]
+                }
+            },
+            _keywordChange: function (newVal) {
+                var self = this;
+                if (newVal) {
+                    var searchResult = self.pinyin.search(newVal);
+                    if (searchResult) {
+                        self.set("selectItems", searchResult.map(function (e) {
+                            return JSON.parse(e.content);
+                        }));
+                    }
+                } else {
+                    self.set("selectItems", self.selectItemsLocal);
+                }
+            },
+            _businessChange: function (business) {
+                var self = this;
+                var url = "";
+                if (this.demo) {
+                    self.set("selectItems", this.localData);
+                    return;
+                }
+                //产品线
+                if (business == 'category-all')
+                    url = "/pdm/categorygroups/all.do";
+                else if (business == 'category-purchase-all') {
+                    url = "/pdm/categorygroups/allPurchase.do";
+                } else if (business == 'category-supplier') {
+                    url = "/pdm/categorygroups/picker/purchase.do";
+                } else if (business == 'category-purchase') {
+                    url = "/pdm/categorygroups/picker/sell.do";
+                    //负责区域
+                } else if (business == 'districts-all') {
+                    url = "/pdm/basic/districts/all.do";
+                } else if (business == 'districts-sell') {
+                    url = "/pdm/basic/districts/picker.do";
+                    //省份城市
+                } else if (business == 'province-all') {
+                    url = "/pdm/provinces/all.do";
+                } else if (business == 'city-all') {
+                    url = "/pdm/cities/all.do";
+                    //公司收款银行
+                } else if (business.indexOf('receipt-account') > -1) {
+                    url = "/mall/kuaisuordernew/selectAllReceiptAccounts.do";
+                    var busin = this.business.split('?');
+                    if(busin.length > 1){
+                        url +="?" + busin[1];
+                    }
+                }else if(business=='country-all'){
+                    url = "/pdm/countries/all.do";
+                }
+                $.ajax({
+                    type: "GET",
+                    url: self.getRoot() + url,
+                    data: {},
+                    dataType: "json",
+                    success: function (data) {
+                        var temp = data.map(function (e) {
+                            if (self.business.indexOf("districts") >= 0) {
+                                return {label: e.name, value: e.districtCode};
+                            }
+                            if (self.business.indexOf("category") >= 0) {
+                                return {label: e.groupName, value: e.groupCode};
+                            }
+                            if (self.business.indexOf("province") >= 0) {
+                                return {label: e.name, value: e.provinceCode};
+                            }
+                            if (self.business.indexOf("city") >= 0) {
+                                return {label: e.name, value: e.cityCode};
+                            }
+                            if (self.business.indexOf("receipt-account") >= 0) {
+                                return {label: e.bankName, value: e.id,accountNo: e.accountNo};
+                            }
+                            if(self.business.indexOf("country")>= 0){
+                                return {label: e. nameCn, value: e.countryCode};
+                            }
+                        });
+                        if (self.filter) {
+                            temp = temp.filter(function (elem) {
+                                var args = [];
+                                if (self.filter.filterField) {
+                                    self.filter.filterField.forEach(function (e, i) {
+                                        args[i] = elem[e];
+                                    });
+                                }
+                                return self.filter.filterFun.call(self, args);
+                            })
+                        }
+                        temp.forEach(function (e) {
+                            self.pinyin.setCache([e.label], JSON.stringify(e));
+                        });
+                        self.set("selectItemsLocal", temp);
+                        self.set("selectItems", temp);
+                    },
+                    error: function (messge) {
+                        throw Error("查询失败：" + messge.responseText);
+                    }
+                });
+            }
+        })
+    </script>
+</dom-module>

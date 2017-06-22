@@ -1,0 +1,107 @@
+<!--简易查询组件-->
+<dom-module id="h-crud-search">
+    <template>
+        <div id="search-content" class="inline-block"></div>
+        <div class="vertical-top search-submit inline-block">
+            <paper-button type="button" class="btn btn-primary float-l" data-args='{"resetPaging":true}'
+                          on-click="_search">查询
+            </paper-button>
+            <paper-button type="button" class="btn btn-primary float-l"
+                          on-click="_resetForm">重置
+            </paper-button>
+            <h-dialog-button class="btn btn-default" label="新增" is-button
+                             content-element="h-crud-form" mode="Add"
+                             dialog-param="[[formInfo]]"></h-dialog-button>
+        </div>
+    </template>
+</dom-module>
+<script>
+    Polymer({
+        is: 'h-crud-search',
+        behaviors: [HCrudBehavior],
+        properties: {
+            /**
+             * 查询实体的url
+             * @attribute queryUrl
+             * @type{String}
+             */
+            queryUrl: {
+                type: String
+            },
+            /**
+             * 需要重置的element
+             * @attribute _restElem
+             * @type{Array}
+             */
+            _restElem: {
+                type: Array,
+                value: function () {
+                    return [];
+                }
+            }
+        },
+        observers: ['_searchInfoChange(searchInfo)'],
+        /**
+         * 初始化查询信息
+         * @param searchInfo
+         * @private
+         */
+        _searchInfoChange: function (searchInfo) {
+            if (!this.isEmptyObject(searchInfo)) {
+                var search = document.createDocumentFragment();//搜索页面容器
+                var columnInfo = searchInfo['column'];//查询列信息
+                for (var column in columnInfo) {//搜索字段
+                    var elem = this._getCustomerElement(columnInfo[column]);//搜索标签
+                    search.appendChild(elem);
+                }
+                this.$['search-content'].appendChild(search);
+                this.set("queryUrl", searchInfo.queryUrl)
+
+                setTimeout(this._search.bind(this),100);
+//                this._search();
+            }
+        },
+        /**
+         * 查询方法
+         */
+        _search: function (e) {
+            var self = this;
+            var elements = this.$['search-content'].childNodes;//查询列元素集合
+            for (var i = 0; i < elements.length; i++) {//搜索字段
+                var name = elements.item(i).getAttribute("name");
+                var val = elements.item(i).bindData || elements.item(i).selectedData;
+                self.set("queryCondition." + this._getName(name), val);
+            }
+            self._queryList(e);
+        },
+
+
+
+        /**
+         * 重置方法
+         */
+        _resetForm: function () {
+            var self = this;
+            this.queryCondition.start = 0;
+            this.queryCondition.pageIndex = 0;
+            var elements = this.$['search-content'].childNodes;//查询列元素集合
+            for (var i = 0; i < elements.length; i++) {//搜索字段
+                var name = elements.item(i).getAttribute("name");
+                if(this.searchInfo['column'][this._getName(name)]['elemAttr']){ //处理默认值
+                    self._bindElemAttr(this.searchInfo['column'][this._getName(name)], elements.item(i));//重新绑定属性值
+                }else{ //处理非默认值
+                    if(elements.item(i).bindData){
+                        elements.item(i).bindData = null;
+                    }else if(elements.item(i).selectedData){
+                        elements.item(i).selectedData = null;
+                    }
+                }
+                var val = elements.item(i).bindData || elements.item(i).selectedData;
+                self.set("queryCondition." + this._getName(name), val);
+            }
+            self._queryList();
+        }
+
+
+    });
+</script>

@@ -1,0 +1,142 @@
+<!--产品牌号分类 返回牌号-->
+<link rel="import" href="o-auto-complete-picker.html"/>
+<dom-module id="o-designation-picker">
+    <style>
+        :host {
+            white-space:nowrap;
+            /*float: left;*/
+        }
+        :host{
+            display: inline-block;
+        }
+        :host label{
+            float: left;
+            line-height: 34px;
+        }
+    </style>
+    <template>
+        <o-auto-complete-picker id="customer-complete" column-info="[[columnInfo]]" display-field="designation"
+                                value-field="designation" local-data="[[localData]]" demo="{{demo}}" keyword="{{keyword}}"
+                                placeholder="[[label]]"
+                                bind-item-value="{{bindItemValue}}"
+                                mode="{{mode}}"
+                                label="[[label]]"
+                                no-label="[[noLabel]]"
+                                data-url="[[getDataUrl(businessCode)]]"
+                                bind-data="{{bindData}}"></o-auto-complete-picker>
+    </template>
+    <script>
+        Polymer({
+            is: 'o-designation-picker',
+            behaviors: [OBaseBehavior],
+            properties: {
+                businessCode:{
+                    type:String,
+                    value:"designation2"
+                },
+                demo:{ //是否是演示模式
+                    type:Boolean,
+                    value:false
+                },
+                label:{ //组件label
+                    type:String,
+                    value: "产品牌号"
+                },
+                noLabel:{ //是否显示label
+                    type:Boolean,
+                    value:false
+                },
+                keyword: {
+                    type: String
+                },
+                bindData: {
+                    type: String,
+                    notify: true,
+                    observer: '_getStaffEntity'
+                },
+                bindItemValue: {
+                    type: Object,
+                    notify: true
+                },
+                columnInfo: { // picker-grid-config
+                    type: Array,
+                    readyOnly: true,
+                    value: [
+                        {field: 'designation', label: '产品牌号', width: '80'},
+                        {field: 'verified', label: '认证状态', width: '100', align: "left",format : function(value){
+                            if(value.verified == 1){ return '已认证' } else { return '' }
+                        }}]
+                },
+                /**
+                 * 模式 常量：'Edit','View'
+                 */
+                mode: {
+                    type: String,
+                    value: 'Edit'
+                },
+                localData: {
+                    type: Array,
+                    value: [{
+                        designation: "HD5502XA",
+                        category: "AES"
+                    }, {
+                        designation: "HD5502XA",
+                        category: "ABS"
+                    }, {
+                        designation: "C91A",
+                        category: "AS"
+                    }, {
+                        designation: "Luci",
+                        category: "AS"
+                    }, {
+                        designation: "LiLi",
+                        category: "AS"
+                    }, {
+                        designation: "Jump",
+                        category: "AS"
+                    }, {
+                        designation: "James",
+                        category: "AS"
+                    }]
+                }
+            },
+            /**
+             * 根据id查询员工
+             * @param newBind
+             * @param oldBind
+             * @private
+             */
+            _getStaffEntity: function (newBind, oldBind) {
+                var self = this;
+                var url = this.getRoot() + '/sys/memcache/fetchByPrimaryKey.do?businessCode=designation&primaryKey='+newBind;
+                if (this.demo) {
+                    var complete = self.$['customer-complete'];
+                    complete.set('keyword', complete.getLabel(newBind));
+                } else if (newBind) {
+                    var param = {};
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        data: param,
+                        dataType: "json",
+                        success: function (data) {
+                            if(data && data.length>0){
+                                self.$['customer-complete'].set('keyword', data[0].designation);
+                            }
+                        },
+                        error: function (messge) {
+                            throw Error("查询失败：" + messge.responseText);
+                        }
+                    });
+                } else {
+                    self.$['customer-complete'].set('keyword', null);
+                }
+            },
+
+            getDataUrl:function(bussCode){
+                return "/sys/memcache/findByKeyword.do?businessCode="+bussCode;
+            }
+
+        })
+    </script>
+</dom-module>

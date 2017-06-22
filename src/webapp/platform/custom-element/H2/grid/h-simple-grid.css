@@ -1,0 +1,316 @@
+/*h-simple-grid*/
+.simple-grid {
+    position: relative;
+    font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+    font-size: 12px;
+}
+
+/*h-simple-grid-header*/
+.header {
+    /*background-color: #595959;*/
+    height: 40px;
+    line-height: 40px;
+    width: 100%;
+    border-top: 1px solid #dddddd;
+}
+
+/*h-simple-grid-header-cell*/
+.header-cell {
+    float: left;
+    height: 40px;
+    line-height: 40px;
+    font-weight: bold;
+    /*color: #ffffff;*/
+}
+
+/*h-simple-grid-body*/
+.body {
+    overflow: auto;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/*h-simple-grid-row*/
+.row {
+    padding: 0;
+    margin: 0;
+    border-bottom: 1px solid #ddd;
+    height: 40px;
+    line-height: 40px;
+}
+
+@media screen and (max-width: 1000px) {
+    .row {
+        height: auto;
+    }
+}
+
+.row.alt {
+    background: #fdfdfd;
+}
+
+.row:before {
+    display: table;
+    content: "";
+}
+
+.row:after {
+    clear: both;
+}
+/*列*/
+h-simple-grid-header-cell,
+h-simple-grid-row-cell {
+    flex-grow: 0;
+    width: 150px;
+    /*min-width: 150px;*/
+    text-align: left;
+    padding-left: 5px;
+}
+
+/*h-simple-grid-row-cell*/
+.row-cell {
+    float: left;
+    height: 40px;
+    line-height: 40px;
+    width: 150px;
+    /*min-width: 150px;*/
+    min-height: 10px;
+}
+
+.ellipsis-box {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+}
+
+.display-table-cell {
+    display: table-cell;
+}
+
+/*h-simple-grid-option-cell*/
+.content {
+    margin: 0 3px;
+}
+
+.check {
+    width: 35px;
+    text-align: center;
+}
+
+/*已读标识*/
+.readicon {
+    color: green;
+    border-radius: 4px;
+    display: inline-block;
+    border: 2px solid green;
+    font-weight: bold;
+    line-height: 20px;
+    padding: 0 5px 0 3px;
+    margin-right: 10px;
+}
+
+
+
+/**/
+/*----------列宽---------*/
+/**/
+/*最小宽度*/
+.row-cell-min {
+    width: 80px;
+    min-width: 80px;
+}
+/*最小宽度*/
+.row-cell-middle {
+    width: 100px;
+    min-width: 100px;
+}
+/*最小宽度*/
+.row-cell-max {
+    width: 200px;
+    min-width: 200px;
+}
+/*默认宽度*/
+.row-cell-default {
+    width: 150px;
+    min-width: 150px;
+}
+/*电话*/
+.row-cell-tel {
+    width: 100px;
+    min-width: 100px;
+}
+
+/*姓名*/
+.row-cell-PersonName {
+    width: 80px;
+    min-width: 80px;
+}
+.row-cell-personname {
+    width: 80px;
+    min-width: 80px;
+}
+/*合同编号*/
+.row-cell-ordernumber {
+    width: 160px;
+    min-width: 160px;
+}
+.row-cell-orderNumber {
+    width: 160px;
+    min-width: 160px;
+}
+.row-cell-ordernumber-min {
+    width: 130px;
+    min-width: 130px;
+    padding-left: 5px;
+}
+
+/*公司名称*/
+.row-cell-company {
+    width: 250px;
+    min-width:250px;
+}
+/*日期*/
+.row-cell-date {
+    width: 100px;
+    min-width: 100px;
+}
+
+/*时间*/
+.row-cell-DateTime {
+    width: 130px;
+    min-width: 130px;
+}
+.row-cell-datetime {
+    width: 130px;
+    min-width: 130px;
+}
+
+/*类型*/
+.row-cell-type {
+    width: 100px;
+    min-width: 100px;
+}
+
+/*状态*/
+.row-cell-status {
+    width: 110px;
+    min-width: 110px;
+}
+
+/*收展子单*/
+.row-cell-itemsOpen {
+    width: 40px;
+    min-width: 40px;
+    text-indent: 2px;
+    padding-left: 5px;
+}
+
+/*操作按钮列*/
+.row-cell-button-max {
+    min-width: 560px;
+}
+
+.row-cell-button-3x {
+    min-width: 300px;
+}
+
+.row-cell-button-4x {
+    min-width: 360px;
+}
+
+.row-cell-button-5x {
+    min-width: 420px;
+}
+
+.row-cell-button-min {
+    min-width: 200px;
+}
+
+.row-cell-button {
+    white-space: normal;
+}
+.white-space-normal {
+    white-space: normal;
+}
+.white-space-normal .ellipsis{
+    white-space: normal;
+}
+@media screen and (max-width: 1000px) {
+    .row-cell-button .ellipsis {
+        white-space: normal;
+    }
+}
+/*----------列宽end---------*/
+
+.flex-box {
+    display: flex;
+}
+
+.flex-grow-one {
+    flex-grow: 1;
+}
+
+.flex-grow-two {
+    flex-grow: 2;
+}
+
+/*列表多行文本行*/
+.multi-line-text .row {
+    padding: 8px 0 8px 0;
+}
+/*列表多行文本行的列*/
+.multi-line-text .row, .multi-line-text .row-cell {
+    height: auto;
+    line-height: 2em;
+}
+
+/**/
+/**/
+/**/
+/*组件下拉列表*/
+/**/
+/**/
+/**/
+#row-have-item table.module-list tr th {
+    padding: 8px 12px;
+    border-bottom: 2px solid #ddd;
+    line-height: inherit;
+}
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(odd) table.module-list tr th,
+h-simple-grid-body h-simple-grid-row#row-have-item:nth-child(even) table.module-list tr th{
+    border-bottom: 2px solid #ddd;
+}
+#row-have-item table.module-list tr:nth-child(odd) td {
+    background-color: #ffffff;
+}
+
+#row-have-item table.module-list tr:nth-child(even) td {
+    background-color: #efefef;
+}
+
+#row-have-item table.module-list tr td {
+    line-height: 1.42857143;
+    padding: 8px 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+#row-have-item table.module-list tr:hover td {
+    background-color: #CAF1FF;
+    cursor: pointer;
+}
+
+#row-have-item table.module-list th:first-child {
+    padding-left: 20px;
+}
+
+#row-have-item table.module-list th:last-child {
+    padding-right: 20px;
+}
+
+#row-have-item table.module-list td:last-child {
+    padding-right: 20px;
+}
+
+#row-have-item table.module-list td:first-child {
+    padding-left: 20px;
+}

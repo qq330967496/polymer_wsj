@@ -1,0 +1,253 @@
+<link rel="import" href="../h-form-checkbox.html"/>
+<link rel="import" href="../h-form-radio.html"/>
+<link rel="import" href="../h-form-select.html"/>
+<link rel="import" href="../h-form-input.html"/>
+<link rel="import" href="../h-form-span.html"/>
+<link rel="import" href="../h-form-textarea.html"/>
+<link rel="import" href="../../../o-resource.html"/>
+<link rel="import" href="../../dialog/demo/edit-product-category.html"/>
+
+<link rel="import" href="test-filter.html"/>
+
+<dom-module id="form-test">
+    <link rel="import" type="css" href="../../../style/css/input-group.css"/>
+    <!--/**
+     * 样式表
+     */-->
+    <style>
+        :host {
+            display: block;
+        }
+    </style>
+
+    <!--/**
+     * 组件的Local MOM
+     */-->
+    <template>
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+        <!--<h-input-select id="bb" is-input select-items="[[radioItems]]"-->
+                        <!--selected-data="3"></h-input-select>-->
+        <!--<h-input-select id="bb" is-input label="下拉列表单" select-items="[[radioItems]]"-->
+                        <!--selected-data="3"></h-input-select>-->
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+
+        <!--<p>12344</p>-->
+        <!--<h-form-input label="Test4" bind-data="0" type="number" required></h-form-input>-->
+        <!--<input type="number"/>-->
+        <paper-tabs id="suplierSettle" class="margin-t5"  selected="{{transCode}}" noink no-bar attr-for-selected="code">
+            <paper-tab code="2">采购端-付款支出</paper-tab>
+            <paper-tab code="3">采购端-退款收入</paper-tab>
+            <paper-tab code="4">采购端-违约金支出</paper-tab>
+            <paper-tab code="5">采购端-赔偿金收入</paper-tab>
+        </paper-tabs>
+    </template>
+</dom-module>
+
+<script>
+    (function () {
+        Polymer({
+            is: 'form-test',
+            behaviors: [OFormatBehavior, OBaseBehavior],
+            properties: {
+                transCode: {
+                    type: String
+                },
+                textValue: {
+                    type: String,
+                    value: 'aa'
+                },
+                checkboxItems: {
+                    type: Array,
+                    value: [{
+                        label: '薄膜',
+                        value: 1
+                    }, {
+                        label: '纤维',
+                        value: 2
+                    }, {
+                        label: '管材 ',
+                        value: 3
+                    }]
+                },
+                radioItems: {
+                    type: Array,
+                    value: [{
+                        label: '站内站内站内',
+                        contentElement: 'edit-product-category',
+                        value: 1
+                    }, {
+                        label: '站外站外站外',
+                        value: 2,
+                        permission: true
+                    }, {
+                        label: '系统系统系统',
+                        value: 3,
+                        permission: false
+                    }]
+                },
+                /**
+                 * 权限列表
+                 */
+                permItem: {
+                    type: Array,
+                    value: function () {
+                        return {"站内": false, "站外": false, "系统": true};
+                    }
+                },
+                selectedValue: {
+                    type: String,
+                    value: "1,2"
+                }
+            }
+
+        });
+    })();
+</script>

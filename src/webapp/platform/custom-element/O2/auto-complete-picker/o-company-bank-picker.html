@@ -1,0 +1,148 @@
+<!-- 多项选着业务组件包括：区域,产品线,省份城市-->
+<link rel="import" href="../../o-resource.html"/>
+<dom-module id="o-company-bank-picker">
+    <style>
+        :host h-input-select{
+            display: block;
+        }
+    </style>
+    <template>
+        <h-input-select label="[[label]]"
+                        select-items="[[selectItems]]"
+                        select-items-local = "{{selectItemsLocal}}"
+                        keyword="{{keyword}}"
+                        mode="{{mode}}"
+                        width="{{width}}"
+                        selected-data="{{selectedData}}"
+                        selected-list="{{selectedList}}"></h-input-select>
+    </template>
+    <script>
+        var pinyin = window.ks.pinyin.newInstance();
+        Polymer({
+            is: 'o-company-bank-picker',
+            behaviors: [OCrudBehavior],
+            properties: {
+                label: {
+                    type: String
+                },
+                width: String,
+                /**
+                 * 是否是演示模式
+                 */
+                demo: Boolean,
+                /**
+                 * 绑定到客户端的数据
+                 */
+                selectedData: {
+                    type: String,
+                    notify: true
+                },
+                /**
+                 * 公司ID
+                 */
+                companyId: {
+                    type: String,
+                    observer: "_companyIdChange"
+                },
+                /**
+                 * 下拉项
+                 */
+                selectItems: {
+                    type: Array,
+                    value: function () {
+                        return []
+                    }
+                },
+                /**
+                 * 被选中的数据项集合
+                 */
+                selectedList: {
+                    type: Array,
+                    notify: true,
+                    value: function() {
+                        return [];
+                    }
+                },
+                /**
+                 * 下拉项总数据
+                 */
+                selectItemsLocal: {
+                    type: Array,
+                    value: function () {
+                        return []
+                    }
+                },
+                /**
+                 * 模式 常量：'Edit','View'
+                 */
+                mode: {
+                    type: String,
+                    value: 'Edit'
+                },
+                keyword: {
+                    type: String,
+                    notify: true,
+                    observer: "_keywordChange"
+                },
+                /**
+                 * 本地数据
+                 */
+                localData: {
+                    type: Array,
+                    value: [{
+                        label: '工商银行',
+                        value: '1'
+                    }, {
+                        label: '建设银行',
+                        value: '2'
+                    }, {
+                        label: '民生银行',
+                        value: '3'
+                    }]
+                }
+            },
+            _keywordChange: function (newVal) {
+                var self = this;
+                if (newVal) {
+                    var searchResult = pinyin.search(newVal);
+                    if (searchResult) {
+                        self.set("selectItems", searchResult.map(function (e) {
+                            return JSON.parse(e.content);
+                        }));
+                    }
+                }else{
+                    self.set("selectItems",self.selectItemsLocal);
+                }
+            },
+            _companyIdChange: function (companyId) {
+                var self = this;
+                if (this.demo) {
+                    self.set("selectItems", this.localData);
+                    return;
+                }
+                if(companyId){
+                        var url = "/crm/crmcustomersnew/findCompanyBanks/"+companyId+".do";
+                    $.ajax({
+                        type: "GET",
+                        url: self.getRoot() + url,
+                        data: {},
+                        dataType: "json",
+                        success: function (data) {
+                            var temp = data.map(function (e) {
+                                return {label: e.bank, value: e.id,cardNo: e.cardno};
+                            });
+                            temp.forEach(function (e) {
+                                pinyin.setCache([e.label], JSON.stringify(e));
+                            });
+                            self.set("selectItemsLocal", temp);
+                            self.set("selectItems", temp);
+                        },
+                        error: function (messge) {
+                            console.log("查询失败：" + messge.responseText);
+                        }
+                    });
+                }
+            }
+        })
+    </script>
+</dom-module>

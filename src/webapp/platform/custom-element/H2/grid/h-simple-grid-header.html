@@ -1,0 +1,23 @@
+<link rel="import" href="../../o-resource.html" />
+<dom-module id="h-simple-grid-header">
+	<link rel="import" type="css" href="h-simple-grid.css"/>
+	<style>
+		:host ::content h-simple-grid-row-cell:last-child{
+		}
+		.flex-grow-one{
+			flex-grow: var(--header-flex-gorw,1);
+			width:  var(--cell-width, 150px);
+			min-width: 150px;
+		}
+	</style>
+	<template>
+		<div class="header flex-box">
+			<content></content>
+		</div>
+	</template>
+	<script>
+		Polymer({
+			is:"h-simple-grid-header"
+		})
+	</script>
+</dom-module>

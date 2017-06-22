@@ -1,0 +1,15 @@
+<!--所有资产-->
+<dom-module id="fund-asset-all">
+    <template>
+        <div class="search-wrap vertical-box form-wrap flex-wrap">
+            <h-input-select label="资金渠道" select-items="[[fundType]]" selected-data="0"></h-input-select>
+            <h-input-select label="资产状态" select-items="[[fundStatus]]" selected-data="0"></h-input-select>
+            <div class="vertical-top search-submit inline-block search-item">
+                <paper-button type="button" class="btn btn-primary float-l">查询</paper-button>
+                <paper-button type="button" class="btn btn-primary float-l">重置</paper-button>
+            </div>
+        </div>
+        <fund-asset-all-list></fund-asset-all-list>
+    </template>
+    <script type="text/javascript" src="assets/js/fund-asset-all.js"></script>
+</dom-module>

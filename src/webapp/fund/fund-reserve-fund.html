@@ -1,0 +1,73 @@
+<!--备用金-->
+<dom-module id="fund-reserve-fund">
+    <template>
+        <div class="fund-index-top float-box">
+            <dl class="fund-overview">
+                <dt>累计融资金额：</dt>
+                <dd><b class="t-sum font18">¥ 8,000,000.00</b> 元</dd>
+                <dt>累计融资利息：</dt>
+                <dd><b class="t-interest font18">¥ 10,000.00 元</b></dd>
+            </dl>
+            <dl class="fund-overview">
+                <dt>资金池总额：</dt>
+                <dd><b class="t-sum font18">¥ 4,000,000.00</b> 元</dd>
+                <dt>可用余额：</dt>
+                <dd><b class="t-sum font18">¥ 3,200,000.00</b> 元</dd>
+            </dl>
+            <dl class="fund-overview">
+                <dd>待收本息：<span>¥ 800,000.00</span> 元</dd>
+                <dd>日利率：<span>14%</span></dd>
+            </dl>
+            <dl class="fund-overview">
+                <dd>待付款金额：<span>¥ 1,000,000.00</span> 元</dd>
+                <dd>待付款订单：<span>5</span> 个</dd>
+                <dd>
+                    <paper-button class="btn btn-default">查看</paper-button>
+                </dd>
+            </dl>
+        </div>
+        <div class="box-part">
+            <div class="title-bar"><span class="inline-block mb-5">资产列表</span></div>
+            <div>
+                <paper-tabs class="tab-bar" selected="{{tabindex}}" noink no-bar>
+                    <paper-tab class="tab-item">进行中</paper-tab>
+                    <paper-tab class="tab-item">已转让</paper-tab>
+                    <paper-tab class="tab-item">已完成</paper-tab>
+                </paper-tabs>
+            </div>
+            <div class="search-wrap vertical-box form-wrap flex-wrap">
+                <o-order-picker label="资产编号" class="search-item"
+                                bind-data="{{queryCondition.orderNo}}"></o-order-picker>
+                <o-customer-picker label="客户名称" class="inline-block search-item" customer-type="1"
+                                   bind-data="{{queryCondition.customerId}}"></o-customer-picker>
+                <div class="inline-block search-item">
+                    <h-form-input label="到期日" type="date" bind-data="{{queryCondition.startTime}}"></h-form-input>
+                    <h-form-input label="至" class="endTime-label" type="date"
+                                  bind-data="{{queryCondition.endTime}}"></h-form-input>
+                </div>
+                <div class="inline-block search-item">
+                    <h-form-input label="回款日" type="date" bind-data="{{queryCondition.startTime}}"></h-form-input>
+                    <h-form-input label="至" class="endTime-label" type="date"
+                                  bind-data="{{queryCondition.endTime}}"></h-form-input>
+                </div>
+                <div class="vertical-top search-submit inline-block search-item">
+                    <paper-button type="button" class="btn btn-primary float-l">查询</paper-button>
+                    <paper-button type="button" class="btn btn-primary float-l">重置</paper-button>
+                </div>
+            </div>
+            <div>
+                <template is="dom-if" if="{{showTabIndex(0,tabindex)}}">
+                    <fund-reserve-fund-list-ongoing></fund-reserve-fund-list-ongoing>
+                </template>
+                <template is="dom-if" if="{{showTabIndex(1,tabindex)}}">
+                    <fund-asset-transfer-list-complete></fund-asset-transfer-list-complete>
+                </template>
+                <template is="dom-if" if="{{showTabIndex(2,tabindex)}}">
+                    <fund-reserve-fund-list-complete></fund-reserve-fund-list-complete>
+                </template>
+            </div>
+        </div>
+
+    </template>
+    <script type="text/javascript" src="assets/js/fund-reserve-fund.js"></script>
+</dom-module>

@@ -1,0 +1,84 @@
+<!-- crud -->
+<link rel="import" href="../../o-resource.html"/>
+<link rel="import" href="h-crud-behavior.html">
+<link rel="import" href="h-crud-search.html">
+<link rel="import" href="h-crud-list.html">
+<link rel="import" href="h-crud-form.html">
+
+<dom-module id="h-crud">
+    <style>
+        :host {
+
+        }
+    </style>
+    <template>
+        <h-crud-search search-info="{{searchInfo}}"
+                       query-condition="{{queryCondition}}"
+                       list-entity="{{listEntity}}"
+                       form-info="{{formInfo}}"
+                ></h-crud-search>
+        <h-crud-list list-info="{{listInfo}}"
+                     query-condition="{{queryCondition}}"
+                     list-entity="{{listEntity}}"
+                     form-info="{{formInfo}}"
+                ></h-crud-list>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: 'h-crud',
+        behaviors: [HCrudBehavior],
+        properties: {
+            table: {
+                type: String
+            },
+            /**
+             * 数据库元信息包括：columnEn,columnType
+             * @attribute meta
+             * {
+                    tableName:"userTable",      //需要操作的数据库表
+                    column:{                    //数据库表对应的字段
+                        field1:{                //字段描述信息
+                            name:"name",
+                            type:String,
+                            comment:"名称",
+                            element:"elementName"
+                                ...
+                        },
+                        field2:{
+                            name:"age",
+                            type:Number,
+                            comment:"年龄",
+                            element:"elementName"
+                                ...
+                        },
+                        ...
+                    },
+                    createUrl:"/aa/bb/cc.do",    //新增接口 注意要使用全路径
+                    deleteUrl:"/aa/bb/cc.do"     //删除接口 注意要使用全路径
+                    queryUrl:"/aa/bb/cc.do",     //查询接口 注意要使用全路径
+                    updateUrl:"/aa/bb/cc.do",    //更新接口 注意要使用全路径
+                    ...
+                }
+             * @type{Object}
+             */
+            meta: {
+                type: Object,
+                value: function () {
+                    return {}
+                }
+            }
+
+        },
+        listeners: {
+            "data-change" : '_backToRoot'
+        },
+        _backToRoot: function (e) {
+            this._queryList();
+            e.stopPropagation();
+        },
+        ready: function () {
+        }
+    });
+</script>

@@ -1,0 +1,58 @@
+<!--单个客户-->
+<dom-module id="customer-info">
+    <style>
+        :host {
+            display: table;
+            width: 100%;
+        }
+    </style>
+    <template>
+        <div>
+            <div class="sider-left pull-left">
+                <div class="company-logo">logo</div>
+                <ul class="info-list">
+                    <!--<li>客户编号：<span>KS201607170001&[[customer.id]]</span></li>-->
+                    <!--<li>融资次数：<span>10</span></li>-->
+                    <!--<li class="li-t">账户信息</li>-->
+                    <!--<li>登录名：<span>13800138000</span></li>-->
+                    <!--<li>注册时间：<span>2016-7-17 22:45</span></li>-->
+                    <!--<li class="li-t">信用信息</li>-->
+                    <!--<li>信用等级：<span>AA</span></li>-->
+                    <!--<li>信用得分：<span>450</span></li>-->
+                    <!--<li class="li-t">资金信息</li>-->
+                    <!--<li>待还总额：<span class="t-red">¥ 65,000.00</span> 元</li>-->
+
+                    <li>客户编号：<span>[[customer.id]]</span></li>
+                    <li>融资次数：<span>10</span></li>
+                    <li class="li-t">账户信息</li>
+                    <li>登录名：<span>[[customer.loginName]]</span></li>
+                    <li>注册时间：<span>2016-7-17 22:45</span></li>
+                    <li class="li-t">信用信息</li>
+                    <li>信用等级：<span>AA</span></li>
+                    <li>信用得分：<span>450</span></li>
+                    <li class="li-t">资金信息</li>
+                    <li>待还总额：<span class="t-red">¥ 65,000.00</span> 元</li>
+                </ul>
+            </div>
+            <div>
+                <paper-tabs class="tab-bar" selected="{{tabindex}}" noink no-bar>
+                    <paper-tab class="tab-item">企业资料</paper-tab>
+                    <paper-tab class="tab-item">融资订单</paper-tab>
+                    <paper-tab class="tab-item">采购记录</paper-tab>
+                </paper-tabs>
+                <div class="customer-info-main">
+                    <template is="dom-if" if="{{showTabIndex(0,tabindex)}}">
+                        <customer-info-company-info customer="{{customer}}" company="{{company}}"></customer-info-company-info>
+                    </template>
+                    <template is="dom-if" if="{{showTabIndex(1,tabindex)}}">
+                        <customer-info-financing-order company-id="{{companyId}}"></customer-info-financing-order>
+                    </template>
+                    <template is="dom-if" if="{{showTabIndex(2,tabindex)}}">
+                        <customer-info-purchase-record query-condition="{{queryCondition}}" orders="{{orders}}"></customer-info-purchase-record>
+                    </template>
+                </div>
+                </div>
+        </div>
+    </template>
+    <script type="text/javascript" src="assets/js/customer-info.js"></script>
+</dom-module>

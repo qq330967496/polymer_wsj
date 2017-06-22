@@ -1,0 +1,196 @@
+<!--
+@author Chad.chen
+OPurchaseStaffBehavior提供了采购员角色下的信息屏蔽规则
+-->
+<script>
+    OStaffPermissionBehaviorImp = {
+        properties: {
+            isPurchase:Boolean,
+            /**
+             * field : 过滤的字段名
+             * selector:标识定位类名：
+             */
+            roleConfig: {
+                type: Object,
+                value: {
+                    purchase: {
+                        /**
+                         * tab索引页面
+                         */
+                        kuaisuorderIndex: {
+                            field: "收款证明认领,物流预约单,快塑贷",
+                            selector: ".kuaisuorder-index-filter"
+                        },
+                        /**
+                         * 销售订单详情页面
+                         */
+                        salesOrderDetailIndex: {
+                            field: "销售订单详情",
+                            selector: ".sales-order-detail-Index-filter"
+                        },
+                        /**
+                         * 销售列表页面(包含销售主单)
+                         */
+                        sellersIndex: {
+                            field: "代理公司,交易公司,结算信息",
+                            subField: "公司名称,结算信息,销售合同(按钮控制)",
+                            selector: ".sellers-index-filter"
+                        },
+                        /**
+                         * 销售列表页面（销售主单）
+                         */
+                        sellersList: {
+                            field: "代理公司,交易公司,结算信息",
+                            selector: ".sellers-list-filter"
+                        },
+                        /**
+                         * 销售列表页面（销售子单）
+                         */
+                        sellersSubitemList: {
+                            field: "销售情况",
+                            selector: ".sellers-subitem-list-filter"
+                        },
+                        /**
+                         * 销售子单页面
+                         */
+                        sellsubitemIndex: {
+                            field: "销售情况",
+                            selector: ".sellsubitem-index-filter"
+                        },
+                        /**
+                         * 客户结算表
+                         */
+                        customerstatementIndex: {
+                            field: "客户名称",
+                            selector: ".customerstatement-index-filter"
+                        },
+                        /**
+                         * 供应商结算表（销售子单）
+                         */
+                        supplierstatementListSub: {
+                            field: "客户名称",
+                            selector: ".supplierstatement-list-sub-filter"
+                        },
+                        purchaseOrderDetailIndex: {
+                            field: "销售情况",
+                            selector: ".purchase-order-detail-index-filter"
+                        },
+                        sellsubitemPurchaseConfirm: {
+                            field: "销售价",
+                            selector: ".sellsubitem-purchase-confirm-filter"
+                        }
+                    },
+                    haier: {
+                        /**
+                         * tab索引页面
+                         */
+                        kuaisuorderIndex : {
+                            field:"销售订单,销售子单,客户结算表,供应商结算表,发货单,收款证明认领,物流预约单,快塑贷,物流费用计算",
+                            selector: ".kuaisuorder-index-he-filter"
+                        },
+                        /**
+                         * 采购订单搜索条件
+                         */
+                        purchaseSearch : {
+                            field:"订单编号,供应商公司名称,交易员,采购员,类型,新增采购订单",
+                            selector: ".purchase-search-he-filter"
+                        },
+                        /**
+                         * 采购订单详情（包含订单详情和tab页）
+                         */
+                        purchaseOrderDetailIndex : {
+                            field: "订单详细信息,采购合同,供应商结算表,库存管理,操作日志",
+                            selector: ".purchase-order-detail-index-he-filter"
+                        },
+                        /**
+                         * 采购订单详情 销售子单tab页
+                         */
+                        sellsubitemListPurchase: {
+                            field: "采购商",
+                            selector: ".sellsubitem-list-purchase-he-filter"
+                        }
+                    }
+                }
+            },
+        },
+        /**
+         * @param self 存储当前页面的this的变量
+         */
+        loadCurrentConfig: function(self){
+            var currUser = top.uc ? top.uc.biz.getCurrUser() : {};
+            if(currUser && currUser.roleIds && currUser.roleIds != '') {
+                var config = {};
+                var roles = currUser.roleIds.split(",")
+                if( 1 == roles.length && 11 ==  roles[0]) {
+                    // 加载配置
+                    config = self.getCurrentConfig(self.is,'purchase');
+                }
+
+                if(1 == roles.length && 57 == roles[0]){
+                    config = self.getCurrentConfig(self.is,'haier');
+                }
+
+                // 屏蔽信息
+                if(config) {
+                    var selector = config.selector;
+                    var eles = self.querySelectorAll(selector);
+                    Array.prototype.forEach.call(eles,function(e){
+                        $(e).hide();
+                    });
+                }
+            }
+        },
+        /**
+         *
+         * @param module 当前页面标识,dom-module的id
+         * 例如：kuaisuorder-index-->kuaisuorder index -->kuaisuorderIndex
+         * 返回 kuaisuorderIndex:{field:xxx,selector:xxx}
+         */
+        getCurrentConfig : function(module,roleType){
+            var config = this.roleConfig[roleType];     //获取特定角色的配置列表
+            var temp = module.split('-');
+            var moduleName = temp[0];
+            for(var i = 1; i < temp.length; i++){
+                moduleName += temp[i].replace(/(\w)/,function(v){return v.toUpperCase()});
+            }
+            return config[moduleName];
+        },
+
+        /**
+         * 角色是否是海尔
+         * @returns {boolean}
+         */
+        isRoleOfHaier: function(){
+            var currUser = top.uc ? top.uc.biz.getCurrUser() : {};
+            if(currUser && currUser.roleIds && currUser.roleIds != '') {
+                var roles = currUser.roleIds.split(",");
+                return (1 == roles.length && 57 == roles[0]); // 海尔
+
+            }
+            return false;
+        },
+        // 查询当前用户的角色
+        // 传入回调函数，做各自的处理
+        queryPurchaseRole: function(callback){          //弃用
+            var url = "/uc/user/staffs/hasPurchaseRole.do";
+            this.query(url,{},callback);
+        },
+
+        /**
+         * 过滤数据集合
+         * @param dataList
+         * @returns {*}
+         */
+        filterDataForRole : function(dataList){
+            if(this.isRoleOfHaier()){
+                dataList = dataList.filter(function(e){
+                    return e.contractCompanyName == '蒲城清洁能源化工有限责任公司'; //或者可以比较id
+                });
+                return dataList;
+            } else {
+                return dataList;
+            }
+        },
+    }
+    OStaffPermissionBehavior = [OCrudBehavior,OStaffPermissionBehaviorImp];
+</script>

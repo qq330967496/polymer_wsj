@@ -1,0 +1,10 @@
+<link rel="import" href="shared-styles.html">
+<dom-module id="x-foo">
+    <template>
+        <!-- include the style module by name -->
+        <style include="shared-styles"></style>
+        <style>:host { display: block; }</style>
+        Hi
+    </template>
+    <script>Polymer({is: 'x-foo'});</script>
+</dom-module>

@@ -1,0 +1,121 @@
+/**
+* Created by luosan on 20160705.
+*页面名称：动态行增加删除与编辑
+*使用说明：实现的功能：动态添加行，删除行，编辑每个输入框，保存编辑的全部数据
+*优点：只进行数据层的操作，不需要dom操作
+*缺点：未实现单独封装成组件，因为不好处理
+*使用方式：1、在o-resource.html中引入该页面（目前被注释，释放注释即可）。2、在任意模块中直接调用该页面，即可预览效果（可参考友情链接模块link下面的test.html）
+*/
+<link rel="import" href="../../o-resource.html" />
+<dom-module id="h-list-grid">
+	<style>
+	</style>
+	<template>
+		<div class="row ">
+			<paper-button type="button" class="btn btn-primary float-l" on-click="addRow">增加</paper-button>
+		</div>
+		<template is="dom-repeat" items="{{dataList}}">
+			<h-simple-grid-row>
+				<input value="{{item.name::input}}"> <input value="{{item.age::input}}"> <input value="{{item.school::input}}"> <input value="{{item.city::input}}">
+				<paper-button class="btn btn-danger" data-args="{{index}}" on-click="delItem">删除  </paper-button>     <br/>
+			</h-simple-grid-row>
+		</template>
+		<div class="row ">
+			<paper-button type="button" class="btn btn-primary float-l" on-click="saveRows">保存</paper-button>
+		</div>
+	</template>
+	<script>
+		Polymer({
+			is:"h-list-grid",
+			properties:{
+				subItem:String,
+				subParam:{
+					type:Object,
+					value:function(){
+						return {};
+					}
+				},
+				dataList: {
+					type: Array,
+					value: [
+						{name:'jack',age:12,school:"五邑大学",city:"江门"},
+						{name:'菲菲',age:14,school:"清华大学",city:"珠海"},
+						{name:'张全蛋',age:15,school:"南开大学",city:"南京"},
+						{name:'法克',age:18,school:"广州大学",city:"广州"},
+						{name:'铁柱',age:23,school:"深圳大学",city:"深圳"},
+					],
+					notify: true
+				},
+				headerList: {
+					type: Array,
+					value: [],
+					notify: true
+				},
+				subItemDoc:{
+					type:Object,
+					value:function(){
+						return {};
+					}
+				},
+                openSubItem:{
+                    type:Object,
+                    value:function(){
+                        var counter = 0;
+                        var self = this;
+                        return {
+                            open:function(){
+                                var firstElement = self.$["sub-row"].firstElementChild;
+                                firstElement.fire("sub-open", {"openCounter": ++counter}, {bubbles: false});
+                                var span = self.querySelector('h-list-grid a span');
+                                if(span.classList.contains("fa-plus")){//小符号改变
+                                    span.classList.remove("fa-plus");
+                                    span.classList.add("fa-minus");
+                                }else{
+                                    span.classList.add("fa-plus");
+                                    span.classList.remove("fa-minus");
+                                }
+                                self.$["sub-row"].toggle();
+                            }
+                        }
+                    }
+                }
+			},
+			observers: [
+				'addSubItems(subItemDoc, subParam)'
+			],
+			addSubItems:function(subItemDoc,subParam){
+				if(!this.isEmptyObject(subItemDoc)&&!this.isEmptyObject(subParam)){
+					this.set("subItemDoc.subParam",this.subParam)
+				}
+			},
+			isEmptyObject: function (obj) {
+				if(typeof obj == "object"){
+					for (var n in obj) {
+						return false
+					}
+				}else{
+					return !obj;
+				}
+				return true;
+			},
+			addRow:function(){
+//				debugger
+//              this.selectItems.push({name:"Jack"});
+				var tempList= jQuery.extend(true,[], this.dataList);
+//              this.set("linkList",[])
+				tempList.push({name:"Jack",age:22,school:"wyu",city:"韶关"})
+				this.set("dataList",tempList)
+			},
+			delItem:function(e){
+				this.splice("dataList", e.target.dataArgs, 1);
+				var temp = this.extend([], this.dataList);
+				this.set("dataList", temp);
+			},
+			saveRows:function(){
+//				debugger
+				var data=JSON.stringify(this.dataList)
+				console.log(data)
+			}
+		})
+	</script>
+</dom-module>

@@ -1,0 +1,153 @@
+<link rel="import" href="o-auto-complete-picker.html"/>
+<dom-module id="o-filter-format-test">
+    <link rel="import" type="css" href="../../style/css/input-group.css"/>
+    <style>
+        :host {
+            white-space:nowrap;
+        }
+        :host label{
+            float: left;
+            line-height: 34px;
+        }
+    </style>
+    <template>
+        <o-auto-complete-picker id="customer-complete" filter="[[filter]]" column-info="[[columnInfo]]"
+                                display-field="name" value-field="id" local-data="[[localData]]" demo="{{demo}}"
+                                data-url="/crm/crmcustomers/findBuyersByKeyword.do"
+                                label="[[label]]"
+                                bind-data="{{bindData}}"></o-auto-complete-picker>
+    </template>
+    <script>
+        Polymer({
+            is: 'o-filter-format-test',
+            properties: {
+                demo: Boolean,
+                label: {
+                    type: String
+                },
+                bindData: {
+                    type: String,
+                    notify: true,
+                    observer: '_getEntity'
+                },
+                columnInfo: {
+                    type: Array,
+                    value: [{
+                        field: 'name',
+                        label: '客户姓名',
+                        width: '80'
+                    }, {
+                        field: 'phone',
+                        label: '客户联系方式',
+                        width: '100'
+                    }, {
+                        field: 'companyName',
+                        label: '客户公司名称',
+                        width: '100'
+                    }, {
+                        field: 'salesOperatorNames',
+                        label: '交易员',
+                        width: '100',
+                        format: function () {
+                            return "nihao"
+                        }
+                    }]
+                },
+                filter: {
+                    type: Object,
+                    value: {
+                        filterFun: function (name) {
+                            if (name == '诸吉峰') {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        },
+                        filterField: ["name"]
+                    }
+                },
+                localData: {
+                    type: Array,
+                    value: [{
+                        name: "诸吉峰",
+                        phone: "15292081609",
+                        companyName: "宁波范斯高进出口有限公司",
+                        salesOperatorNames: "于水林",
+                        companyId: 137,
+                        id: 237
+                    }, {
+                        name: "劳凯",
+                        phone: "15142818592",
+                        companyName: "宁波市元弘贸易有限公司",
+                        salesOperatorNames: "陈立巍",
+                        companyId: 138,
+                        id: 238
+                    }, {
+                        name: "张颖",
+                        phone: "13742715650",
+                        companyName: "浙江物产化工集团宁波有限公司",
+                        salesOperatorNames: "程凯",
+                        companyId: 139,
+                        id: 239
+                    }, {
+                        name: "林庆波",
+                        phone: "15547570686",
+                        companyName: "浙江华布岛进出口有限公司",
+                        salesOperatorNames: "张威",
+                        companyId: 140,
+                        id: 240
+                    }, {
+                        name: "沈建波",
+                        phone: "18677405656",
+                        companyName: "远大石化有限公司",
+                        salesOperatorNames: "张三",
+                        companyId: 141,
+                        id: 241
+                    }, {
+                        name: "张全蛋",
+                        phone: "15513456204",
+                        companyName: "浙江凯勒聚合材料科技有限公司",
+                        salesOperatorNames: "诸葛励志",
+                        companyId: 142,
+                        id: 242
+                    }, {
+                        name: "唐马儒",
+                        phone: "13573736602",
+                        companyName: "宁波范斯高进出口有限公司",
+                        salesOperatorNames: "欧阳武陵",
+                        companyId: 143,
+                        id: 243
+                    }, {
+                        name: "紊流",
+                        phone: "13573736602",
+                        companyName: "宁波范斯高进出口有限公司",
+                        salesOperatorNames: "欧阳武陵",
+                        companyId: 143,
+                        id: 243
+                    }]
+                }
+            },
+            _getEntity: function (newBind, oldBind) {
+                var self = this;
+                var url = '/crm/buyers/' + newBind + '.do';
+                if (this.demo) {
+                    //                    self.$['customer-complete'].set('keyword','test');
+                } else if (newBind) {
+                    var param = {};
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        data: param,
+                        dataType: "json",
+                        success: function (data) {
+                            self.$['customer-complete'].set('keyword', data.name);
+                        },
+                        error: function (messge) {
+                            throw Error("查询失败：" + messge.responseText);
+                        }
+                    });
+                }
+            }
+        })
+    </script>
+</dom-module>

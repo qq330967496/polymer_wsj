@@ -1,0 +1,83 @@
+<link rel="import" href="../../o-resource.html" />
+<dom-module id="h-animated-dropdown">
+
+  <style>
+
+    :host {
+      position:absolute;
+      z-index: 9999;
+      display: none;
+      padding: 5px 0px 0px 0px;
+      background: white;
+      color: black;
+      @apply(--shadow-elevation-2dp);
+    }
+  </style>
+
+  <template>
+      <content></content>
+  </template>
+
+</dom-module>
+
+<script>
+
+  Polymer({
+
+    is: 'h-animated-dropdown',
+
+    behaviors: [
+      Polymer.NeonAnimationRunnerBehavior
+    ],
+
+    properties: {
+
+      animationConfig: {
+        type: Object,
+        value: function() {
+          return {
+            'entry': [{
+              name: 'scale-up-animation',
+              node: this,
+              transformOrigin: '0 0'
+            }],
+            'exit': [{
+              name: 'fade-out-animation',
+              node: this
+            }]
+          }
+        }
+      },
+
+      _showing: {
+        type: Boolean,
+        value: false
+      }
+
+    },
+
+    listeners: {
+      'neon-animation-finish': '_onAnimationFinish'
+    },
+
+    _onAnimationFinish: function() {
+      if (this._showing) {
+      } else {
+        this.style.display = '';
+      }
+    },
+
+    show: function() {
+      this.style.display = 'block';
+      this._showing = true;
+      this.playAnimation('entry');
+    },
+
+    hide: function() {
+      this._showing = false;
+      this.playAnimation('exit');
+    }
+
+  });
+
+</script>

@@ -1,0 +1,8 @@
+{
+  "name": "polymer_wsj",
+  "main": "index.html",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "web-component-tester": "6.0.0-prerelease.5"
+  }

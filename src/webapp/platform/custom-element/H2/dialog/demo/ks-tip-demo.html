@@ -1,0 +1,81 @@
+<link rel="import" href="../../../o-resource.html"/>
+<dom-module id='ks-tip-demo'>
+    <link rel="import" href="../h-tip-dialog.html"/>
+    <style>
+        /*ks.tip组件start*/
+        .ks-tip {
+            min-width: 300px;
+            width: auto;
+            height: 60px;
+            overflow: hidden;
+            box-shadow: 10px 10px 30px #a0a0a0;
+            font-size: 16px;
+            color: #000;
+            padding: 10px;
+            position: fixed;
+            top: 300px;
+            left: 40%;
+            text-align: center;
+            z-index: 99999;
+        }
+
+        .ks-tip.success {
+            background: #00b300;
+            color: #fff;
+            line-height: 40px;
+        }
+
+        .ks-tip.alert {
+            background: #ffff00;
+            color: red;
+            line-height: 40px;
+        }
+
+        .ks-tip.msg {
+            background: blue;
+            color: #fff;
+            line-height: 40px;
+        }
+
+        .ks-tip.error {
+            background: #f60;
+            color: #fff;
+            line-height: 40px;
+        }
+    </style>
+    <template>
+		<span>
+		<button on-click="test">success</button>
+        <button on-click="error">error</button>
+            <button on-click="alert">alert</button>
+		</span>
+    </template>
+    <script>
+        Polymer({
+            is: 'ks-tip-demo',
+            behaviors: [OBaseBehavior, OTipBehavior],
+            properties: {
+                message: {
+                    type: String,
+                    value: "hello"
+                },
+                type: {
+                    type: String,
+                    value: "alert"
+                }
+            },
+            test: function () {
+                this.hTip.success("success");
+            },
+            error: function () {
+                this.hTip.confirm("error", function () {
+                });
+            },
+            alert: function () {
+                this.hTip.error("alert");
+            }
+
+        })
+    </script>
+
+</dom-module>

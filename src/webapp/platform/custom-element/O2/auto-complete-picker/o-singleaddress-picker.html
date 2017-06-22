@@ -1,0 +1,135 @@
+<!--单个城市或者地区组件-->
+<link rel="import" href="o-auto-complete-picker.html"/>
+<dom-module id="o-singleaddress-picker">
+    <link rel="import" type="css" href="../../style/css/input-group.css"/>
+    <style>
+        :host {
+            white-space: nowrap;
+            float: left;
+        }
+
+        :host label {
+            float: left;
+            line-height: 34px;
+        }
+    </style>
+    <template>
+        <o-auto-complete-picker id="singleaddress-complete" column-info="[[_getColumnInfo(addressType)]]"
+                                display-field="{{displayField}}"
+                                bind-item-value="{{bindItemValue}}"
+                                placeholder="[[label]]"
+                                mode="{{mode}}"
+                                label="[[label]]"
+                                no-label="[[noLabel]]"
+                                value-field="cityCode" local-data="[[localData]]" demo="{{demo}}"
+                                data-url="[[getDataUrl(addressType)]]"
+                                bind-data="{{bindData}}"></o-auto-complete-picker>
+    </template>
+    <script>
+        Polymer({
+            is: 'o-singleaddress-picker',
+            behaviors: [OBaseBehavior, OTipBehavior],
+            properties: {
+                demo: { //是否是演示模式
+                    type: Boolean,
+                    value: false
+                },
+                label: { //组件label
+                    type: String
+                },
+                noLabel: { //是否显示label
+                    type: Boolean,
+                    value: false
+                },
+                displayField: {
+                    type: String,
+                    value: 'name',
+                    notify: true
+                },
+                bindData: {
+                    type: String,
+                    notify: true,
+                    observer: '_getAddressEntity'
+                },
+                bindItemValue: {
+                    type: Object,
+                    notify: true
+                },
+                addressType: {//单个城市或者地区类型 1：省份 2：城市
+                    type: Number,
+                    value: 2,//默认是2
+                    notify: true
+                },
+                /**
+                 * 模式 常量：'Edit','View'
+                 */
+                mode: {
+                    type: String,
+                    value: 'Edit'
+                },
+                localData: {
+                    type: Array,
+                    value: []
+                }
+            },
+            /**
+             * 根据code查询城市
+             * @param newBind
+             * @param oldBind
+             * @private
+             */
+            _getAddressEntity: function (newBind, oldBind) {
+                var self = this;
+                var businessName="city"
+                if(self.addressType==1){
+                    businessName="province"
+                }
+                var url = this.getRoot() + '/sys/memcache/fetchByPrimaryKey.do?businessCode='+businessName+'&primaryKey='+newBind;
+                if (this.demo) {
+                    var complete = self.$['customer-complete'];
+                    complete.set('keyword', complete.getLabel(newBind));
+                } else if (newBind) {
+                    var param = {};
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        data: param,
+                        dataType: "json",
+                        success: function (data) {
+                            if(data && data.length>0){
+                                self.$['singleaddress-complete'].set('keyword', data[0].name);
+                                self.$['singleaddress-complete'].set('bindItemValue', data[0]);
+                            }
+                        },
+                        error: function (messge) {
+                            throw Error("查询失败：" + messge.responseText);
+                        }
+                    });
+                } else {
+                    self.$['singleaddress-complete'].set('keyword', null);
+                }
+            },
+            getDataUrl: function (addressType) {
+                    if (addressType == 1) {//省份
+                        return "/sys/memcache/findByKeyword.do?businessCode=provinice";
+                    } else if(addressType == 2){//城市
+                        return "/sys/memcache/findByKeyword.do?businessCode=city";
+                    }
+            },
+            //组件列属性
+            _getColumnInfo: function (addressType) {
+                if (addressType == 1) {//省份
+                    return [
+                        {field: 'name', label: '省份', width: '80'},
+                    ]
+
+                }else if (addressType == 2) {//城市
+                    return [
+                        {field: 'name', label: '城市', width: '80'},
+                    ]
+                }
+
+            }
+        })
+    </script>
+</dom-module>
