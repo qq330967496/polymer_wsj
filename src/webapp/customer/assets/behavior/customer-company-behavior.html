@@ -19,7 +19,7 @@
                 notify: true
             },
 
-            companyList: {
+            customerList: {
                 type: Array,
                 value: function () {
                     return []
@@ -58,7 +58,7 @@
             this.dealParams(params);
             params.loading = true;//加载遮罩
             this.query("/customer/findSimpleCompanies.do", params, function (data) {
-                self.set("companyList", data.rows);
+                self.set("customerList", data.rows);
                 self.set("queryCondition.results", data.results);
             }, function (XMLHttpRequest) {
                 self.hTip.confirm(XMLHttpRequest.responseText);
@@ -91,7 +91,6 @@
          */
         resetFormSmsQC: function () {
             var queryCondition = this.getQueryCondition();
-            this.set("orderKeyword", null);
             this.set('queryCondition', queryCondition);
         },
 
@@ -104,5 +103,5 @@
             $("#mainIndex")[0]._showTabPage("company_" + companyName, id);
         }
     }
-    CustomerCompanyBehavior = [CustomerCompanyBehaviorImpl, OCrudBehavior, OFormatBehavior];
+    CustomerCompanyBehavior = [OCrudBehavior, OFormatBehavior,CustomerCompanyBehaviorImpl];
 </script>

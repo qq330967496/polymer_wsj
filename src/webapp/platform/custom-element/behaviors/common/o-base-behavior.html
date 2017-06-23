@@ -203,14 +203,19 @@ BaseBehavior提供了构建组件的最基本属性和样式
             Polymer.dom(dialog).classList.add('paper-dialog');
             dialog.style.maxWidth = window.screen.width + 'px';
             dialog.style.width = width;
-//            dialog.style.paddingTop = '15px';
-//            dialog.style.paddingLeft = '15px';
-//            dialog.style.paddingRight = '15px';
-            dialog.style.paddingLeft = '0px';
-            dialog.style.paddingRight = '0px';
+            dialog.style.paddingTop = '15px';
+            dialog.style.paddingLeft = '15px';
+            dialog.style.paddingRight = '15px';
+            dialog.style.paddingBottom = '15px';
             dialog.style.margin = '0px';
+            // 屏蔽此行代码，可以实现垂直（上下）居中
+            // --注意：不可以屏蔽，dialog内容超过一页,里面内容未加载完成会有bug,不能下拉
             dialog.style.position = 'fixed';
-            dialog.style.top = '16px';
+            dialog.style.top = '6px';
+            //左右居中
+            dialog.style.left = '50%';
+            dialog.style.marginLeft = -parseInt(width)/2+'px';
+
             dialog.style.minHeight = height;
 //            dialog.style.height = 'auto';
             dialog.style.overflow = 'auto';
@@ -485,6 +490,18 @@ BaseBehavior提供了构建组件的最基本属性和样式
             return statusEnums[key] || "无";
         },
         /**
+         * 获取类似[{label:xxx,value:xxxx}]数组中value对应的label值
+         */
+        showRadioLabel: function(radioArray, value) {
+            var label = "";
+            radioArray.forEach(function(e){
+                if (value == e.value) {
+                    label = e.label;
+                }
+            });
+            return label;
+        },
+        /**
          *  @param status 传入数据 values 操作权限的集合 mode 与或运算 roles角色权限
          *
          *  */
@@ -651,6 +668,100 @@ BaseBehavior提供了构建组件的最基本属性和样式
                 result[key] = typeof obj[key]==='object'? this.copyObj(obj[key]): obj[key];
             }
             return result;
+        },
+
+        /**
+         * 移除字符串中所有的空格
+         * @param str
+         * @returns {*}
+         */
+        trimStr: function(str) {
+            if(str == null){
+                return "";
+            }
+            return str.replace(/\s/g, '');
+        },
+
+        /**
+         * 校验传入的值是否合法
+         * 非法输入：屏蔽null undefined 只含空白的字符串 NaN function
+         * @param val
+         */
+        vaildVal: function(val) {
+            var type;
+            if (val == undefined || val == null) {
+                return false;
+            }
+            type = typeof val;
+            switch (type) {
+                case 'string':
+                    if (this.trimStr(val) == '') {
+                        return false;
+                    }
+                    break;
+                case 'number':
+                    return !isNaN(val);
+                case 'function':
+                    return false;
+                case 'object':
+                    return this.isEmptyObject();
+            }
+            return true;
+        },
+
+        /**
+         * 对象相等：规则认定 具有相同的属性，且属性值也相同
+         * @param a
+         * @param b
+         * @returns {boolean}
+         */
+        isEqualValue :function(a,b) {
+            if(typeof a != 'object' || typeof b != 'object'){
+                return false;
+            }
+            var aProp = Object.getOwnPropertyNames(a);
+            var bProp = Object.getOwnPropertyNames(b);
+            if(aProp.length != bProp.length) {
+                return false;
+            }
+            for(var i = 0; i < aProp.length; i++){
+                var propName = aProp[i];
+                if(a[propName] != b[propName]){
+                    return false;
+                }
+            }
+            return true;
+        },
+
+        /**
+         * 查看对象元素是否在对象数组中
+         * @param list
+         * @param ele
+         */
+        containObj: function(list, ele) {
+            var flag = false;
+            for(var i = 0; i < list.length; i++) {
+                if (this.isEqualValue(list[i], ele)) {
+                    flag = true;
+                    break;
+                }
+            }
+            return flag;
+        },
+
+        /**
+         * 去重 对象数组
+         * @param arr
+         */
+        uniqueArray: function(arr) {
+            var r = [];
+            for (var i = 0; i < arr.length; i++) {
+                if(!this.containObj(r,arr[i])) {
+                    r.push(arr[i]);
+                }
+            }
+            return r;
         }
+
     };
 </script>

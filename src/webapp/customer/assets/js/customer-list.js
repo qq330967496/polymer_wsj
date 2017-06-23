@@ -1,9 +1,9 @@
 /**
- * Created by wendy-pc on 2016/7/26.
+ * Created by SkyLin on 2017/6/23.
  */
 Polymer({
     is: "customer-list",
-    behaviors:[OBaseBehavior,OCrudBehavior,CustomerCompanyBehavior],
+    behaviors: [OTipBehavior, CustomerCompanyBehavior],
     properties: {
         entity: {
             type: Object
@@ -11,12 +11,25 @@ Polymer({
         resetPaging: {
             type: Boolean
         },
-        companyList: {
+        customerList: {
             type: Array,
-            value: function () {
-                return []
-            },
             notify: true
         }
+    },
+    _disableCustomer: function () {
+        var self = this;
+        this.hTip.confirm(
+         "确定禁用该用户吗？",
+         function () {
+         self.hTip.success("禁用成功！",2000);
+         });
+    },
+    _enableCustomer: function () {
+        var self = this;
+        this.hTip.confirm(
+            "确定启用该用户吗？",
+            function () {
+                self.hTip.success("启用成功！", 2000);
+            });
     }
 });

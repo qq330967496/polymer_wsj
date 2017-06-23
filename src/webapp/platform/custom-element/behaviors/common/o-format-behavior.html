@@ -43,6 +43,26 @@ BaseBehavior提供了构建组件的最基本属性和样式
 //            console.log("this.bindData2",this.bindData);
         },
         /**
+         * 将long类型的时间戳转换为本地时间格式字符串
+         * @param longTime
+         * @param fmt 时间格式
+         */
+        formatLocalDate: function(longTime,fmt){
+            return this.formatDate(longTime,fmt).replace(" ","T");
+        },
+        /**
+         * 本地时间 与 普通时间 String之间的转换
+         * type: 1   localStr to Str
+         * type: 2   Str to localStr
+         */
+        formatStrToStr: function(timeStr, type){
+            if(timeStr) {
+                return type == 1 ? timeStr.replace("T", " ") : timeStr.replace(" ", "T");
+            }
+            return "";
+
+        },
+        /**
          * 格式化日期
          * @param date 时间戳（毫秒）
          * @param fmt 显示格式，默认为'yyyy-MM-dd HH:mm:ss'
@@ -72,6 +92,33 @@ BaseBehavior提供了构建组件的最基本属性和样式
                     fmt  =  fmt.replace(RegExp.$1,   (RegExp.$1.length  ==  1)  ?  (o[k])       :  (("00"  +  o[k]).substr((""  +  o[k]).length)));
                 }
             return  fmt;
+        },
+        /**
+         * 将long类型的时间戳转换为本地时间格式字符串
+         * @param longTime
+         * @param fmt 时间格式
+         */
+        formatLocalDate: function(longTime,fmt){
+            return this.formatDate(longTime,fmt).replace(" ","T");
+        },
+        /**
+         * 将本地时间格式转换为时间戳
+         * 不为本地时间则直接返回
+         */
+        formatLocalDateToLong: function(localTime){
+            if(localTime && localTime.toString().indexOf("T") > 0) {
+                return Date.parse(localTime.replace("T"," "));
+            }
+            return localTime;
+        },
+        /**
+         * 将浮点数保留两位小数
+         * @param num
+         * @returns {Number}
+         */
+        formatFloat: function(num) {
+            var num = Number(num);
+            return Number(num.toFixed(2));
         },
         /**
          * 格式化数字
@@ -191,5 +238,50 @@ BaseBehavior提供了构建组件的最基本属性和样式
             }
             return ChineseStr;
         },
+        //--------------------------Math.float -------------------------------//
+        accDiv: function(arg1, arg2){
+            var t1=0,t2=0,r1,r2;
+            try{t1=arg1.toString().split(".")[1].length}catch(e){}
+            try{t2=arg2.toString().split(".")[1].length}catch(e){}
+
+            r1=Number(arg1.toString().replace(".",""));
+            r2=Number(arg2.toString().replace(".",""));
+            return this.accMul((r1/r2), Math.pow(10,t2-t1));
+        },
+        //乘法
+        accMul: function(arg1, arg2) {
+            var m=0,s1=arg1.toString(),s2=arg2.toString();
+            try{m+=s1.split(".")[1].length}catch(e){}
+            try{m+=s2.split(".")[1].length}catch(e){}
+
+            return Number(s1.replace(".",""))*Number(s2.replace(".",""))/Math.pow(10,m);
+        },
+
+        //加法
+        accAdd: function(arg1, arg2){
+            var r1,r2,m;
+            try{r1=arg1.toString().split(".")[1].length}catch(e){r1=0};
+            try{r2=arg2.toString().split(".")[1].length}catch(e){r2=0};
+
+            m=Math.pow(10,Math.max(r1,r2));
+            return (arg1*m+arg2*m)/m
+        },
+        //减法
+        accSub: function(arg1, arg2){
+            var r1,r2,m,n;
+            try{r1=arg1.toString().split(".")[1].length}catch(e){r1=0}
+            try{r2=arg2.toString().split(".")[1].length}catch(e){r2=0}
+            m=Math.pow(10,Math.max(r1,r2));
+            n=(r1>=r2)?r1:r2;
+            return ((arg1*m-arg2*m)/m).toFixed(n);
+        },
+        // 控制小数位数的format方法
+        formatAccSub: function(arg1, arg2, fixed) {
+            var m, n, fix;
+            m = Number(arg1);
+            n = Number(arg2);
+            fix = fixed != null ? fixed : 2;
+            return Number(Number(this.accSub(m,n)).toFixed(fix));
+        }
     };
 </script>

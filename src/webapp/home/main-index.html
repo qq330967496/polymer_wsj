@@ -3,7 +3,7 @@
     <template>
         <div class="main-wrap">
             <div>
-                <paper-tabs class="tab-bar tab-complex" selected="{{tabindex}}" noink no-bar scrollable>
+                <paper-tabs class="tab-bar tab-complex" selected="{{tabindex}}" noink no-bar scrollable hide-scroll-buttons>
                     <template is="dom-repeat" items="[[tabPages]]">
                         <paper-tab class="tab-item">
                             <span name$="[[item.id]]" on-click="_clickTitle">[[item.title]]</span>
@@ -14,9 +14,9 @@
                 </paper-tabs>
             </div>
             <div id="mainCont" class="main-cont">
-                <template is="dom-if" if="{{showTabIndex('home',pageId)}}">
+                <!--<template is="dom-if" if="{{showTabIndex('home',pageId)}}">
                     <home-index></home-index>
-                </template>
+                </template>-->
                 <template is="dom-if" if="{{showTabIndex('approval',pageId)}}">
                     <financial-business-check-pending></financial-business-check-pending>
                 </template>
@@ -38,27 +38,6 @@
                 <template is="dom-if" if="{{showTabIndex('allCustomer',pageId)}}">
                     <customer-index></customer-index>
                 </template>
-                <!--<template is="dom-if" if="{{showTabIndex('order',pageId)}}">-->
-                <!--<financial-business-order></financial-business-order>-->
-                <!--</template>-->
-                <!--<template is="dom-if" if="{{showTabIndex('customer',pageId)}}">-->
-                <!--<customer-info></customer-info>-->
-                <!--</template>-->
-                <!--<template is="dom-if" if="{{showTabIndex(10,tabindex)}}">-->
-                <!--<fund-capital-pool></fund-capital-pool>-->
-                <!--</template>-->
-                <!--<template is="dom-if" if="{{showTabIndex(11,tabindex)}}">-->
-                <!--<fund-reserve-fund></fund-reserve-fund>-->
-                <!--</template>-->
-                <!--<template is="dom-if" if="{{showTabIndex(12,tabindex)}}">-->
-                <!--<fund-asset-all></fund-asset-all>-->
-                <!--</template>-->
-                <!--<template is="dom-if" if="{{showTabIndex(13,tabindex)}}">-->
-                <!--<fund-asset-transfer></fund-asset-transfer>-->
-                <!--</template>-->
-                <!--<template is="dom-if" if="{{showTabIndex(14,tabindex)}}">-->
-                <!--<fund-asset-details></fund-asset-details>-->
-                <!--</template>-->
             </div>
         </div>
     </template>

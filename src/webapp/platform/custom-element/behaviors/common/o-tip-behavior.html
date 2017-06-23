@@ -16,16 +16,16 @@
                 success: 1500,
                 msg: 1500
             },
-            success: function (message) {
-                this.tip(message, "success");
+            success: function (message,timeouts) {
+                this.tip(message, "success",timeouts);
             },
-            alert: function (message) {
-                this.tip(message, "alert");
+            alert: function (message,timeouts) {
+                this.tip(message, "alert",timeouts);
             },
-            error: function (message) {
-                this.tip(message, "error");
+            error: function (message,timeouts) {
+                this.tip(message, "error",timeouts);
             },
-            tip: function (message, type) {
+            tip: function (message, type,timeouts) {
                 var self=this;
                 var a = document.createElement('h-tip-dialog');
                 var dialog = a.querySelector('#tip-dialog');
@@ -36,35 +36,79 @@
                     a.remove();
                 })
                 document.body.appendChild(a);
+
+                timeouts= timeouts || self.timeouts[type];
                 setTimeout(function () {
                     a.remove();
-                }, self.timeouts[type])
+                },timeouts)
             },
-            confirm: function (message,okFn) {
+
+            /**
+             * 确认弹窗
+             * @param params 配置参数
+             * @param sureFn
+             * @param cancelFn
+             * @param type 弹窗类型 "confirm"、"prompt"
+             */
+            confirmDialog:function(params,okFn,noFn,type){
+                var  isConfig=(typeof params === 'object' && params !== null);
+                var yesBtn="确定";
+                var noBtn="取消";
+                var msg;
+                if(isConfig){
+                    yesBtn=params.yesBtn || yesBtn;
+                    noBtn=params.noBtn || noBtn;
+                    msg=params.message;
+                    if(params.sure && typeof(params.sure)=='function'){
+                        okFn=params.sure;
+                    }
+                    if(params.cancel && typeof(params.cancel)=='function'){
+                        noFn=params.cancel;
+                    }
+                }else{
+                    msg=params;
+                }
                 var a = document.createElement('h-tip-dialog');
                 var dialog = a.querySelector('#tip-dialog');
-                a.set('type','confirm');
-                a.set('message',message);
+
+                a.set('message',msg);
+                a.set('yesBtn',yesBtn);
+                a.set('noBtn',noBtn);
+                a.set('type',type);
                 a.addEventListener("confirm-handler",function(e){
-                    okFn();
-                    a.remove();
-                });
-                document.body.appendChild(a);
-                dialog.open();
-            },
-            prompt: function (message,okFn) {
-                var a = document.createElement('h-tip-dialog');
-                var dialog = a.querySelector('#tip-dialog');
-                a.set('type','prompt');
-                a.set('message',message);
-                a.addEventListener("confirm-handler",function(e){
-                    if(okFn(e.detail.remark)==false){
+                    if(okFn && type=="confirm"){
+                        okFn && okFn();
+
+                    }else if(okFn && type=="prompt" && okFn(e.detail.remark)==false){
                         return;
                     }
                     a.remove();
                 });
+
+                a.addEventListener("cancel-handler",function(e){
+                    noFn && noFn();
+                    a.remove();
+                });
                 document.body.appendChild(a);
                 dialog.open();
+            },
+            /**
+             * 确认提示框
+             * @param message
+             * @param okFn
+             * @param noFn
+             */
+            confirm: function (message,okFn,noFn) {
+                this.confirmDialog(message,okFn,noFn,"confirm");
+            },
+            /**
+             * 提示确认框（带备注）
+             * @param message
+             * @param okFn
+             * @param noFn
+             */
+            prompt: function (message,okFn,noFn) {
+                this.confirmDialog(message,okFn,noFn,"prompt");
             },
             //桌面通知
             notice:function(config){
