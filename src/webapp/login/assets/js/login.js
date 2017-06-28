@@ -9,12 +9,12 @@ $(function () {
             autoLogin: false
         };
         query(
-            '/wsj/staff/login.do',
+            '/wsj_server/staff/login.do',
             param,
             function (data) {
                 if (data.success) {
                     $('#errorMsg').hide();
-                    document.location.href = "/wsj/login/index.do";
+                    document.location.href = "/wsj_server/login/index.do";
                 } else {
                     $('#errorMsg').show();
                 }

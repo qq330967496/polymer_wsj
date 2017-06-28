@@ -42,7 +42,6 @@
                     a.remove();
                 },timeouts)
             },
-
             /**
              * 确认弹窗
              * @param params 配置参数
@@ -75,6 +74,12 @@
                 a.set('yesBtn',yesBtn);
                 a.set('noBtn',noBtn);
                 a.set('type',type);
+
+                // 是否隐藏取消按钮
+                if (isConfig) {
+                    a.set('hasCancleBtn', params.hasCancleBtn);
+                }
+
                 a.addEventListener("confirm-handler",function(e){
                     if(okFn && type=="confirm"){
                         okFn && okFn();

@@ -45,9 +45,10 @@
     </style>
     <template>
 		<span>
-		<button on-click="test">success</button>
-        <button on-click="error">error</button>
+            <button on-click="test">success</button>
+            <button on-click="error">error</button>
             <button on-click="alert">alert</button>
+            <button on-click="singleConfirm">singleConfirm</button>
 		</span>
     </template>
     <script>
@@ -73,8 +74,11 @@
             },
             alert: function () {
                 this.hTip.error("alert");
+            },
+            singleConfirm: function () {
+                this.hTip.confirm({message: "单个确认按钮测试", hasCancleBtn: false}, function () {
+                });
             }
-
         })
     </script>
 

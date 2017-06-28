@@ -60,7 +60,7 @@ BaseBehavior提供了构建组件的最基本属性和样式
          * @returns {*}
          */
         getRoot: function () {
-            return window.document.location.origin + "/wsj" || '/wsj';
+            return window.document.location.origin + "/wsj_server" || '/wsj_server';
         },
         /**
          * 获取资源路径请求头
@@ -236,7 +236,7 @@ BaseBehavior提供了构建组件的最基本属性和样式
             if (parentNode) {
                 Polymer.dom(parentNode).node.appendChild(dialog);
             } else {
-                Polymer.dom(this).node.domHost.appendChild(dialog);
+                Polymer.dom(this).node.appendChild(dialog);
             }
             Polymer.dom.flush();
             dialog.open();

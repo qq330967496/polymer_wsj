@@ -689,9 +689,7 @@ OCrudBehavior 提供了构建CRUD组件的最基本CRUD方法
          */
         checkSession: function (data) {
             if (data && data.sessionStatus === "timeout") {
-                this.hTip.confirm("登陆超时，请重新登陆", function () {
-                    document.location.href = data.redirectHref;
-                },function () {
+                this.hTip.confirm({message: "登陆超时，请重新登陆", hasCancleBtn: false}, function () {
                     document.location.href = data.redirectHref;
                 });
             }
