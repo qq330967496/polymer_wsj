@@ -1,6 +1,6 @@
 {
   "name": "polymer_wsj",
   "short_name": "polymer_wsj",
-  "start_url": "/index.do",
+  "start_url": "/",
   "display": "standalone"
 }

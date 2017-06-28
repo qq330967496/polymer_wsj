@@ -3,12 +3,24 @@
  */
 Polymer({
     is: "finance-index",
-    behaviors: [OBaseBehavior],
+    behaviors: [OBaseBehavior, OCrudBehavior],
     properties: {
         tabindex: {
             type: Number,
             value: 0
+        },
+        staff: {
+            type: Object,
+            value: function () {
+                return {
+                    name: ""
+                };
+            },
+            notify: true
         }
+    },
+    ready:function(){
+        this.async(this._getStaffName.bind(this), 100);
     },
     /**
      * 打开金融服务页面
@@ -74,6 +86,22 @@ Polymer({
     _openPage: function (pageId) {
         var mainIndex = $(this).find("#mainIndex")[0];
         mainIndex._showTabPage(pageId);
+    },
+    _logout: function () {
+        var self = this;
+        this.query("/staff/logout.do", {}, function (data) {
+            data.success ? document.location.href = self.getResourceRoot() + "/login/login.html" : "";
+        });
+    },
+    _getStaffName: function () {
+        var self = this;
+        this.query("/staff/loginUser.do", {}, function (data) {
+            if (data.success) {
+                self.set("staff", data.bean);
+                return;
+            }
+            document.location.href = self.getResourceRoot() + "/login/login.html";
+        });
     },
     showTabIndex: function (index, tabindex) {
         return index == tabindex;

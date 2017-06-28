@@ -125,6 +125,19 @@ paper-tabs.nav-bar paper-tab {
 
 .user-drawer {
     font-size: 14px;
+    margin-right:20px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.logout {
+    color: #3366cc;
+}
+
+.logout:hover {
+    color: #f60;
 }
 
 /*菜单*/
@@ -409,9 +422,11 @@ paper-tabs.tab-bar.tab-complex paper-tab.tab-item.iron-selected {
     overflow: hidden;
     zoom: 1;
 }
-.sub-h4{
+
+.sub-h4 {
     color: #0ea6da;
 }
+
 .info-list {
 
 }
