@@ -8,32 +8,18 @@ Polymer({
         customerList: {
             type: Array,
             value: function () {
-                return [{
-                    name: "罗三三",
-                    sex: "男",
-                    phone: "12345678901",
-                    createAt: new Date().getTime(),
-                    id: 1
-                }, {
-                    name: "罗三三",
-                    sex: "男",
-                    phone: "12345678901",
-                    createAt: new Date().getTime(),
-                    id: 2
-                }, {
-                    name: "罗三三",
-                    sex: "男",
-                    phone: "12345678901",
-                    createAt: new Date().getTime(),
-                    id: 3
-                }]
+                return []
             },
             notify: true
         }
     },
-    listeners:{
-        "data-change":'findSimpleCompanies',
+    listeners: {
+        "data-change": 'findCustomers',
     },
     ready: function () {
+        var self = this;
+        setTimeout(function () {
+            self.findCustomers();
+        },100);
     }
 });

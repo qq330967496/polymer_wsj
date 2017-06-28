@@ -7,7 +7,7 @@
         }
     </style>
     <template>
-        <h-simple-grid class="multi-line-text" paging="{{queryCondition}}" on-select-page="findSimpleCompanies">
+        <h-simple-grid class="multi-line-text" paging="{{queryCondition}}" on-select-page="findCustomers">
             <h-simple-grid-header>
                 <h-simple-grid-header-cell class="row-cell-company white-space-normal">用户昵称</h-simple-grid-header-cell>
                 <h-simple-grid-header-cell class="row-cell-default">性别</h-simple-grid-header-cell>
@@ -21,12 +21,16 @@
                         <h-simple-grid-row-cell class="row-cell-company white-space-normal">
                             <span>[[item.name]]</span>
                         </h-simple-grid-row-cell>
-                        <h-simple-grid-row-cell class="row-cell-default"><span>[[item.sex]]</span></h-simple-grid-row-cell>
+                        <h-simple-grid-row-cell class="row-cell-default"><span>[[_showSex(item.sex)]]</span></h-simple-grid-row-cell>
                         <h-simple-grid-row-cell class="row-cell-default"><span>[[item.phone]]</span></h-simple-grid-row-cell>
-                        <h-simple-grid-row-cell class="row-cell-date"><span>[[formatDate(item.createAt,"yyyy-MM-dd")]]</span></h-simple-grid-row-cell>
+                        <h-simple-grid-row-cell class="row-cell-date"><span>[[formatDate(item.createdAt,"yyyy-MM-dd")]]</span></h-simple-grid-row-cell>
                         <h-simple-grid-row-cell is-option class="row-cell-button row-cell-button-min flex-grow-one">
-                            <paper-button class="btn btn-primary table-btn" is-button on-click="_enableCustomer" data-args="[[item]]">启用</paper-button>
-                            <paper-button class="btn btn-danger table-btn" is-button on-click="_disableCustomer" data-args="[[item]]">禁用</paper-button>
+                            <template is="dom-if" if="[[compareType(item.status,0)]]">
+                                <paper-button class="btn btn-primary table-btn" is-button on-click="_enableCustomer" data-args="[[item]]">启用</paper-button>
+                            </template>
+                            <template is="dom-if" if="[[compareType(item.status,1)]]">
+                                <paper-button class="btn btn-danger table-btn" is-button on-click="_disableCustomer" data-args="[[item]]">禁用</paper-button>
+                            </template>
                         </h-simple-grid-row-cell>
                     </h-simple-grid-row>
                 </template>

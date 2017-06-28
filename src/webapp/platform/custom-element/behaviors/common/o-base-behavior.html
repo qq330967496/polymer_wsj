@@ -60,7 +60,14 @@ BaseBehavior提供了构建组件的最基本属性和样式
          * @returns {*}
          */
         getRoot: function () {
-            return (window.webRoot ? window.webRoot + '/' : null) || '';
+            return window.document.location.origin + "/wsj" || '/wsj';
+        },
+        /**
+         * 获取资源路径请求头
+         * @returns {*}
+         */
+        getResourceRoot: function () {
+            return window.document.location.origin + "/wsj_system";
         },
         getVersion: function () {
             return window.version;

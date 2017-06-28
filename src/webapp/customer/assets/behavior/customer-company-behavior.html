@@ -1,5 +1,6 @@
 <script>
     CustomerCompanyBehaviorImpl = {
+        behaviors: [OBaseBehavior, OCrudBehavior],
         properties: {
             queryCondition: {
                 type: Object,
@@ -13,41 +14,19 @@
                 },
                 notify: true
             },
-
-            orderKeyword: {
-                type: String,
-                notify: true
-            },
-
             customerList: {
                 type: Array,
                 value: function () {
                     return []
                 },
                 notify: true
-            },
-
-            orderChannel: {
-                type: Array,
-                value: [{
-                    label: '全部',
-                    value: 0
-                }, {
-                    label: '快塑网(kuaisuwang)',
-                    value: 1
-                }, {
-                    label: '其他(others)',
-                    value: 99
-                }
-                ]
-            },
+            }
         },
-        behaviors:[OBaseBehavior,OCrudBehavior],
         /**
          * 条件查询方法
          * @param e 事件
          */
-        findSimpleCompanies: function (e) {
+        findCustomers: function (e) {
             var self = this;
             var params = {};
             var args = this.getEventArgs(e);
@@ -57,43 +36,20 @@
             $.extend(params, this.queryCondition);
             this.dealParams(params);
             params.loading = true;//加载遮罩
-            this.query("/customer/findSimpleCompanies.do", params, function (data) {
+            this.query("/customers/findCustomers.do", params, function (data) {
                 self.set("customerList", data.rows);
                 self.set("queryCondition.results", data.results);
             }, function (XMLHttpRequest) {
-                self.hTip.confirm(XMLHttpRequest.responseText);
+                console.log(XMLHttpRequest.getResponseHeader('location'));
             });
         },
-
         /**
-         * 装载客户名下拉搜索框数组
-         */
-        loadCustomerName: function () {
-            var param = {
-                status: 0//查询全部状态订单
-            };
-            var self = this;
-            var url = "/financialOrder/queryCustomerName.do";
-            this.query(
-                    url,
-                    param,
-                    function (data) {
-                        self.set("customerNames", data);
-                        console.log("查询客户名数组成功");
-                    }, function () {
-                        console.log("查询客户名数组失败");
-                    }
-            );
-        },
-
-        /**
-         * 重置按钮 findSimpleCompanies
+         * 重置按钮 findCustomers
          */
         resetFormSmsQC: function () {
             var queryCondition = this.getQueryCondition();
             this.set('queryCondition', queryCondition);
         },
-
         /**
          * 打开客户详情
          */
@@ -101,7 +57,16 @@
             var id = e.target.name;
             var companyName = e.target.companyName;
             $("#mainIndex")[0]._showTabPage("company_" + companyName, id);
+        },
+        /**
+         * 比较2个状态是否相等
+         * @param srcType
+         * @param targetType
+         * @returns {boolean}
+         */
+        compareType: function (srcType, targetType) {
+            return srcType === targetType;
         }
-    }
-    CustomerCompanyBehavior = [OCrudBehavior, OFormatBehavior,CustomerCompanyBehaviorImpl];
+    };
+    CustomerCompanyBehavior = [OCrudBehavior, OFormatBehavior, CustomerCompanyBehaviorImpl];
 </script>
