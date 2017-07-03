@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link rel="import" href="../../platform/custom-element/o-resource.html"/>
+    <link rel="import" href="../resources/wechat-style.html">
+    <title>Title</title>
+    <!--主页面-->
+    <div class="main_field">
+        <div class="nav"></div>
+        <div class="login_title">
+            <span>手机号快捷登陆</span>
+        </div>
+        <div class="login_title">
+            <paper-input label="手机号" type="number"></paper-input>
+            <paper-input  class="btn table-btn" label="短信验证码" type="number" style="width:4rem;"></paper-input>|
+            <paper-button class="btn btn-danger table-btn" is-button on-click="">重新发送短信</paper-button>
+        </div>
+    </div>
+</head>
+<body>
+<!--<script>
+    (function(){
+        function w () {
+            var r = document.documentElement;
+            var a = r.getBoundingClientRect().width;
+            if (a > 750) {
+                a = 750;
+            };
+            rem = a / 7.5;
+            r.style.fontSize = rem + 'px';
+        };
+        var t;
+        w();
+        window.addElementListener('resize',function(){
+            clearTimeout(t);
+            t = setTimeout(w,300)
+        },false);
+    })();
+</script>-->
+</body>
+</html>
