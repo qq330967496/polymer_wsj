@@ -1,18 +1,34 @@
+@charset "utf-8";
+
+/*iphone5 Galaxy S3*/
+@media only screen and (min-width:319px) and (max-width:320px){html{font-size:42.66666667px}}
+/*Galaxy 5S*/
+@media only screen and (min-width:321px) and (max-width:360px){html{font-size:48px}}
+/*iphone6*/
+@media only screen and (min-width:361px) and (max-width:375px){html{font-size:50px}}
+/*iphone6 plus*/
+@media only screen and (min-width:376px) and (max-width:414px){html{font-size:55.2px}}
+/**/
+@media only screen and (min-width:415px) and (max-width:639px){html{font-size:85.2px}}
+/**/
+@media only screen and (min-width:640px) and (max-width:719px){html{font-size:95.86666667px}}
+/**/
+@media only screen and (min-width:720px) and (max-width:750px){html{font-size:100px}}
+/*ipad*/
+@media only screen and (min-width:751px) and (max-width:768px){html{font-size:102.4px}}
+/**/
+@media only screen and (min-width:769px) and (max-width:799px){html{font-size:106.53333333px}}
+/**/
+@media only screen and (min-width:800px){html{font-size:106.66666667px}}
+/*ipad pro*/
+@media only screen and (min-width:1024px){html{font-size:136.53333333px}}
+
 html {
     font-family: Microsoft Yahei, Hiragino Sans GB, "Helvetica Neue", Helvetica, sans-serif;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
     -webkit-tap-highlight-color: #333;
-    font-size: 50px;
 }
-
-/*@media screen and (min-width:321px) and (max-width:375px){html{font-size:11px}}
-@media screen and (min-width:376px) and (max-width:414px){html{font-size:12px}}
-@media screen and (min-width:415px) and (max-width:639px){html{font-size:15px}}
-@media screen and (min-width:640px) and (max-width:719px){html{font-size:20px}}
-@media screen and (min-width:720px) and (max-width:749px){html{font-size:22.5px}}
-@media screen and (min-width:750px) and (max-width:799px){html{font-size:23.5px}}
-@media screen and (min-width:800px){html{font-size:25px}}*/
 
 body {
     margin: 0;
