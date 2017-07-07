@@ -17,10 +17,12 @@ webpackJsonp([0,1],[
 	    },
 	    mounted: function () {
 	        let _self = this;
+	        _self.init();
 	    },
 	    methods: {
 	        init: function () {
-	            1;
+	            let _self = this;
+	            _self.msg = '123';
 	        }
 	    }
 	});
