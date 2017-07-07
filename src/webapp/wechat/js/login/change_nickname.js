@@ -27,12 +27,20 @@ webpackJsonp([0],[
 	            let _self = this;
 	            console.log('提交');
 	            if (!_self.nickname) {
-	                utils.alert('请输入昵称');
+	                utils.prompt('请输入昵称');
 	                return;
 	            }
 
-	            //异常处理
-
+	            //请求
+	            $.ajax({
+	                url: '',
+	                data: {},
+	                type: 'POST',
+	                success: function (json) {},
+	                error: function () {
+	                    utils.prompt('网络错误，请重试');
+	                }
+	            });
 	        },
 	        clearInput(type) {
 	            let _self = this;

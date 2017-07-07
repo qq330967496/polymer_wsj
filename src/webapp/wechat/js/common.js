@@ -10757,7 +10757,6 @@
 	            var prompt = $(".dialog-prompt"),
 	                promptWidth = prompt.width(),
 	                wiWidth = $(window).width();
-	            prompt.css({ "margin-left": -promptWidth * 0.5 });
 	            // if (wiWidth / 2 == promptWidth) {
 	            //     prompt.css({"margin-left": -promptWidth * 0.725});
 	            // } else {

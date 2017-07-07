@@ -30,25 +30,40 @@ const app = new Vue({
                 if(_self.time<=0){
                     clearInterval(inte);
                 }
-            },1000)
+            },1000);
+
+
         },
         toLogin(){
             let _self = this;
-            console.log('去登录');
+            console.log('登录');
             if(_self.phone.length!=11){
-                utils.alert('请输入正确的手机号');
+                utils.prompt('请输入正确的手机号');
                 return;
             }
             if(!_self.phone){
-                utils.alert('请输入手机号');
+                utils.prompt('请输入手机号');
                 return;
             }
             if(!_self.captcha){
-                utils.alert('请输入验证码');
+                utils.prompt('请输入验证码');
                 return;
             }
 
-            //异常处理
+            //请求
+            $.ajax({
+                url:'',
+                data:{
+
+                },
+                type:'POST',
+                success:function(json){
+
+                },
+                error:function(){
+                    utils.prompt('网络错误，请重试');
+                }
+            });
         },
         toWechatLogin(){
             let _self = this;
