@@ -1,3 +1,5 @@
-# ---> Yii
-src/node_modules/
-.idea
+src/webapp/node_modules/
+.idea/*
+*.iml
+/.idea/
+out/*
