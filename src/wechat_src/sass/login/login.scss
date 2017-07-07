@@ -1,42 +1,19 @@
-@import "../sass_lib/sass_utils";
+@import "../../sass_lib/sass_utils";
+
 @charset "UTF-8";
-
-/*html {
-    font-family: Microsoft Yahei, Hiragino Sans GB, "Helvetica Neue", Helvetica, sans-serif;
-    -webkit-text-size-adjust: 100%;
-    -ms-text-size-adjust: 100%;
-    -webkit-tap-highlight-color: #333;
-    font-size: 50px;
-}
-
-@media screen and (min-width:321px) and (max-width:375px){html{font-size:11px}}
-@media screen and (min-width:376px) and (max-width:414px){html{font-size:12px}}
-@media screen and (min-width:415px) and (max-width:639px){html{font-size:15px}}
-@media screen and (min-width:640px) and (max-width:719px){html{font-size:20px}}
-@media screen and (min-width:720px) and (max-width:749px){html{font-size:22.5px}}
-@media screen and (min-width:750px) and (max-width:799px){html{font-size:23.5px}}
-@media screen and (min-width:800px){html{font-size:25px}}
-
-body {
-    margin: 0;
-    padding: 0;
-    font-family: Microsoft Yahei, Hiragino Sans GB, "Helvetica Neue", Helvetica, sans-serif;
+body.login {
+  .bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
     background-image: linear-gradient(-110deg, #00c99d 0%, #00bcbc 100%, #00bbbe 100%);
-    width: 7.5rem;
-    height: 13.34rem;
-}
-
-* {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}*/
-body.login{
-  background-image: linear-gradient(-110deg, #00c99d 0%, #00bcbc 100%, #00bbbe 100%);
+    z-index: -1;
+  }
 
   .main_field {
     padding: pxToRem(68) pxToRem(32);
-    height: 100%;
     display: block;
   }
 
@@ -71,7 +48,7 @@ body.login{
     width: pxToRem(670);
     color: #ffffff;
     //height: pxToRem(200);
-    &>*{
+    & > * {
       margin-top: pxToRem(32);
       border: none;
       border-bottom: 1px solid #ffffff;
@@ -121,42 +98,45 @@ body.login{
   }
 
   .other_login_type {
-    margin: 0 pxToRem(8);
-    display: inline-block;
+    position: absolute;
+    bottom:0;
+    left:0;
+    right:0;
+    margin: 0 auto;
     width: pxToRem(670);
     color: #ffffff;
     height: pxToRem(200);
     font-size: pxToRem(28);
     text-align: center;
-  }
 
-  .other_login_type_tip {
-    display: block;
-    position: relative;
-    height: pxToRem(28);
-    line-height: pxToRem(28);
-    margin: 0 auto;
-    width: pxToRem(670);
-  }
+    .other_login_type_tip {
+      display: block;
+      position: relative;
+      height: pxToRem(28);
+      line-height: pxToRem(28);
+      margin: 0 auto;
+      width: pxToRem(670);
+    }
 
-  .other_login_type_tip:before {
-    content: "";
-    border-top: 1px solid #ffffff;
-    display: block;
-    position: absolute;
-    width: pxToRem(150);
-    top: pxToRem(14);
-    left: 0;
-  }
+    .other_login_type_tip:before {
+      content: "";
+      border-top: 1px solid #ffffff;
+      display: block;
+      position: absolute;
+      width: pxToRem(150);
+      top: pxToRem(14);
+      left: 0;
+    }
 
-  .other_login_type_tip:after {
-    content: "";
-    border-top: 1px solid #ffffff;
-    display: block;
-    position: absolute;
-    width: pxToRem(150);
-    top: pxToRem(14);
-    right: 0;
+    .other_login_type_tip:after {
+      content: "";
+      border-top: 1px solid #ffffff;
+      display: block;
+      position: absolute;
+      width: pxToRem(150);
+      top: pxToRem(14);
+      right: 0;
+    }
   }
 
   .logo_filed {

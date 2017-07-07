@@ -2,46 +2,22 @@
 /*全局变量*/
 /*函数*/
 /*混合*/
-/*html {
-    font-family: Microsoft Yahei, Hiragino Sans GB, "Helvetica Neue", Helvetica, sans-serif;
-    -webkit-text-size-adjust: 100%;
-    -ms-text-size-adjust: 100%;
-    -webkit-tap-highlight-color: #333;
-    font-size: 50px;
-}
-
-@media screen and (min-width:321px) and (max-width:375px){html{font-size:11px}}
-@media screen and (min-width:376px) and (max-width:414px){html{font-size:12px}}
-@media screen and (min-width:415px) and (max-width:639px){html{font-size:15px}}
-@media screen and (min-width:640px) and (max-width:719px){html{font-size:20px}}
-@media screen and (min-width:720px) and (max-width:749px){html{font-size:22.5px}}
-@media screen and (min-width:750px) and (max-width:799px){html{font-size:23.5px}}
-@media screen and (min-width:800px){html{font-size:25px}}
-
-body {
-    margin: 0;
-    padding: 0;
-    font-family: Microsoft Yahei, Hiragino Sans GB, "Helvetica Neue", Helvetica, sans-serif;
-    background-image: linear-gradient(-110deg, #00c99d 0%, #00bcbc 100%, #00bbbe 100%);
-    width: 7.5rem;
-    height: 13.34rem;
-}
-
-* {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}*/
 body.login {
-  background-image: linear-gradient(-110deg, #00c99d 0%, #00bcbc 100%, #00bbbe 100%);
   /*.input_field input:focus {
       border: none;
       border-bottom: 1px solid #ffffff;
   }*/
   /*change deafult placeholder color*/ }
+  body.login .bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-image: linear-gradient(-110deg, #00c99d 0%, #00bcbc 100%, #00bbbe 100%);
+    z-index: -1; }
   body.login .main_field {
     padding: 1.7rem 0.8rem;
-    height: 100%;
     display: block; }
   body.login .nav {
     width: 0.4rem;
@@ -98,36 +74,39 @@ body.login {
     color: #ffffff;
     font-size: 0.7rem; }
   body.login .other_login_type {
-    margin: 0 0.2rem;
-    display: inline-block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
     width: 16.75rem;
     color: #ffffff;
     height: 5rem;
     font-size: 0.7rem;
     text-align: center; }
-  body.login .other_login_type_tip {
-    display: block;
-    position: relative;
-    height: 0.7rem;
-    line-height: 0.7rem;
-    margin: 0 auto;
-    width: 16.75rem; }
-  body.login .other_login_type_tip:before {
-    content: "";
-    border-top: 1px solid #ffffff;
-    display: block;
-    position: absolute;
-    width: 3.75rem;
-    top: 0.35rem;
-    left: 0; }
-  body.login .other_login_type_tip:after {
-    content: "";
-    border-top: 1px solid #ffffff;
-    display: block;
-    position: absolute;
-    width: 3.75rem;
-    top: 0.35rem;
-    right: 0; }
+    body.login .other_login_type .other_login_type_tip {
+      display: block;
+      position: relative;
+      height: 0.7rem;
+      line-height: 0.7rem;
+      margin: 0 auto;
+      width: 16.75rem; }
+    body.login .other_login_type .other_login_type_tip:before {
+      content: "";
+      border-top: 1px solid #ffffff;
+      display: block;
+      position: absolute;
+      width: 3.75rem;
+      top: 0.35rem;
+      left: 0; }
+    body.login .other_login_type .other_login_type_tip:after {
+      content: "";
+      border-top: 1px solid #ffffff;
+      display: block;
+      position: absolute;
+      width: 3.75rem;
+      top: 0.35rem;
+      right: 0; }
   body.login .logo_filed {
     display: block;
     height: 2.2rem;
