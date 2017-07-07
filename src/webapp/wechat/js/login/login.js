@@ -53,7 +53,6 @@ webpackJsonp([1],[
 	            }
 
 	            //异常处理
-
 	        },
 	        toWechatLogin() {
 	            let _self = this;

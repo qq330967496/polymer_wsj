@@ -49,8 +49,6 @@ const app = new Vue({
             }
 
             //异常处理
-
-
         },
         toWechatLogin(){
             let _self = this;
