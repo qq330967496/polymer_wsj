@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html class="car_card_detail">
+
+<head>
+    <meta charset="utf-8">
+    <title>车主卡详情</title>
+    <meta id="meta_viewport" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="../css/style.min.css">
+    <link rel="stylesheet" type="text/css" href="../icon/iconfont.css">
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <comp-header :back_url="'/view/card_list.html?token='+token" :title="'车主卡详情'"></comp-header>
+        <div id="main" :class="platform">
+            <!--<div class="top_notice" v-if="cardstates == 2 && !isBindSuccess">
+                您绑定的粤通卡不符合返还条件
+            </div>-->
+
+            <!-- 特权卡详情 banner状态 -->
+            <div class="card-list-info-box">
+                <img :src="json_data.detail_img" onerror="this.src='../images/cardinfo.jpg'" alt="" />
+
+                <div class="card-list-info-icon" v-if="json_data.status == 2"><img src="../images/state2.png" :alt="get_status_cn(json_data.status)" /></div>
+                <div class="card-list-info-icon" v-if="json_data.status == 3"><img src="../images/state1.png" :alt="get_status_cn(json_data.status)" /></div>
+                <div class="card-list-info-icon" v-if="json_data.status == 4"><img src="../images/state4.png" :alt="get_status_cn(json_data.status)" /></div>
+                <div class="card-list-info-icon" v-if="json_data.status == 99"><img src="../images/state5.png" :alt="get_status_cn(json_data.status)" /></div>
+            </div>
+            <!-- 特权卡详情 banner状态-->
+
+            <!-- 特权说明-->    
+            <div class="card-list-info-service">
+
+                <p class="card-explain" @click="toStatement()"><img src="../images/exp.jpg" alt="" /></p>
+
+            </div>
+            <!-- 特权说明-->
+
+            <div class="car_statement_list">
+                <div class="car_item" v-for="item in json_data.detail_icons">
+                    <div class="icon">
+                        <img :src="item.icon" onerror="this.src='../images/icon_car_sta.png'" alt="">
+                    </div>
+                    <div class="text">
+                        {{item.detail}}
+                    </div>
+                </div>
+
+                <!--<div class="car_item">
+                    <div class="icon">
+                        <img src="../images/icon_car_sta.png" alt="">
+                    </div>
+                    <div class="text">
+                        安全保障
+                    </div>
+                </div>
+                <div class="car_item">
+                    <div class="icon canUpdate">
+                        <img src="../images/icon_car_sta.png" alt="">
+                    </div>
+                    <div class="text">
+                        服务保证
+                    </div>
+                </div>
+                <div class="car_item">
+                    <div class="icon">
+                        <img src="../images/icon_car_sta.png" alt="">
+                    </div>
+                    <div class="text">
+                        服务保证
+                    </div>
+                </div>
+                <div class="car_item">
+                    <div class="icon">
+                        <img src="../images/icon_car_sta.png" alt="">
+                    </div>
+                    <div class="text">
+                        服务保证
+                    </div>
+                </div>
+                <div class="car_item">
+                    <div class="icon">
+                        <img src="../images/icon_car_sta.png" alt="">
+                    </div>
+                    <div class="text">
+                        服务保证
+                    </div>
+                </div>-->
+            </div>
+
+            <!--车主卡待激活 -->
+            <div class="btn-activated-box" v-if="json_data.status == 2">
+                <div class="btn-card-act" @click="activeCard" onclick="_hmt.push(['click','激活特权卡']);">激活特权卡</div>
+            </div>
+
+            <!--车主卡使用中 -->
+            <div class="coupon_total" v-if="json_data.status == 3" @click="json_data.coupon.count>0?open_coupon():''">
+                <div class="money">
+                    <!--594.00-->
+                    {{json_data.coupon.count_money}}
+                </div>
+                <div class="subTitle">
+                    累计返还(元)
+                </div>
+                <div class="remain">
+                    <div class="left">剩余优惠卡券</div>
+                    <div class="right">{{json_data.coupon.count}}张</div>
+                </div>
+            </div>
+
+            <!--车主卡已过期 -->
+            <div class="coupon_total disabled" v-if="json_data.status == 4">
+                <div class="money">
+                    <!--595.00-->
+                    {{json_data.coupon.count_money}}
+                </div>
+                <div class="subTitle">
+                    累计返还(元)
+                </div>
+                <div class="statement">
+                    优惠券已经发放完毕，此卡已失效
+                </div>
+            </div>
+            <!-- 已失效 -->
+
+            <p class="card-info-tips" >如有疑问，请联系客服电话：<a :href="'tel:'+telephone" >{{telephone}}</a></p>
+        </div>
+    </div>
+    <script src="../js/common.js"></script>
+    <script src="../js/car_card_detail.js"></script>
+</body>
+
+</html>

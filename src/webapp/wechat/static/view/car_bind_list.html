@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html class="car_bind_list">
+
+<head>
+    <meta charset="utf-8">
+    <title>车主卡绑定列表</title>
+    <meta id="meta_viewport" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="../css/style.min.css">
+    <link rel="stylesheet" type="text/css" href="../icon/iconfont.css">
+
+</head>
+
+<body>
+<div id="app" v-cloak>
+    <!--头部组件，注释详见header组件-->
+    <comp-header :title="'ETC车主卡'"></comp-header>
+    <div id="main" :class="platform" v-if="json_data">
+        <div class="list car" v-if="json_data.cars.need_bind_car">
+            <div class="label">
+                请选择绑定车辆
+            </div>
+            <div class="item empty" v-if="!json_data.cars.car_info.length" @click="to_bind_car">
+                <div class="main">
+                    <div class="title">
+                        还没有填写车辆
+                    </div>
+                    <div class="subtitle">
+                        + 立即添加
+                    </div>
+                </div>
+            </div>
+            <template v-if="json_data.cars.car_info.length>0" v-for="(item,index) in json_data.cars.car_info">
+                <div class="item checkbox" :class="{'checked':selected_car==item.plate_num}" :data-id="item.plate_num"
+                     @touchstart="touchStart"
+                     @touchmove="touchMove"
+                     @touchend="select_car">
+                    <div class="left">
+                        <div class="title">
+                            车牌：{{item.plate_num}}
+                        </div>
+                        <div class="subtitle">
+                            车型：{{item.car_brand}}
+                        </div>
+                    </div>
+                    <div class="right">
+
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <div class="list fuel" v-if="json_data.cards.need_bind_card">
+            <div class="label">
+                请选择绑定油卡
+            </div>
+            <div class="item empty" v-if="!json_data.cards.card_info.length" @click="to_bind_card">
+                <div class="main">
+                    <div class="title">
+                        还没有绑定油卡
+                    </div>
+                    <div class="subtitle">
+                        + 立即添加
+                    </div>
+                </div>
+            </div>
+            <template v-if="json_data.cards.card_info.length>0" v-for="(item,index) in json_data.cards.card_info">
+                <div class="item checkbox" :class="{'checked':selected_fuel==item.card_number}" :data-id="item.card_number"
+                     @touchstart="touchStart"
+                     @touchmove="touchMove"
+                     @touchend="select_fuel">
+                    <div class="left">
+                        <div class="title">
+                            油卡卡号：{{item.card_number}}
+                        </div>
+                        <div class="subtitle">
+                            手机号码：{{item.phone}}
+                        </div>
+                    </div>
+                    <div class="right">
+
+                    </div>
+                </div>
+            </template>
+        </div>
+        <div class="block"></div>
+    </div>
+    <div class="footer">
+        <div class="btn" :class="{'disabled':!canSubmit}" @click="canSubmit?to_pay():''">
+            确认
+        </div>
+    </div>
+</div>
+<script src="../js/common.js"></script>
+<script src="../js/car_bind_list.js"></script>
+</body>
+
+</html>

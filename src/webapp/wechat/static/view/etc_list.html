@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>粤通卡列表</title>
+    <meta id="meta_viewport" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="../css/style.min.css">
+    <link rel="stylesheet" type="text/css" href="../icon/iconfont.css">
+</head>
+<body id="etc_list">
+<div id="app" v-cloak>
+    <comp-header :back_url="'/view/card_detail.html?token='+token+'&card_id='+card_id" :title="'粤通卡列表'"></comp-header>
+    <div id="main" :class="platform">
+        <div class="main" v-if="json_data.info.length>0">
+
+            <div class="top_notice" v-if="json_data.count==0">
+                您绑定的粤通卡不符合返还条件
+            </div>
+
+            <div class="mod card_mod" :class="{'disabled' : item.is_gray==1}" :data-id="item.card_no" v-for="(item,index) in json_data.info" @click="selectCard">
+                <div class="title">
+                    <div class="col-6 left">
+                        {{getCardTypeCHS(item.card_type)}}
+                    </div>
+                    <div class="col-6 tr right">
+                        <span class="iconfont icon-checkbox1"></span>
+                    </div>
+                </div>
+                <div class="detail_item">
+                    <div class="col-6 left">
+                        卡号：
+                    </div>
+                    <div class="col-6 tr right">
+                        {{item.card_no}}
+                    </div>
+                </div>
+                <div class="detail_item">
+                    <div class="col-6 left">
+                        车牌号：
+                    </div>
+                    <div class="col-6 tr right">
+                        {{item.license}}
+                    </div>
+                </div>
+                <div class="detail_item">
+                    <div class="col-6 left">
+                        返还类型：
+                    </div>
+                    <div class="col-6 tr right">
+                        {{getReturnTypeCHS(item.return_type)}}
+                    </div>
+                </div>
+                <div class="detail_item statement" v-if="item.is_gray">
+                    {{item.gray_reason}}
+                </div>
+            </div>
+            <div class="note">
+                注：请谨慎选择需要绑定特权的粤通卡，选定之后特权卡不能随意更改
+            </div>
+
+        </div>
+
+        <div class="main empty tc" v-if="json_data.info.length==0">
+            <img src="../images/icon_bankcard.png" alt="">
+            <div class="text">
+                你没有添加粤通卡哦！
+            </div>
+        </div>
+
+        <div class="footer" @click="submit" v-if="json_data.count>0 && selectedCard">
+            <div class="btn">
+                确定
+            </div>
+        </div>
+
+        <div class="footer" @click="addEtcCard" v-if="json_data.count==0">
+            <div class="btn">
+                添加粤通卡
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<script src="../js/common.js"></script>
+<script src="../js/etc_list.js"></script>
+
+
+</body>
+
+</html>

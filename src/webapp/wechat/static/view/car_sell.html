@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>车主卡购买/升级</title>
+    <meta id="meta_viewport" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <link rel="stylesheet" type="text/css" href="../css/style.min.css">
+    <link rel="stylesheet" type="text/css" href="../icon/iconfont.css">
+
+</head>
+
+<body class="car_sell">
+<div id="app" v-cloak>
+    <!--头部组件，注释详见header组件-->
+    <comp-header :back_close="true" :title="'ETC车主卡'"></comp-header>
+    <div id="main" :class="platform" v-if="card_id">
+        <!-- 特权卡详情 banner状态 -->
+        <div class="card-list-info-box">
+            <!--<img src="../images/cardinfo.jpg" alt=""/>-->
+            <img :src="card_data.defaultCard.detail_img" onerror="this.src='../images/cardinfo.jpg'" alt=""/>
+
+
+            <!--<div class="card-list-info-icon" >
+                <img src="../images/state2.png" alt="待激活" />
+            </div>-->
+        </div>
+        <!-- 特权卡详情 banner状态-->
+
+        <!-- 特权说明-->
+        <div class="card-list-info-service" @click="toStatement()">
+            <p class="card-explain">
+                <img src="../images/exp.jpg" alt=""/></p>
+            <ul>
+            </ul>
+        </div>
+
+        <div class="car_statement_list" v-if="card_data.defaultCard.detail_icon"
+             @click="(card_data.defaultCard.card_status==1 || card_data.defaultCard.card_status==3)?to_buy():''">
+            <div class="car_item" v-for="item in card_data.defaultCard.detail_icon">
+                <div class="icon" :class="{'canUpdate':item.status==3}">
+                    <img :src="item.icon" onerror="this.src='../images/icon_car_sta.png'" alt="">
+                </div>
+                <div class="text">
+                    {{item.detail}}
+                </div>
+            </div>
+            <!--<div class="car_item">
+                <div class="icon">
+                    <img src="../images/icon_car_sta.png" alt="">
+                </div>
+                <div class="text">
+                    安全保障
+                </div>
+            </div>
+            <div class="car_item">
+                <div class="icon canUpdate">
+                    <img src="../images/icon_car_sta.png" alt="">
+                </div>
+                <div class="text">
+                    服务保证
+                </div>
+            </div>
+            <div class="car_item">
+                <div class="icon">
+                    <img src="../images/icon_car_sta.png" alt="">
+                </div>
+                <div class="text">
+                    服务保证
+                </div>
+            </div>
+            <div class="car_item">
+                <div class="icon">
+                    <img src="../images/icon_car_sta.png" alt="">
+                </div>
+                <div class="text">
+                    服务保证
+                </div>
+            </div>
+            <div class="car_item">
+                <div class="icon">
+                    <img src="../images/icon_car_sta.png" alt="">
+                </div>
+                <div class="text">
+                    服务保证
+                </div>
+            </div>-->
+        </div>
+        <!-- 特权说明-->
+
+        <!--评论-->
+        <div class="comment">
+            <div class="title" v-if="card_data.countDriver">
+                <!--已有 <span>{{total_comments}}</span> 老司机加入-->
+                已有 <span>{{card_data.countDriver}}</span> 老司机加入
+            </div>
+            <div class="comment_list">
+                <div class="comment_item" v-for="(item, index) in comment_rows">
+                    <div class="info">
+                        <img class="user_icon" :src="item.avatar" onerror="this.src='../images/icon_logo.png'"/>
+                        <div class="middle">
+                            <div class="user_name">{{item.nickname}}</div>
+                            <div class="star" :class="{
+                                                        'star_0':item.star==0,
+                                                        'star_1':item.star==1,
+                                                        'star_2':item.star==2,
+                                                        'star_3':item.star==3,
+                                                        'star_4':item.star==4,
+                                                        'star_5':item.star==5,
+                                                        }"></div>
+                        </div>
+                        <div class="time">{{item.create_time}}</div>
+                    </div>
+                    <div class="content">
+                        {{item.content}}
+                    </div>
+                </div>
+                <!--<div class="comment_item">
+                    <div class="info">
+                        <img class="user_icon" src="../images/icon_user.png"></img>
+                        <div class="middle">
+                            <div class="user_name">车宝君</div>
+                            <div class="star star_3"></div>
+                        </div>
+                        <div class="time">2016-04-25 12:00</div>
+                    </div>
+                    <div class="content">
+                        您要找的那个页面，程程实在没有找到
+                    </div>
+                </div>-->
+            </div>
+        </div>
+
+        <!--评论-end -->
+
+        <!--空格-->
+        <div style="height:3.2rem"></div>
+
+        <!-- 底部 -->
+        <div>
+            <div class="btn-activated-box" v-if="card_data.defaultCard.card_status">
+                <div v-if="card_data.defaultCard.card_status==1" class="btn-card-act" @click="to_buy" onclick="_hmt.push(['_trackEvent','办理车主卡','click','办理车主卡']);">
+                    立即加入
+                </div>
+                <div v-if="card_data.defaultCard.card_status==2" class="btn-card-act disabled" @click="sell_out">
+                    已售罄
+                </div>
+                <div v-if="card_data.defaultCard.card_status==3" class="btn-card-act" @click="to_buy" onclick="_hmt.push(['_trackEvent','升级车主卡','click','升级车主卡']);">
+                    我要升级
+                </div>
+                <div v-if="card_data.defaultCard.card_status==4" class="btn-card-act disabled" @click="cannot_upate">
+                    不可升级
+                </div>
+            </div>
+        </div>
+        <!-- 底部-->
+
+    </div>
+</div>
+<script src="../js/common.js"></script>
+<script src="../js/car_sell.js"></script>
+</body>
+
+</html>

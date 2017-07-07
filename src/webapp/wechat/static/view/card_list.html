@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html class="card_list">
+
+<head>
+    <meta charset="utf-8">
+    <title>我的特权卡</title>
+    <meta id="meta_viewport" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="../css/style.min.css">
+    <link rel="stylesheet" type="text/css" href="../icon/iconfont.css">
+ 
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <!--头部组件，注释详见header组件-->
+        <comp-header :back_close="true" :title="'特权卡列表'" :right_text="'兑换激活码'"></comp-header>
+        <div id="main" :class="platform">
+            <div class="card-list-box" v-if="!(carCardList.length==0 && cardlists.length==0)">
+                <!--车主卡-->
+                <ul class="card-list-cont" v-if="carCardList.length>0" >
+                    <li v-for="item in carCardList" >
+                        <i v-if="item.red_point ==1"></i>
+                        <img :src="item.list_img" alt="车主卡" :id="item.card_id" @click="carCardDetail(item)"/>
+                        <div class="card-list-type-icon" v-if="item.status == 2"><img src="../images/state2.png" alt="待激活" /></div>
+                        <div class="card-list-type-icon" v-if="item.status == 3"><img src="../images/state1.png" alt="使用中" /></div>
+                        <div class="card-list-type-icon" v-if="item.status == 4"><img src="../images/state4.png" alt="已过期" /></div>
+                        <div class="card-list-type-icon" v-if="item.status == 99"><img src="../images/state5.png" alt="已作废" /></div>
+                    </li>
+                </ul>
+                <!--特权卡-->
+                <ul class="card-list-cont" v-if="cardlists.length>0" >
+                    <li v-for="lists in cardlists" >
+                       <i v-if="lists.red_point ==1"></i>
+                       <img :src="lists.list_skin" alt="特权卡" :id="lists.card_id" @click="liClick(lists)"/>
+                       <div class="card-list-type-icon" v-if="lists.status ==1"><img src="../images/state1.png" alt="生效中" /></div>
+                       <div class="card-list-type-icon" v-else-if="lists.status ==2"><img src="../images/state2.png" alt="待激活" /></div>
+                       <div class="card-list-type-icon" v-else-if="lists.status ==3"><img src="../images/state3.png" alt="已转赠" /></div>
+                       <div class="card-list-type-icon" v-else-if="lists.status ==41 || lists.status ==42"><img src="../images/state4.png" alt="已过期" /></div>
+                       <div class="card-list-type-icon" v-else-if="lists.status ==51 || lists.status ==52 || lists.status ==53 || lists.status ==54"><img src="../images/state5.png" alt="已作废" /></div>
+                    </li>
+                </ul>
+
+            </div>
+
+            <!-- 没有特权卡 -->
+            <div class="card-list-none" v-if="carCardList.length==0 && cardlists.length==0">
+                <img src="../images/nocard.jpg" alt="" />
+                <span>你暂时还没有特权卡</span>
+            </div>
+
+            <!--<div class="loading" v-if="cardlists.length>0">
+                加载中...
+            </div>-->
+
+
+        </div>
+    </div>
+    <script src="../js/common.js"></script>
+    <script src="../js/card_list.js"></script>
+</body>
+
+</html>
