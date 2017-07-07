@@ -1,0 +1,164 @@
+@import "../../sass_lib/sass_utils";
+
+@charset "UTF-8";
+body.login {
+  .bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-image: linear-gradient(-110deg, #00c99d 0%, #00bcbc 100%, #00bbbe 100%);
+    z-index: -1;
+  }
+
+  .main_field {
+    padding: pxToRem(68) pxToRem(32);
+    display: block;
+  }
+
+  .nav {
+    width: pxToRem(16);
+    height: pxToRem(33);
+    display: block;
+    background: url(/images/left-nav.png) center left no-repeat;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: pxToRem(67);
+    display: block;
+  }
+
+  .login_title {
+    display: inline-block;
+    //margin: 1.63rem 0.08rem 0.86rem 0.08rem;
+    margin: pxToRem(163) pxToRem(8) pxToRem(86);
+    font-size: pxToRem(40);
+    line-height: pxToRem(40);
+    height: pxToRem(40);
+    width: pxToRem(670);
+    color: #ffffff;
+    span {
+      text-align: left;
+    }
+  }
+
+  .input_field {
+    display: inline-block;
+    margin: 0 pxToRem(8);
+    width: pxToRem(670);
+    color: #ffffff;
+    //height: pxToRem(200);
+    /*& > * {
+      color: #fff;
+      margin-top: pxToRem(32);
+      border: none;
+      border-bottom: 1px solid #ffffff;
+      background: transparent;
+      height: pxToRem(68);
+      font-size: pxToRem(40);
+      line-height: pxToRem(68);
+    }*/
+    .row {
+      border-bottom: 1px solid #ffffff;
+      padding-bottom: pxToRem(25);
+      display: flex;
+      margin-bottom: pxToRem(25);
+    }
+    input {
+      flex: 1;
+      color: #fff;
+      background: transparent;
+      font-size: pxToRem(40);
+    }
+    .send_sms {
+      flex: 0.5;
+      text-align: center;
+      border-left: 1px solid #ffffff;
+      font-size: pxToRem(30);
+      line-height: 150%;
+    }
+
+  }
+
+  .login_btn {
+    font-size: pxToRem(30);
+    border: 1px solid #ffffff;
+    border-radius: pxToRem(15);
+    text-align: center;
+    padding: pxToRem(30) 0;
+    background: #fff;
+    color: #00c99d;
+
+    &.disabled {
+      color: #66dbcc;
+      background: transparent;
+    }
+  }
+
+  /*change deafult placeholder color*/
+  ::-webkit-input-placeholder {
+    color: #ffffff;
+    font-size: pxToRem(28);
+  }
+
+  .other_login_type {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: pxToRem(670);
+    color: #ffffff;
+    height: pxToRem(200);
+    font-size: pxToRem(28);
+    text-align: center;
+
+    .other_login_type_tip {
+      display: block;
+      position: relative;
+      height: pxToRem(28);
+      line-height: pxToRem(28);
+      margin: 0 auto;
+      width: pxToRem(670);
+    }
+
+    .other_login_type_tip:before {
+      content: "";
+      border-top: 1px solid #ffffff;
+      display: block;
+      position: absolute;
+      width: pxToRem(150);
+      top: pxToRem(14);
+      left: 0;
+    }
+
+    .other_login_type_tip:after {
+      content: "";
+      border-top: 1px solid #ffffff;
+      display: block;
+      position: absolute;
+      width: pxToRem(150);
+      top: pxToRem(14);
+      right: 0;
+    }
+  }
+
+  .logo_filed {
+    display: block;
+    height: pxToRem(88);
+    line-height: pxToRem(88);
+    margin-top: pxToRem(60);
+    width: pxToRem(670);
+  }
+
+  .wechat_logo {
+    margin: 0 auto;
+    width: pxToRem(88);
+    height: pxToRem(88);
+    display: block;
+    background: url(/images/wechat-logo.png) center center no-repeat;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+}

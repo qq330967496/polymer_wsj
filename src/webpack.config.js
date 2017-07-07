@@ -10,8 +10,8 @@ var config = {
     entry:getEntry(),
     //入口文件输出配置
     output: {
-        path: path.join(__dirname, '/wechat'),
-        publicPath: "wechat/js/",
+        path: path.join(__dirname, '/webapp/wechat'),
+        publicPath: "webapp/wechat/js/",
         filename: '[name].js'
     },
     //其它解决方案配置
@@ -49,7 +49,7 @@ var config = {
     plugins: [
         new CommonsChunkPlugin('js/common.js'),
         new ExtractTextPlugin("css/styles.css"),
-        new CleanWebpackPlugin([__dirname+'/wechat/'], {
+        new CleanWebpackPlugin([__dirname+'/webapp/wechat/'], {
             root: '', // An absolute path for the root  of webpack.config.js
             verbose: true,// Write logs to console.
             dry: false,// Do not delete anything, good for testing.

@@ -1,0 +1,129 @@
+@charset "UTF-8";
+/*全局变量*/
+/*函数*/
+/*混合*/
+body.login {
+  /*change deafult placeholder color*/ }
+  body.login .bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-image: linear-gradient(-110deg, #00c99d 0%, #00bcbc 100%, #00bbbe 100%);
+    z-index: -1; }
+  body.login .main_field {
+    padding: 1.7rem 0.8rem;
+    display: block; }
+  body.login .nav {
+    width: 0.4rem;
+    height: 0.825rem;
+    display: block;
+    background: url(/images/left-nav.png) center left no-repeat;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 1.675rem;
+    display: block; }
+  body.login .login_title {
+    display: inline-block;
+    margin: 4.075rem 0.2rem 2.15rem;
+    font-size: 1rem;
+    line-height: 1rem;
+    height: 1rem;
+    width: 16.75rem;
+    color: #ffffff; }
+    body.login .login_title span {
+      text-align: left; }
+  body.login .input_field {
+    display: inline-block;
+    margin: 0 0.2rem;
+    width: 16.75rem;
+    color: #ffffff;
+    /*& > * {
+      color: #fff;
+      margin-top: pxToRem(32);
+      border: none;
+      border-bottom: 1px solid #ffffff;
+      background: transparent;
+      height: pxToRem(68);
+      font-size: pxToRem(40);
+      line-height: pxToRem(68);
+    }*/ }
+    body.login .input_field .row {
+      border-bottom: 1px solid #ffffff;
+      padding-bottom: 0.625rem;
+      display: flex;
+      margin-bottom: 0.625rem; }
+    body.login .input_field input {
+      flex: 1;
+      color: #fff;
+      background: transparent;
+      font-size: 1rem; }
+    body.login .input_field .send_sms {
+      flex: 0.5;
+      text-align: center;
+      border-left: 1px solid #ffffff;
+      font-size: 0.75rem;
+      line-height: 150%; }
+  body.login .login_btn {
+    font-size: 0.75rem;
+    border: 1px solid #ffffff;
+    border-radius: 0.375rem;
+    text-align: center;
+    padding: 0.75rem 0;
+    background: #fff;
+    color: #00c99d; }
+    body.login .login_btn.disabled {
+      color: #66dbcc;
+      background: transparent; }
+  body.login ::-webkit-input-placeholder {
+    color: #ffffff;
+    font-size: 0.7rem; }
+  body.login .other_login_type {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 16.75rem;
+    color: #ffffff;
+    height: 5rem;
+    font-size: 0.7rem;
+    text-align: center; }
+    body.login .other_login_type .other_login_type_tip {
+      display: block;
+      position: relative;
+      height: 0.7rem;
+      line-height: 0.7rem;
+      margin: 0 auto;
+      width: 16.75rem; }
+    body.login .other_login_type .other_login_type_tip:before {
+      content: "";
+      border-top: 1px solid #ffffff;
+      display: block;
+      position: absolute;
+      width: 3.75rem;
+      top: 0.35rem;
+      left: 0; }
+    body.login .other_login_type .other_login_type_tip:after {
+      content: "";
+      border-top: 1px solid #ffffff;
+      display: block;
+      position: absolute;
+      width: 3.75rem;
+      top: 0.35rem;
+      right: 0; }
+  body.login .logo_filed {
+    display: block;
+    height: 2.2rem;
+    line-height: 2.2rem;
+    margin-top: 1.5rem;
+    width: 16.75rem; }
+  body.login .wechat_logo {
+    margin: 0 auto;
+    width: 2.2rem;
+    height: 2.2rem;
+    display: block;
+    background: url(/images/wechat-logo.png) center center no-repeat;
+    background-size: contain;
+    background-repeat: no-repeat; }

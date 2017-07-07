@@ -9,6 +9,7 @@
 </head>
 <body class="login">
 <div id="app">
+    <div class="bg"></div>
     <!--主页面-->
     <div class="main_field">
         <div class="nav"></div>
@@ -16,16 +17,29 @@
             <span>手机号快捷登陆</span>
         </div>
         <div class="input_field">
-            <input class="input_lg" placeholder="手机号" type="number" id="loginPhone"/>
-            <input class="input_mid" placeholder="短信验证码" type="number" id="verificationCode"/>
-            <button class="send_sms" on-click="">重新发送短信</button>
-            <button class="login_btn" on-click="">登录</button>
-        </div>
-        <div class="other_login_type">
-            <div class="other_login_type_tip">使用第三方账号登录</div>
-            <div class="logo_filed">
-                <div class="wechat_logo"></div>
+            <div class="row">
+                <input v-model="phone_num" placeholder="手机号"/>
             </div>
+            <div class="row">
+                <input v-model="captcha" placeholder="短信验证码"/>
+                <div class="send_sms" @click="time>0?'':sendSms()">
+                    {{time>0?time+'秒':'发送短信'}}
+                </div>
+            </div>
+            <div class="login_btn" :class="{'disabled':(!phone_num||!captcha)}" @click="(!phone_num||!captcha)?'':toLogin()">登录</div>
+
+            <!--<input v-model="phone_num" class="input_lg" placeholder="手机号"/>
+            <input v-model="captcha" class="input_mid" placeholder="短信验证码"/>
+            <button class="send_sms" @click="time>0?'':sendSms()">
+                {{time>0?time+'秒':'发送短信'}}
+            </button>
+            <button class="login_btn" @click="toLogin">登录</button>-->
+        </div>
+    </div>
+    <div class="other_login_type">
+        <div class="other_login_type_tip">使用第三方账号登录</div>
+        <div class="logo_filed">
+            <div @click="toWechatLogin" class="wechat_logo"></div>
         </div>
     </div>
 </div>
