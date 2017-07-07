@@ -17,12 +17,23 @@
             <span>手机号快捷登陆</span>
         </div>
         <div class="input_field">
-            <input v-model="phone_num" class="input_lg" placeholder="手机号"/>
+            <div class="row">
+                <input v-model="phone_num" placeholder="手机号"/>
+            </div>
+            <div class="row">
+                <input v-model="captcha" placeholder="短信验证码"/>
+                <div class="send_sms" @click="time>0?'':sendSms()">
+                    {{time>0?time+'秒':'发送短信'}}
+                </div>
+            </div>
+            <div class="login_btn" :class="{'disabled':(!phone_num||!captcha)}" @click="(!phone_num||!captcha)?'':toLogin()">登录</div>
+
+            <!--<input v-model="phone_num" class="input_lg" placeholder="手机号"/>
             <input v-model="captcha" class="input_mid" placeholder="短信验证码"/>
             <button class="send_sms" @click="time>0?'':sendSms()">
                 {{time>0?time+'秒':'发送短信'}}
             </button>
-            <button class="login_btn" @click="toLogin">登录</button>
+            <button class="login_btn" @click="toLogin">登录</button>-->
         </div>
     </div>
     <div class="other_login_type">

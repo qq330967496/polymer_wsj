@@ -48,7 +48,7 @@ body.login {
     width: pxToRem(670);
     color: #ffffff;
     //height: pxToRem(200);
-    & > * {
+    /*& > * {
       color: #fff;
       margin-top: pxToRem(32);
       border: none;
@@ -57,39 +57,42 @@ body.login {
       height: pxToRem(68);
       font-size: pxToRem(40);
       line-height: pxToRem(68);
-    }
-  }
-
-  /*.input_field input:focus {
-      border: none;
+    }*/
+    .row {
       border-bottom: 1px solid #ffffff;
-  }*/
+      padding-bottom: pxToRem(25);
+      display: flex;
+      margin-bottom: pxToRem(25);
+    }
+    input {
+      flex: 1;
+      color: #fff;
+      background: transparent;
+      font-size: pxToRem(40);
+    }
+    .send_sms {
+      flex: 0.5;
+      text-align: center;
+      border-left: 1px solid #ffffff;
+      font-size: pxToRem(30);
+      line-height: 150%;
+    }
 
-  .input_lg {
-    width: 100%;
-  }
-
-  .input_mid {
-    width: 65%;
-    float: left;
-  }
-
-  .send_sms {
-    color: inherit;
-    width: 35%;
-    text-align: center;
-    font-size: pxToRem(30);
-    float: left;
-    border-left: 1px solid #ffffff;
   }
 
   .login_btn {
-    color: inherit;
     font-size: pxToRem(30);
     border: 1px solid #ffffff;
     border-radius: pxToRem(15);
-    width: pxToRem(670);
-    height: pxToRem(100);
+    text-align: center;
+    padding: pxToRem(30) 0;
+    background: #fff;
+    color: #00c99d;
+
+    &.disabled {
+      color: #66dbcc;
+      background: transparent;
+    }
   }
 
   /*change deafult placeholder color*/
@@ -100,9 +103,9 @@ body.login {
 
   .other_login_type {
     position: absolute;
-    bottom:0;
-    left:0;
-    right:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     margin: 0 auto;
     width: pxToRem(670);
     color: #ffffff;
