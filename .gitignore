@@ -1,4 +1,4 @@
-src/webapp/node_modules/
+src/node_modules/
 .idea/*
 *.iml
 /.idea/

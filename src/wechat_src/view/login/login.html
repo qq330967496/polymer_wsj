@@ -40,7 +40,7 @@
                     </div>
 
                     <div class="send_sms" :class="{'disabled':(phone.length!=11)}" @click="(time==0 && phone.length==11)?sendSms():''">
-                        {{time>0?time+'秒':'发送短信验证码'}}
+                        {{time>0?time+'秒后重发':'发送短信验证码'}}
                     </div>
                 </div>
             </div>

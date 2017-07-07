@@ -1,4 +1,4 @@
-webpackJsonp([1],[
+webpackJsonp([0],[
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10,9 +10,7 @@ webpackJsonp([1],[
 	const app = new Vue({
 	    el: '#app',
 	    data: {
-	        phone: '', //手机号
-	        captcha: '', //验证码
-	        time: 0
+	        nickname: '' //昵称
 	    },
 	    beforeCreate: function () {
 	        utils.adaptive();
@@ -25,30 +23,11 @@ webpackJsonp([1],[
 	        init() {
 	            let _self = this;
 	        },
-	        sendSms() {
+	        submit() {
 	            let _self = this;
-	            console.log('发送验证码');
-	            _self.time = 60;
-	            var inte = setInterval(function () {
-	                _self.time--;
-	                if (_self.time <= 0) {
-	                    clearInterval(inte);
-	                }
-	            }, 1000);
-	        },
-	        toLogin() {
-	            let _self = this;
-	            console.log('登录');
-	            if (_self.phone.length != 11) {
-	                utils.prompt('请输入正确的手机号');
-	                return;
-	            }
-	            if (!_self.phone) {
-	                utils.prompt('请输入手机号');
-	                return;
-	            }
-	            if (!_self.captcha) {
-	                utils.prompt('请输入验证码');
+	            console.log('提交');
+	            if (!_self.nickname) {
+	                utils.prompt('请输入昵称');
 	                return;
 	            }
 
@@ -63,20 +42,12 @@ webpackJsonp([1],[
 	                }
 	            });
 	        },
-	        toWechatLogin() {
-	            let _self = this;
-	            console.log('微信登录');
-	        },
-
 	        clearInput(type) {
 	            let _self = this;
 	            $('#' + type).focus();
 	            switch (type) {
-	                case 'phone':
-	                    _self.phone = '';
-	                    break;
-	                case 'captcha':
-	                    _self.captcha = '';
+	                case 'nickname':
+	                    _self.nickname = '';
 	                    break;
 	            }
 	        }
