@@ -44,6 +44,7 @@ body.login {
     width: 16.75rem;
     color: #ffffff; }
     body.login .input_field > * {
+      color: #fff;
       margin-top: 0.8rem;
       border: none;
       border-bottom: 1px solid #ffffff;
@@ -52,14 +53,14 @@ body.login {
       font-size: 1rem;
       line-height: 1.7rem; }
   body.login .input_lg {
-    width: 16.75rem; }
+    width: 100%; }
   body.login .input_mid {
-    width: 11.25rem;
+    width: 65%;
     float: left; }
   body.login .send_sms {
     color: inherit;
-    width: 5.5rem;
-    text-align: right;
+    width: 35%;
+    text-align: center;
     font-size: 0.75rem;
     float: left;
     border-left: 1px solid #ffffff; }

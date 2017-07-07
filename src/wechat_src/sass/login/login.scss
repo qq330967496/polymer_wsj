@@ -49,6 +49,7 @@ body.login {
     color: #ffffff;
     //height: pxToRem(200);
     & > * {
+      color: #fff;
       margin-top: pxToRem(32);
       border: none;
       border-bottom: 1px solid #ffffff;
@@ -65,18 +66,18 @@ body.login {
   }*/
 
   .input_lg {
-    width: pxToRem(670);
+    width: 100%;
   }
 
   .input_mid {
-    width: pxToRem(450);
+    width: 65%;
     float: left;
   }
 
   .send_sms {
     color: inherit;
-    width: pxToRem(220);
-    text-align: right;
+    width: 35%;
+    text-align: center;
     font-size: pxToRem(30);
     float: left;
     border-left: 1px solid #ffffff;
