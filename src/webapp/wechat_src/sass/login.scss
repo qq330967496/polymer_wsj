@@ -1,2 +1,180 @@
 @import "../sass_lib/sass_utils";
 @charset "UTF-8";
+
+/*html {
+    font-family: Microsoft Yahei, Hiragino Sans GB, "Helvetica Neue", Helvetica, sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: #333;
+    font-size: 50px;
+}
+
+@media screen and (min-width:321px) and (max-width:375px){html{font-size:11px}}
+@media screen and (min-width:376px) and (max-width:414px){html{font-size:12px}}
+@media screen and (min-width:415px) and (max-width:639px){html{font-size:15px}}
+@media screen and (min-width:640px) and (max-width:719px){html{font-size:20px}}
+@media screen and (min-width:720px) and (max-width:749px){html{font-size:22.5px}}
+@media screen and (min-width:750px) and (max-width:799px){html{font-size:23.5px}}
+@media screen and (min-width:800px){html{font-size:25px}}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Microsoft Yahei, Hiragino Sans GB, "Helvetica Neue", Helvetica, sans-serif;
+    background-image: linear-gradient(-110deg, #00c99d 0%, #00bcbc 100%, #00bbbe 100%);
+    width: 7.5rem;
+    height: 13.34rem;
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}*/
+body.login{
+  background-image: linear-gradient(-110deg, #00c99d 0%, #00bcbc 100%, #00bbbe 100%);
+
+  .main_field {
+    padding: pxToRem(68) pxToRem(32);
+    height: 100%;
+    display: block;
+  }
+
+  .nav {
+    width: pxToRem(16);
+    height: pxToRem(33);
+    display: block;
+    background: url(/images/left-nav.png) center left no-repeat;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: pxToRem(67);
+    display: block;
+  }
+
+  .login_title {
+    display: inline-block;
+    //margin: 1.63rem 0.08rem 0.86rem 0.08rem;
+    margin: pxToRem(163) pxToRem(8) pxToRem(86);
+    font-size: pxToRem(40);
+    line-height: pxToRem(40);
+    height: pxToRem(40);
+    width: pxToRem(670);
+    color: #ffffff;
+    span {
+      text-align: left;
+    }
+  }
+
+  .input_field {
+    display: inline-block;
+    margin: 0 pxToRem(8);
+    width: pxToRem(670);
+    color: #ffffff;
+    //height: pxToRem(200);
+    &>*{
+      margin-top: pxToRem(32);
+      border: none;
+      border-bottom: 1px solid #ffffff;
+      background: transparent;
+      height: pxToRem(68);
+      font-size: pxToRem(40);
+      line-height: pxToRem(68);
+    }
+  }
+
+  /*.input_field input:focus {
+      border: none;
+      border-bottom: 1px solid #ffffff;
+  }*/
+
+  .input_lg {
+    width: pxToRem(670);
+  }
+
+  .input_mid {
+    width: pxToRem(450);
+    float: left;
+  }
+
+  .send_sms {
+    color: inherit;
+    width: pxToRem(220);
+    text-align: right;
+    font-size: pxToRem(30);
+    float: left;
+    border-left: 1px solid #ffffff;
+  }
+
+  .login_btn {
+    color: inherit;
+    font-size: pxToRem(30);
+    border: 1px solid #ffffff;
+    border-radius: pxToRem(15);
+    width: pxToRem(670);
+    height: pxToRem(100);
+  }
+
+  /*change deafult placeholder color*/
+  ::-webkit-input-placeholder {
+    color: #ffffff;
+    font-size: pxToRem(28);
+  }
+
+  .other_login_type {
+    margin: 0 pxToRem(8);
+    display: inline-block;
+    width: pxToRem(670);
+    color: #ffffff;
+    height: pxToRem(200);
+    font-size: pxToRem(28);
+    text-align: center;
+  }
+
+  .other_login_type_tip {
+    display: block;
+    position: relative;
+    height: pxToRem(28);
+    line-height: pxToRem(28);
+    margin: 0 auto;
+    width: pxToRem(670);
+  }
+
+  .other_login_type_tip:before {
+    content: "";
+    border-top: 1px solid #ffffff;
+    display: block;
+    position: absolute;
+    width: pxToRem(150);
+    top: pxToRem(14);
+    left: 0;
+  }
+
+  .other_login_type_tip:after {
+    content: "";
+    border-top: 1px solid #ffffff;
+    display: block;
+    position: absolute;
+    width: pxToRem(150);
+    top: pxToRem(14);
+    right: 0;
+  }
+
+  .logo_filed {
+    display: block;
+    height: pxToRem(88);
+    line-height: pxToRem(88);
+    margin-top: pxToRem(60);
+    width: pxToRem(670);
+  }
+
+  .wechat_logo {
+    margin: 0 auto;
+    width: pxToRem(88);
+    height: pxToRem(88);
+    display: block;
+    background: url(/images/wechat-logo.png) center center no-repeat;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+}
