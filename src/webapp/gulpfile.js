@@ -65,20 +65,20 @@ gulp.task("build-js", function(callback) {
 gulp.task('watch', ['watch-css', 'watch-view', 'watch-images', 'watch-js']);
 
 gulp.task('watch-css', function(done) {
-    return gulp.watch(['static/css/*','static/sass/**/*','static/sass_lib/**/*'],function(){
+    return gulp.watch(['wechat_src/css/*','wechat_src/sass/**/*','wechat_src/sass_lib/**/*'],function(){
         runSequence('sass','cssmin');
     }).on('end', done);
 });
 gulp.task('watch-view', function(done) {
-    return gulp.watch(['static/view/**/*'], ['copy:html'])
+    return gulp.watch(['wechat_src/view/**/*'], ['copy:html'])
         .on('end', done);
 });
 gulp.task('watch-images', function(done) {
-    return gulp.watch(['static/images/**/*'], ['copy:images'])
+    return gulp.watch(['wechat_src/images/**/*'], ['copy:images'])
         .on('end', done);
 });
 gulp.task('watch-js', function(done) {
-    return gulp.watch(['static/js/**/*','static/lib/**/*', 'static/components/**/*'], ['build-js'])
+    return gulp.watch(['wechat_src/js/**/*','wechat_src/lib/**/*', 'wechat_src/components/**/*'], ['build-js'])
         .on('end', done);
 });
 
@@ -94,14 +94,14 @@ gulp.task('connect', function() {
 
 //将html拷贝到目标目录
 gulp.task('copy:html', function(done) {
-    gulp.src(['static/view/**/*'], { base: 'static' })
+    gulp.src(['wechat_src/view/**/*'], { base: 'static' })
         .pipe(gulp.dest('web'))
         .on('end', done);
 });
 
 //将图片拷贝到目标目录
 gulp.task('copy:images', function(done) {
-    gulp.src(['static/images/**/*'])
+    gulp.src(['wechat_src/images/**/*'])
         .pipe(gulp.dest('web/images'))
         .on('end', done);
 });
@@ -109,19 +109,19 @@ gulp.task('copy:images', function(done) {
 
 //清理sass编译后的文件
 gulp.task('clean:sass', function () {
-    gulp.src(['static/css/sass'])
+    gulp.src(['wechat_src/css/sass'])
         .pipe(clean());
 });
 //sass转化css
 gulp.task('sass', function () {
-    return gulp.src('static/sass/**/*.scss')
+    return gulp.src('wechat_src/sass/**/*.scss')
         .pipe(sass().on('error', sass.logError))
-        .pipe(gulp.dest('static/css/sass'));
+        .pipe(gulp.dest('wechat_src/css/sass'));
 });
 
 //压缩合并css, css中既有自己写的.less, 也有引入第三方库的.css
 gulp.task('cssmin', function(done) {
-    gulp.src(['static/css/**/*.css'])
+    gulp.src(['wechat_src/css/**/*.css'])
         .pipe(concat('style.min.css'))
         .pipe(cssmin())
         .pipe(gulp.dest('web/css/'))
@@ -166,5 +166,5 @@ gulp.task('md5:css', ['sprite'], function(done) {
 
 //将图标文件拷贝到目标目录
 gulp.task('copy:icon', function(done) {
-    gulp.src(['static/icon/**/*']).pipe(gulp.dest('web/icon')).on('end', done);
+    gulp.src(['wechat_src/icon/**/*']).pipe(gulp.dest('web/icon')).on('end', done);
 });
