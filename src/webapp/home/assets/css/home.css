@@ -114,9 +114,7 @@ paper-tabs.nav-bar paper-tab {
 /*logo*/
 .logo {
     width: 240px;
-    /*line-height: 105px;*/
-    text-align: center;
-    line-height: 85px;
+    height: 85px;
 }
 
 .user-icon {
