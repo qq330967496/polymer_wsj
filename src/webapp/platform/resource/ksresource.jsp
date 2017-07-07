@@ -3,7 +3,7 @@
 <%
     String basePath = request.getContextPath();
     request.setAttribute("basePath", basePath);
-    request.setAttribute("DEFAULT_TITLE", "供应链金融－运营系统");
+    request.setAttribute("DEFAULT_TITLE", "运营系统");
 
     String version = com.kuaisu.platform.ResourceVersion.getVersion();
     request.setAttribute("version", version);
