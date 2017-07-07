@@ -3,7 +3,7 @@
 - wechat_src：微信端源文件
 - wechat：编译文件
 - gulpfile.js：gulp配置文件
-- package.js：nodejs包配置
+- package.json：nodejs包配置
 - webpack.config.js：webpack配置文件
 
 # 编译步骤

@@ -20,9 +20,9 @@ var runSequence = require('gulp-run-sequence');//执行队列
 
 //主机信息
 var host = {
-    path: 'wechat',
+    path: 'webapp/wechat',
     port: 8091,
-    html: '/login/login.html'
+    html: 'view/login/login.html'
 };
 gulp.task('default', function() {
     runSequence('clean:sass','sass', 'md5:css', 'md5:js', 'copy:html');
@@ -43,7 +43,7 @@ var devCompiler = webpack(myDevConfig);
  return gulp.src(['wechat_src/js/!**.js'])
  .pipe(named())
  .pipe(webpack(webpackConfig()))
- .pipe(gulp.dest('wechat/js/'))
+ .pipe(gulp.dest('webapp/wechat/js/'))
  });*/
 
 gulp.task("build-js", function(callback) {
@@ -95,14 +95,14 @@ gulp.task('connect', function() {
 //将html拷贝到目标目录
 gulp.task('copy:html', function(done) {
     gulp.src(['wechat_src/view/**/*'], { base: 'wechat_src' })
-        .pipe(gulp.dest('wechat'))
+        .pipe(gulp.dest('webapp/wechat'))
         .on('end', done);
 });
 
 //将图片拷贝到目标目录
 gulp.task('copy:images', function(done) {
     gulp.src(['wechat_src/images/**/*'])
-        .pipe(gulp.dest('wechat/images'))
+        .pipe(gulp.dest('webapp/wechat/images'))
         .on('end', done);
 });
 
@@ -124,7 +124,7 @@ gulp.task('cssmin', function(done) {
     gulp.src(['wechat_src/css/**/*.css'])
         .pipe(concat('style.min.css'))
         .pipe(cssmin())
-        .pipe(gulp.dest('wechat/css/'))
+        .pipe(gulp.dest('webapp/wechat/css/'))
         .on('end', done);
 });
 
@@ -132,19 +132,19 @@ gulp.task('cssmin', function(done) {
 
 //将js加上10位md5,并修改html中的引用路径，该动作依赖build-js
 gulp.task('md5:js', ['build-js'], function(done) {
-    gulp.src('wechat/js/**/*.js')
+    gulp.src('webapp/wechat/js/**/*.js')
         .pipe(uglify()) //压缩
-        .pipe(md5(10, ['wechat/view/**/*.html', 'wechat/view/app.html']))
-        .pipe(gulp.dest('wechat/js'))
+        .pipe(md5(10, ['webapp/wechat/view/**/*.html', 'webapp/wechat/view/app.html']))
+        .pipe(gulp.dest('webapp/wechat/js'))
         .on('end', done);
 });
 
 //雪碧图操作，应该先拷贝图片并压缩合并css
 gulp.task('sprite', ['copy:images', 'cssmin'], function(done) {
     var timestamp = +new Date();
-    gulp.src('wechat/css/style.min.css')
+    gulp.src('webapp/wechat/css/style.min.css')
         // .pipe(spriter({
-        //     spriteSheet: 'wechat/images/spritesheet' + timestamp + '.png',
+        //     spriteSheet: 'webapp/wechat/images/spritesheet' + timestamp + '.png',
         //     pathToSpriteSheetFromCSS: '../images/spritesheet' + timestamp + '.png',
         //     spritesmithOptions: {
         //         padding: 10
@@ -152,19 +152,19 @@ gulp.task('sprite', ['copy:images', 'cssmin'], function(done) {
         // }))
         .pipe(base64())
         .pipe(cssmin())
-        .pipe(gulp.dest('wechat/css'))
+        .pipe(gulp.dest('webapp/wechat/css'))
         .on('end', done);
 });
 
 //将css加上10位md5，并修改html中的引用路径，该动作依赖sprite
 gulp.task('md5:css', ['sprite'], function(done) {
-    gulp.src('wechat/css/**/*.css')
-        .pipe(md5(10, ['wechat/view/**/*.html', 'wechat/view/app.html']))
-        .pipe(gulp.dest('wechat/css'))
+    gulp.src('webapp/wechat/css/**/*.css')
+        .pipe(md5(10, ['webapp/wechat/view/**/*.html', 'webapp/wechat/view/app.html']))
+        .pipe(gulp.dest('webapp/wechat/css'))
         .on('end', done);
 });
 
 //将图标文件拷贝到目标目录
 gulp.task('copy:icon', function(done) {
-    gulp.src(['wechat_src/icon/**/*']).pipe(gulp.dest('wechat/icon')).on('end', done);
+    gulp.src(['wechat_src/icon/**/*']).pipe(gulp.dest('webapp/wechat/icon')).on('end', done);
 });
