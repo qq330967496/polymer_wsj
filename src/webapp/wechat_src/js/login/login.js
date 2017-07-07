@@ -18,7 +18,7 @@ const app = new Vue({
     },
     methods: {
         init:function(){
-
+            1
         }
     }
 });
