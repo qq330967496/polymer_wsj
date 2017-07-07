@@ -1,0 +1,131 @@
+/* 添加油卡 */
+@import "../sass_lib/sass_utils";
+@import '../sass_lib/basic';
+
+.fuel_add{
+  #main * {
+    font-size: pxToRem(26);
+  }
+  #main {
+    .order-top-tips {
+      height: 2rem;
+      line-height: 2rem;
+      text-align: center;
+      color: #d27e00;
+      background-color: #fbf2dc;
+    }
+
+    .this-row {
+      height: 2.4rem;
+      line-height: 2.4rem;
+      color: $gray;
+    }
+
+    .add-box {
+      padding-left: 0.75rem;
+      background-color: #fff;
+      .add-row {
+        @extend .this-row;
+        border-bottom: 1px solid #e4e4e4;
+
+        &:last-child {
+          border-bottom: 0px;
+        }
+      }
+
+      .input {
+        margin-top: 0.625rem;
+        width: 13rem;
+        border: 0 none;
+        outline: none;
+        color: $dark;
+      }
+    }
+
+    .delete-card {
+      margin: 0.5rem 0;
+      @extend .this-row;
+      padding: 0 0.75rem;
+      background-color: #fff;
+      .right-arrow {
+        // content: '';
+        // display: inline-block;
+        // margin-top: 1rem;
+        // width: 0.4rem;
+        // height: 0.4rem;
+        // border-top: 1px solid $light;
+        // border-right: 1px solid $light;
+        // -webkit-transform: rotateZ(45deg);
+
+        content: '';
+        display: inline-block;
+        width: 0.275rem;
+        height: 0.475rem;
+        margin-left: 0.15rem;
+        margin-top: 1rem;
+        // border-top: 1px solid $light;
+        // border-right: 1px solid $light;
+        background: url('../images/icon-arrow-right.png') no-repeat;
+        background-size: cover;
+        // -webkit-transform: rotateZ(45deg);
+      }
+    }
+
+    .row-hd {
+      // float:left;
+      width: 4.5rem;
+      margin-right: 0.375rem;
+      text-align: right;
+    }
+    .row-bd {
+      // overflow:hidden;
+      // margin-left: 4.2rem;
+      // float: left;
+    }
+
+    .foot {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      z-index: 1;
+      width: 100%;
+      .foot-wrap {
+        width: 100%;
+        max-width: 750px;
+        margin: 0 auto;
+        background-color: #fff;
+        .foot-inside {
+          padding: 0.5rem 0.75rem;
+          border-top: 1px solid #e4e4e4;
+          background-color: #fff;
+        }
+      }
+
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0.55rem 0;
+      text-align: center;
+      font-size: 0.75rem;
+      border-radius: 0.15rem;
+      background-color: $yellow_1;
+      color: $yellow_3;
+    }
+
+    .btn-disabled {
+      @extend .btn;
+      background-color: #dcdcdc;
+      color: #fff;
+    }
+  }
+  .confirm-head {
+    margin-bottom: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: $dark;
+  }
+}
+

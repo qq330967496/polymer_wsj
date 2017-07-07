@@ -6,7 +6,7 @@ var utils = require('utils');
 const app = new Vue({
     el: '#app',
     data: {
-        phone_num:'',//手机号
+        phone:'',//手机号
         captcha:'',//验证码
         time:0,
     },
@@ -35,7 +35,11 @@ const app = new Vue({
         toLogin(){
             let _self = this;
             console.log('去登录');
-            if(!_self.phone_num){
+            if(_self.phone.length!=11){
+                utils.alert('请输入正确的手机号');
+                return;
+            }
+            if(!_self.phone){
                 utils.alert('请输入手机号');
                 return;
             }
@@ -44,10 +48,26 @@ const app = new Vue({
                 return;
             }
 
+            //异常处理
+
+
         },
         toWechatLogin(){
             let _self = this;
             console.log('微信登录');
+        },
+
+        clearInput(type){
+            let _self = this;
+            $('#'+type).focus();
+            switch (type){
+                case 'phone':
+                    _self.phone = '';
+                    break;
+                case 'captcha':
+                    _self.captcha = '';
+                    break;
+            }
         }
     }
 });

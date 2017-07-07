@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>特权说明</title>
+    <meta id="meta_viewport" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="../css/style.min.css">
+    <link rel="stylesheet" type="text/css" href="../icon/iconfont.css">
+     <style type="text/css">
+        html,body,#app,#main{
+            width:100%;
+            height:100%;
+        }
+        .wrap{
+            height:100%;
+            padding:0 4%;
+            border-top:.5rem solid #efefef;
+            background-color: #fff;
+            box-sizing:border-box;
+        }
+        .rule-tit{
+            color:#333;
+            font-size:.7rem;
+            margin-top:.5rem;
+        }
+        .wrap div{
+            width:100%;
+            color:#666;
+            font-size:.7rem!important;
+            margin-top:.5rem;
+            line-height: 150%;
+        }
+        .wrap div p{
+            font-size:.7rem!important;
+        }
+        .serial{
+            width: 4%;
+            height: 100%;
+            float: left;
+        }
+
+        .clause {
+            width: 96%;
+            float: left;
+        }
+        .wrap li:after{
+            display:block; 
+            content:""; 
+            height:0; 
+            clear:both; 
+            overflow:hidden; 
+            visibility:hidden;
+        }
+         [v-cloak]{
+            display:none;
+        }
+
+        
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <comp-header :title="'特权卡说明'"></comp-header>
+        <div id="main" :class="platform">
+            <div class="wrap">
+                <!-- <p class="rule-tit">活动规则：</p> -->
+                <div v-html="rulecontent"></div>
+                <!-- <li>
+                    <p class="serial">1.</p>
+                    <p class="clause">用户条件：限非营运车辆的粤通卡（国标卡）用户使用。一经绑定不可变更，若使用过程中车辆信息变更为营运车辆，特权卡作废。</p>
+                </li>
+                <li>
+                    <p class="serial">2.</p>
+                    <p class="clause">使用要求：需登录ETC车宝APP，绑定粤通卡（国标卡）激活使用。</p>
+                </li>
+                <li>
+                    <p class="serial">3.</p>
+                    <p class="clause">特权卡激活：首次领取90天内激活有效，逾期不激活则作废。</p>
+                </li>
+                <li>
+                    <p class="serial">4.</p>
+                    <p class="clause">有效期：自激活之日起的连续12个月。</p>
+                </li>
+                <li>
+                    <p class="serial">5.</p>
+                    <p class="clause">计算规则：当月行车里程 ≤ 200公里时，按实际行车里程享9折优惠；行车里程 > 200公里时，按200公里计算。</p>
+                </li>
+                <li>
+                    <p class="serial">6.</p>
+                    <p class="clause">返还形式：每月的月底核算上个月所返还的路费，并打到个人APP账户上。记账卡（信用卡）用户返还U币，储值卡的用户返还路费。</p>
+                </li>
+                <li>
+                    <p class="serial">7.</p>
+                    <p class="clause">其它：转赠次数不限，每张卡只能绑定激活一次。</p>
+                </li> -->
+            </div>
+        </div>
+    </div>
+    <script src="../js/common.js"></script>
+    <script src="../js/statement.js"></script>
+</body>
+
+</html>

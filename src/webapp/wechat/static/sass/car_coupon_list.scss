@@ -1,0 +1,93 @@
+@import "../sass_lib/sass_utils";
+@charset "UTF-8";
+
+.car_coupon_list{
+  .coupon_item{
+    display: flex;
+    margin: pxToRem(20);
+    margin-bottom: 0;
+    position:relative;
+    border:1px solid #E5BBBB;
+    @include border-radius(pxToRem(8));
+    font-size: pxToRem(26);
+    background:url("../images/bg_coupon.png");
+    background-size: 130%;
+    .left{
+      flex:1;
+      text-align: center;
+      padding:pxToRem(30) 0;
+      .money{
+        font-size:pxToRem(30);
+        span{
+          font-size: pxToRem(80);
+          font-weight: bold;
+        }
+      }
+      .statement{
+        font-size: pxToRem(24);
+      }
+    }
+    .right{
+      flex:2;
+      padding:pxToRem(50) 0;
+      padding-left:pxToRem(30);
+      border-left: 1px dashed #E5BBBB;
+      .title{
+        margin-bottom: pxToRem(20);
+        font-weight: bold;
+      }
+      .subtitle{
+        color:#666;
+      }
+    }
+    .type{
+      position: absolute;
+      right:pxToRem(20);
+      top:pxToRem(20);
+      background-color: #cc423f;
+      padding:pxToRem(8) pxToRem(20);
+      color: #fff;
+      @include border-radius(pxToRem(4));
+
+      &:before,&:after{
+        content: '';
+        position: absolute;
+        display: inline-block;
+        left:pxToRem(-8);
+        padding:pxToRem(8);
+        @include border-radius(50%);
+        background-color: #ece2e2;
+        box-sizing: border-box;
+
+        width:pxToRem(16);
+        height:pxToRem(16);
+        top:0;
+        bottom:0;
+        margin:auto 0;
+      }
+      &:after{
+        left:auto;
+        right:pxToRem(-8);
+      }
+    }
+    &.disabled{
+      -webkit-filter: grayscale(100%);
+      -ms-filter: grayscale(100%);
+      filter: grayscale(100%);
+
+      .left{
+        color:#bfbfbf;
+      }
+      .right{
+        color:#bfbfbf;
+        .subtitle{
+          color:#bfbfbf;
+        }
+      }
+      .type{
+        background-color: #bfbfbf;
+      }
+    }
+  }
+}
+

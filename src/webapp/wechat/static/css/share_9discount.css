@@ -1,0 +1,65 @@
+#share_9discount{
+    background: #FBF2D8;
+}
+#share_9discount img{
+    width:100%;
+}
+#share_9discount input{
+    background: #efefef;
+    width:100%;
+    text-align: center;
+    padding:0.5rem 0;
+    -webkit-border-radius: .125rem;
+    -moz-border-radius: .125rem;
+    border-radius: .125rem;
+    font-size: 0.7rem;
+
+}
+#share_9discount .btn{
+    background: #ff782b;
+    color:#fff;
+}
+
+
+#share_9discount .mod{
+    margin:0.5rem;
+    margin-top:0.5rem;
+}
+#share_9discount .mod.main{
+    padding-top:0.5rem;
+}
+
+#share_9discount .mod_item{
+    padding:0.5rem;
+    padding-top:0;
+}
+#share_9discount .mod_item.notice{
+    color:#ff782b;
+    font-size: 0.75rem;
+}
+#share_9discount .mod_item.note{
+    text-align:center;
+    color:#999;
+    font-size: 0.6rem;
+}
+#share_9discount .mod_item.notice .icon{
+    width:1.1rem;
+    vertical-align: middle;
+}
+
+#share_9discount .footer .title{
+    text-align: center;
+    padding:0.5rem 0;
+    font-size: 0.75rem;
+}
+#share_9discount .footer .title img{
+    width:5.5rem;
+    vertical-align: middle;
+}
+#share_9discount .footer .content{
+    padding:0.5rem;
+    padding-top:0;
+    line-height: 200%;
+    color: #666;
+    font-size: 0.65rem;
+}

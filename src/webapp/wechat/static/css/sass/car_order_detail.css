@@ -1,0 +1,168 @@
+@charset "UTF-8";
+/*全局变量*/
+/*函数*/
+/*混合*/
+.car_order_detail .timeout {
+  background-color: #fbf2dc;
+  color: #d27e00;
+  text-align: center;
+  padding: 0.5rem 0;
+  position: fixed;
+  width: 100%; }
+
+.car_order_detail .list {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  background-color: #fff; }
+  .car_order_detail .list.nmt {
+    margin-top: 1.75rem; }
+  .car_order_detail .list .item {
+    padding: 0.75rem;
+    padding-left: 0;
+    margin-left: 0.75rem;
+    display: flex;
+    border-bottom: 1px solid #d8d8d8; }
+    .car_order_detail .list .item:last-child {
+      border-bottom: 0; }
+    .car_order_detail .list .item .label {
+      flex: 1;
+      color: #666666; }
+    .car_order_detail .list .item .content {
+      flex: 2;
+      text-align: right; }
+      .car_order_detail .list .item .content span {
+        color: #d27e00; }
+
+.car_order_detail .comment .comment_empty {
+  color: #d27e00;
+  text-align: center;
+  margin-bottom: 0.5rem; }
+
+.car_order_detail .comment .comment_empty:after {
+  content: '';
+  border-top: 1px solid #d27e00;
+  border-left: 1px solid #d27e00;
+  padding: 0.15rem;
+  width: 0;
+  display: inline-block;
+  -webkit-transform: rotate(135deg);
+  /* Safari 和 Chrome */
+  -moz-transform: rotate(135deg);
+  /* Firefox */
+  -ms-transform: rotate(135deg);
+  /* IE 9 */
+  -o-transform: rotate(135deg);
+  /* Opera */
+  transform: rotate(135deg); }
+
+.car_order_detail .comment .comment_list {
+  background-color: #fff;
+  margin-bottom: 0.5rem; }
+  .car_order_detail .comment .comment_list .comment_item {
+    border-bottom: 1px solid #e4e4e4;
+    padding: 0.75rem; }
+    .car_order_detail .comment .comment_list .comment_item:last-child {
+      border: 0; }
+    .car_order_detail .comment .comment_list .comment_item .info > * {
+      display: inline-block;
+      vertical-align: top; }
+    .car_order_detail .comment .comment_list .comment_item .user_icon {
+      width: 12%;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      border-radius: 50%; }
+    .car_order_detail .comment .comment_list .comment_item .middle {
+      width: 40%;
+      padding-left: 0.75rem;
+      font-weight: bold; }
+    .car_order_detail .comment .comment_list .comment_item .user_name {
+      padding-bottom: 0.2rem; }
+    .car_order_detail .comment .comment_list .comment_item .star, .car_order_detail .comment .comment_list .comment_item .star.star_0 {
+      width: 4rem;
+      height: 0.654rem;
+      background-image: url("../images/icon_star.png");
+      background-size: 100%; }
+    .car_order_detail .comment .comment_list .comment_item .star.star_1 {
+      background-position-y: -0.654rem; }
+    .car_order_detail .comment .comment_list .comment_item .star.star_2 {
+      background-position-y: -1.308rem; }
+    .car_order_detail .comment .comment_list .comment_item .star.star_3 {
+      background-position-y: -1.962rem; }
+    .car_order_detail .comment .comment_list .comment_item .star.star_4 {
+      background-position-y: 1.308rem; }
+    .car_order_detail .comment .comment_list .comment_item .star.star_5 {
+      background-position-y: 0.654rem; }
+    .car_order_detail .comment .comment_list .comment_item .time {
+      width: 45%;
+      text-align: right;
+      color: #999; }
+    .car_order_detail .comment .comment_list .comment_item .content {
+      padding-top: 0.5rem;
+      padding-left: 3rem; }
+
+.car_order_detail .footer {
+  display: flex;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  background-color: #fff;
+  width: 100%;
+  padding: 0.5rem;
+  border-top: 1px solid #d8d8d8; }
+  .car_order_detail .footer .buy {
+    flex: 1;
+    display: flex; }
+    .car_order_detail .footer .buy .total {
+      flex: 2;
+      padding: 0.5rem; }
+      .car_order_detail .footer .buy .total span {
+        color: #d27e00; }
+    .car_order_detail .footer .buy .btn {
+      flex: 1; }
+
+.car_order_detail .comment_dialog .common_dialog_main {
+  background-color: #fff;
+  -webkit-border-radius: 0.25rem;
+  -moz-border-radius: 0.25rem;
+  border-radius: 0.25rem; }
+  .car_order_detail .comment_dialog .common_dialog_main .title {
+    padding: 1.5rem 0;
+    font-size: 0.8rem;
+    font-weight: bold; }
+  .car_order_detail .comment_dialog .common_dialog_main .star_mod {
+    text-align: left;
+    padding: 0 1.25rem;
+    margin-bottom: 1.5rem;
+    display: flex; }
+    .car_order_detail .comment_dialog .common_dialog_main .star_mod .star {
+      flex: 1;
+      display: inline-block;
+      height: 1.7rem;
+      background-image: url("../images/icon_star_0.png");
+      background-repeat: no-repeat;
+      background-size: contain;
+      margin-right: 1.4rem; }
+      .car_order_detail .comment_dialog .common_dialog_main .star_mod .star:last-child {
+        margin-right: 0; }
+      .car_order_detail .comment_dialog .common_dialog_main .star_mod .star.checked {
+        background-image: url("../images/icon_star_1.png"); }
+  .car_order_detail .comment_dialog .common_dialog_main .content {
+    padding: 0 1.25rem; }
+    .car_order_detail .comment_dialog .common_dialog_main .content textarea {
+      width: 100%;
+      height: 4.5rem;
+      border-color: #d8d8d8;
+      -webkit-border-radius: 0.25rem;
+      -moz-border-radius: 0.25rem;
+      border-radius: 0.25rem; }
+  .car_order_detail .comment_dialog .common_dialog_main .bottom {
+    padding: 1.25rem; }
+  .car_order_detail .comment_dialog .common_dialog_main .close {
+    background-image: url("../images/icon_close_circle.png");
+    position: absolute;
+    width: 1.4rem;
+    height: 1.4rem;
+    background-size: 100%;
+    left: 0;
+    right: 0;
+    margin: 0.5rem auto 0; }

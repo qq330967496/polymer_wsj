@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>车主卡优惠券列表</title>
+    <meta id="meta_viewport" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="../css/style.min.css">
+    <link rel="stylesheet" type="text/css" href="../icon/iconfont.css">
+
+</head>
+
+<body class="car_coupon_list">
+    <div id="app" v-cloak>
+        <!--头部组件，注释详见header组件-->
+        <comp-header :title="'优惠券列表'"></comp-header>
+        <div id="main" :class="platform">
+            <div class="coupon_list">
+                <div class="coupon_item" :class="{'disabled':item.status==2}" v-for="item in json_data">
+                    <div class="left">
+                        <div class="money">
+                            ￥<span>{{item.money}}</span>
+                        </div>
+                        <div class="statement">
+                            {{item.statement}}
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="title">
+                            {{item.name}}
+                        </div>
+                        <div class="subtitle">
+                            发放日期：{{item.issue_time}}
+                        </div>
+                    </div>
+                    <div class="type">
+                        <!--{{get_coupon_type(item.coupon_type)}}券-->
+                        {{item.coupon_type}}
+                    </div>
+                </div>
+
+                <!--<div class="coupon_item disabled">
+                    <div class="left">
+                        <div class="money">
+                            ￥<span>50</span>
+                        </div>
+                        <div class="statement">
+                            满99可用
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="title">
+                            商城通用券
+                        </div>
+                        <div class="subtitle">
+                            发放日期：2017-01-01
+                        </div>
+                    </div>
+                    <div class="type">
+                        商城券
+                    </div>
+                </div>-->
+            </div>
+        </div>
+    </div>
+    <script src="../js/common.js"></script>
+    <script src="../js/car_coupon_list.js"></script>
+</body>
+
+</html>

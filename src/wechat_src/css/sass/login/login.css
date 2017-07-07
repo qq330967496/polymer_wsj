@@ -52,19 +52,40 @@ body.login {
     body.login .input_field .row {
       border-bottom: 1px solid #ffffff;
       padding-bottom: 0.625rem;
-      display: flex;
       margin-bottom: 0.625rem; }
-    body.login .input_field input {
-      flex: 1;
-      color: #fff;
-      background: transparent;
-      font-size: 1rem; }
-    body.login .input_field .send_sms {
-      flex: 0.5;
-      text-align: center;
-      border-left: 1px solid #ffffff;
-      font-size: 0.75rem;
-      line-height: 150%; }
+      body.login .input_field .row.error {
+        border-bottom: 1px solid #ff4f41; }
+      body.login .input_field .row .info_mod {
+        height: 0.5rem; }
+        body.login .input_field .row .info_mod .info {
+          font-size: 0.5rem;
+          display: block;
+          text-align: left;
+          color: #ececec; }
+      body.login .input_field .row .inner {
+        display: flex; }
+        body.login .input_field .row .inner > * {
+          margin-top: 0.625rem; }
+        body.login .input_field .row .inner input {
+          flex: 1;
+          color: #fff;
+          background: transparent;
+          font-size: 0.7rem; }
+        body.login .input_field .row .inner .send_sms {
+          flex: 0.7;
+          text-align: center;
+          border-left: 1px solid #ffffff;
+          font-size: 0.7rem; }
+          body.login .input_field .row .inner .send_sms.disabled {
+            color: #66dbcc; }
+        body.login .input_field .row .inner .clear {
+          flex: 0.05; }
+          body.login .input_field .row .inner .clear img {
+            width: 0.75rem;
+            vertical-align: middle;
+            display: inline-block; }
+          body.login .input_field .row .inner .clear.captcha {
+            flex: 0.125; }
   body.login .login_btn {
     font-size: 0.75rem;
     border: 1px solid #ffffff;
@@ -95,8 +116,8 @@ body.login {
       position: relative;
       height: 0.7rem;
       line-height: 0.7rem;
-      margin: 0 auto;
-      width: 16.75rem; }
+      /*margin: 0 auto;
+      width: pxToRem(670);*/ }
     body.login .other_login_type .other_login_type_tip:before {
       content: "";
       border-top: 1px solid #ffffff;
