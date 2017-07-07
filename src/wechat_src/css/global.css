@@ -519,36 +519,3 @@ header .close{
     transform:rotate(135deg);
 
 }
-
-.info{
-    color: #a8a8a8;
-    text-align: center;
-}
-.info .icon{
-    position: relative;
-    width:0.65rem;
-    height:0.65rem;
-    margin-right:0.1rem;
-    display: inline-block;
-}
-.info .icon:before{
-    position: absolute;
-    left:0;
-    content: "";
-    padding:0.325rem;
-    border:1px solid #a8a8a8;
-    -webkit-border-radius:5rem;
-    -moz-border-radius:5rem;
-    border-radius:5rem;
-    color: #a8a8a8;
-    display: inline-block;
-}
-.info .icon:after{
-    position: absolute;
-    left:0;
-    content: "i";
-    text-align: center;
-    display: inline-block;
-    width:0.65rem;
-    border:1px solid transparent;
-}

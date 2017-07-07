@@ -8,7 +8,7 @@
     <title>手机号快捷登陆页</title>
 </head>
 <body class="login">
-<div id="app">
+<div id="app" v-cloak>
     <div class="bg"></div>
     <!--主页面-->
     <div class="main_field">
@@ -18,17 +18,35 @@
         </div>
         <div class="input_field">
             <div class="row">
-                <input v-model="phone_num" placeholder="手机号"/>
+                <div class="info_mod">
+                    <div class="info" v-if="phone">手机号</div>
+                </div>
+                <div class="inner">
+                    <input v-model="phone" id="phone" placeholder="手机号"/>
+                    <div class="clear" @click="clearInput('phone')">
+                        <img src="/images/icon_close.png" alt="" v-if="phone">
+                    </div>
+                </div>
+
             </div>
             <div class="row">
-                <input v-model="captcha" placeholder="短信验证码"/>
-                <div class="send_sms" @click="time>0?'':sendSms()">
-                    {{time>0?time+'秒':'发送短信'}}
+                <div class="info_mod">
+                    <div class="info" v-if="captcha">验证码</div>
+                </div>
+                <div class="inner">
+                    <input v-model="captcha" id="captcha" placeholder="短信验证码"/>
+                    <div class="clear captcha" @click="clearInput('captcha')">
+                        <img src="/images/icon_close.png" alt="" v-if="captcha">
+                    </div>
+
+                    <div class="send_sms" :class="{'disabled':(phone.length!=11)}" @click="(time==0 && phone.length==11)?sendSms():''">
+                        {{time>0?time+'秒':'发送短信验证码'}}
+                    </div>
                 </div>
             </div>
-            <div class="login_btn" :class="{'disabled':(!phone_num||!captcha)}" @click="(!phone_num||!captcha)?'':toLogin()">登录</div>
+            <div class="login_btn" :class="{'disabled':(!phone || phone.length!=11 ||!captcha)}" @click="(!phone || phone.length!=11 ||!captcha)?'':toLogin()">登录</div>
 
-            <!--<input v-model="phone_num" class="input_lg" placeholder="手机号"/>
+            <!--<input v-model="phone" class="input_lg" placeholder="手机号"/>
             <input v-model="captcha" class="input_mid" placeholder="短信验证码"/>
             <button class="send_sms" @click="time>0?'':sendSms()">
                 {{time>0?time+'秒':'发送短信'}}

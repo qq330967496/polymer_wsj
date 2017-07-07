@@ -61,23 +61,57 @@ body.login {
     .row {
       border-bottom: 1px solid #ffffff;
       padding-bottom: pxToRem(25);
-      display: flex;
       margin-bottom: pxToRem(25);
-    }
-    input {
-      flex: 1;
-      color: #fff;
-      background: transparent;
-      font-size: pxToRem(40);
-    }
-    .send_sms {
-      flex: 0.5;
-      text-align: center;
-      border-left: 1px solid #ffffff;
-      font-size: pxToRem(30);
-      line-height: 150%;
-    }
+      &.error {
+        border-bottom: 1px solid #ff4f41;
+      }
 
+      .info_mod {
+        height: pxToRem(20);
+        .info {
+          font-size: pxToRem(20);
+          display: block;
+          text-align: left;
+          color: #ececec;
+        }
+      }
+
+      .inner {
+        display: flex;
+
+        & > * {
+          margin-top: pxToRem(25);
+        }
+
+        input {
+          flex: 1;
+          color: #fff;
+          background: transparent;
+          font-size: pxToRem(28);
+        }
+        .send_sms {
+          flex: 0.7;
+          text-align: center;
+          border-left: 1px solid #ffffff;
+          font-size: pxToRem(28);
+          //line-height: 150%;
+          &.disabled {
+            color: #66dbcc;
+          }
+        }
+        .clear {
+          flex: 0.05;
+          img {
+            width: pxToRem(30);
+            vertical-align: middle;
+            display: inline-block;
+          }
+          &.captcha {
+            flex: 0.125;
+          }
+        }
+      }
+    }
   }
 
   .login_btn {
@@ -118,8 +152,8 @@ body.login {
       position: relative;
       height: pxToRem(28);
       line-height: pxToRem(28);
-      margin: 0 auto;
-      width: pxToRem(670);
+      /*margin: 0 auto;
+      width: pxToRem(670);*/
     }
 
     .other_login_type_tip:before {
