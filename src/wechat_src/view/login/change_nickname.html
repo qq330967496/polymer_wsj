@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <!--<link rel="stylesheet" type="text/css" href="../resources/css/login.css">-->
+    <link rel="stylesheet" type="text/css" href="/css/style.min.css">
+    <title>手机号快捷登陆页</title>
+</head>
+<body class="login">
+<div id="app" v-cloak>
+    <div class="bg"></div>
+    <!--主页面-->
+    <div class="main_field">
+        <div class="nav"></div>
+        <div class="login_title">
+            <span>
+                第三方帐号登录成功， <br>
+                昵称被占用，请重新
+            </span>
+        </div>
+        <div class="input_field">
+            <div class="row">
+                <div class="info_mod">
+                    <div class="info" v-if="nickname">新昵称</div>
+                </div>
+                <div class="inner">
+                    <input v-model="nickname" id="nickname" placeholder="新昵称"/>
+                    <div class="clear" @click="clearInput('nickname')">
+                        <img src="/images/icon_close.png" alt="" v-if="nickname">
+                    </div>
+                </div>
+
+            </div>
+            <div class="login_btn" :class="{'disabled':!nickname}" @click="!nickname?'':submit()">提交</div>
+        </div>
+    </div>
+    <!--<div class="other_login_type">
+        <div class="other_login_type_tip">使用第三方账号登录</div>
+        <div class="logo_filed">
+            <div @click="toWechatLogin" class="wechat_logo"></div>
+        </div>
+    </div>-->
+</div>
+
+
+<!--<script>
+    (function(){
+        function w () {
+            var r = document.documentElement;
+            var a = r.getBoundingClientRect().width;
+            if (a > 750) {
+                a = 750;
+            };
+            rem = a / 7.5;
+            r.style.fontSize = rem + 'px';
+        };
+        var t;
+        w();
+        window.addElementListener('resize',function(){
+            clearTimeout(t);
+            t = setTimeout(w,300)
+        },false);
+    })();
+</script>-->
+
+<script src="/js/common.js"></script>
+<script src="/js/login/change_nickname.js"></script>
+</body>
+</html>
