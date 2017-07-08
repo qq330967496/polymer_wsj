@@ -22,7 +22,7 @@
                     <div class="info" v-if="phone">手机号</div>
                 </div>
                 <div class="inner">
-                    <input v-model="phone" id="phone" placeholder="手机号" @click="clearError('phone')"/>
+                    <input v-model="phone" id="phone" placeholder="手机号" @input="clearError('phone')"/>
                     <div class="clear" @click="clearInput('phone')">
                         <img src="/wechat/images/icon_close.png" alt="" v-if="phone">
                     </div>
@@ -34,7 +34,7 @@
                     <div class="info" v-if="captcha">验证码</div>
                 </div>
                 <div class="inner">
-                    <input v-model="captcha" id="captcha" placeholder="短信验证码" @click="clearError('captcha')"/>
+                    <input v-model="captcha" id="captcha" placeholder="短信验证码" @input="clearError('captcha')"/>
                     <div class="clear captcha" @click="clearInput('captcha')">
                         <img src="/wechat/images/icon_close.png" alt="" v-if="captcha">
                     </div>

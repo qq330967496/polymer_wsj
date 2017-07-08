@@ -25,7 +25,7 @@
                     <div class="info" v-if="nickname">新昵称</div>
                 </div>
                 <div class="inner">
-                    <input v-model="nickname" id="nickname" placeholder="新昵称" @click="clearError('nickname')"/>
+                    <input v-model="nickname" id="nickname" placeholder="新昵称" @input="clearError('nickname')"/>
                     <div class="clear" @click="clearInput('nickname')">
                         <img src="/wechat/images/icon_close.png" alt="" v-if="nickname">
                     </div>
