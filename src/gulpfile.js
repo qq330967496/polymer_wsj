@@ -20,9 +20,9 @@ var runSequence = require('gulp-run-sequence');//执行队列
 
 //主机信息
 var host = {
-    path: 'webapp/wechat',
+    path: 'webapp',
     port: 8091,
-    html: 'view/login/login.html'
+    html: 'wechat/view/login/login.html'
 };
 gulp.task('default', function() {
     runSequence('clean:sass','sass', 'md5:css', 'md5:js', 'copy:html');

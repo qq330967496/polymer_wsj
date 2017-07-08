@@ -1,16 +1,18 @@
-webpackJsonp([0],[
+webpackJsonp([1],[
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Vue, $) {/**
 	 * Created by Sever on 2017/7/7.
 	 */
-	var utils = __webpack_require__(3);
+	var utils = __webpack_require__(2);
 
 	const app = new Vue({
 	    el: '#app',
 	    data: {
-	        nickname: '' //昵称
+	        cur_nickname: utils.queryString('cur_nickname'),
+	        nickname: '', //昵称
+	        error_msg: ''
 	    },
 	    beforeCreate: function () {
 	        utils.adaptive();
@@ -22,6 +24,32 @@ webpackJsonp([0],[
 	    methods: {
 	        init() {
 	            let _self = this;
+	            /* $.ajax({
+	                 // url:'/wsj_server/customers/getLoginCustomerInfo.do',
+	                 data:{
+	                     
+	                 },
+	                 type:'GET',
+	                 success:function(json){
+	                     //假数据
+	                     json={
+	                         success:true,
+	                         message:'登录成功',
+	                     }
+	                     if(json.success){
+	                         // location.href='../index.html';
+	                     }else{
+	                         utils.prompt('没有该用户');
+	                         // _self.error_msg = '昵称被占用，请重新输入';
+	                     }
+	                 },
+	                 error:function(){
+	                     utils.prompt('网络错误，请重试');
+	                 }
+	             })*/
+	        },
+	        clearError(type) {
+	            $('#' + type).parents('.row').removeClass('error');
 	        },
 	        submit() {
 	            let _self = this;
@@ -33,10 +61,27 @@ webpackJsonp([0],[
 
 	            //请求
 	            $.ajax({
-	                url: '',
-	                data: {},
-	                type: 'POST',
-	                success: function (json) {},
+	                url: '/wsj_server/customers/changeCustomerNickName.do',
+	                data: {
+	                    nickName: _self.nickname
+	                },
+	                type: 'GET',
+	                success: function (json) {
+	                    //假数据
+	                    /*json={
+	                        // success:true,
+	                        // message:'修改成功',
+	                        success:false,
+	                        message:'修改失败',
+	                    }*/
+	                    if (json.success) {
+	                        location.href = '../index.html';
+	                    } else {
+	                        _self.error_msg = '昵称被占用，请重新输入';
+	                        $('#nickname').parents('.row').addClass('error');
+	                        $('#nickname').focus();
+	                    }
+	                },
 	                error: function () {
 	                    utils.prompt('网络错误，请重试');
 	                }
@@ -53,7 +98,7 @@ webpackJsonp([0],[
 	        }
 	    }
 	});
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(2)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(3)))
 
 /***/ })
 ]);
