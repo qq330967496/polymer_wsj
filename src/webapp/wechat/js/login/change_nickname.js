@@ -5,7 +5,7 @@ webpackJsonp([1],[
 	/* WEBPACK VAR INJECTION */(function(Vue, $) {/**
 	 * Created by Sever on 2017/7/7.
 	 */
-	var utils = __webpack_require__(2);
+	var utils = __webpack_require__(3);
 
 	const app = new Vue({
 	    el: '#app',
@@ -98,7 +98,7 @@ webpackJsonp([1],[
 	        }
 	    }
 	});
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(3)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(2)))
 
 /***/ })
 ]);

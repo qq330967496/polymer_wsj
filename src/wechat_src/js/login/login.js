@@ -9,6 +9,7 @@ const app = new Vue({
         phone:'',//手机号
         captcha:'',//验证码
         time:0,
+        isWechat:utils.queryString('isWechat'),
     },
     beforeCreate: function () {
         utils.adaptive();

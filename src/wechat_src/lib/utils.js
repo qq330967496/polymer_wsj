@@ -248,7 +248,7 @@ define(function (require, exports, module) {
             var content = obj.content || String(obj) || "",
                 boxClass = obj.boxClass || "",
                 delay = obj.delay || 2000,
-                msgHtml = '<div class="dialog-prompt ' + boxClass + '">' + content + '</div>';
+                msgHtml = '<div class="dialog-prompt ' + boxClass + '"><div>' + content + '</div></div>';
             $(".dialog-prompt").remove();
             $("body").append(msgHtml);
             var prompt = $(".dialog-prompt"),

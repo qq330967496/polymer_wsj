@@ -5,14 +5,15 @@ webpackJsonp([2],[
 	/* WEBPACK VAR INJECTION */(function(Vue, $) {/**
 	 * Created by Sever on 2017/7/7.
 	 */
-	var utils = __webpack_require__(2);
+	var utils = __webpack_require__(3);
 
 	const app = new Vue({
 	    el: '#app',
 	    data: {
 	        phone: '', //手机号
 	        captcha: '', //验证码
-	        time: 0
+	        time: 0,
+	        isWechat: utils.queryString('isWechat')
 	    },
 	    beforeCreate: function () {
 	        utils.adaptive();
@@ -137,7 +138,7 @@ webpackJsonp([2],[
 	        }
 	    }
 	});
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(3)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(2)))
 
 /***/ })
 ]);
