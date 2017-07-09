@@ -100,7 +100,7 @@ const app = new Vue({
                         if(json.message=='注册成功'){
                             // location.href='change_nickname.html?cur_nickname='+json.bean.name;
                             location.href='change_nickname.html';
-                        }else if(json.message=='登录成功'){
+                        }else if(json.message=='登陆成功' || json.message=='登录成功'){
                             location.href='../index.html';
                         }
                     }else{
