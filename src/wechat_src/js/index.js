@@ -21,7 +21,7 @@ const app = new Vue({
 
             //请求
             $.ajax({
-                url:'/wsj_server/sms/login/getLoginCustomerInfo.do',
+                url:'/wsj_server/customers/getLoginCustomerInfo.do',
                 data:{
                     
                 },
