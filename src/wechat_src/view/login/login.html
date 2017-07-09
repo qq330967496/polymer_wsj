@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <!--<link rel="stylesheet" type="text/css" href="../resources/css/login.css">-->
-    <link rel="stylesheet" type="text/css" href="/css/style.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/style.min.css">
     <title>手机号快捷登陆页</title>
 </head>
 <body class="login">
@@ -22,9 +22,9 @@
                     <div class="info" v-if="phone">手机号</div>
                 </div>
                 <div class="inner">
-                    <input v-model="phone" id="phone" placeholder="手机号"/>
+                    <input v-model="phone" id="phone" placeholder="手机号" @input="clearError('phone')"/>
                     <div class="clear" @click="clearInput('phone')">
-                        <img src="/images/icon_close.png" alt="" v-if="phone">
+                        <img src="../../images/icon_close.png" alt="" v-if="phone">
                     </div>
                 </div>
 
@@ -34,9 +34,9 @@
                     <div class="info" v-if="captcha">验证码</div>
                 </div>
                 <div class="inner">
-                    <input v-model="captcha" id="captcha" placeholder="短信验证码"/>
+                    <input v-model="captcha" id="captcha" placeholder="短信验证码" @input="clearError('captcha')"/>
                     <div class="clear captcha" @click="clearInput('captcha')">
-                        <img src="/images/icon_close.png" alt="" v-if="captcha">
+                        <img src="../../images/icon_close.png" alt="" v-if="captcha">
                     </div>
 
                     <div class="send_sms" :class="{'disabled':(phone.length!=11)}" @click="(time==0 && phone.length==11)?sendSms():''">
@@ -83,7 +83,7 @@
     })();
 </script>-->
 
-<script src="/js/common.js"></script>
-<script src="/js/login/login.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/login/login.js"></script>
 </body>
 </html>

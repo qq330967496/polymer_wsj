@@ -362,7 +362,7 @@ footer{
 .dialog-prompt {
     background-color: rgba(0, 0, 0, .8);
     color: #fff;
-    max-width: 140px;
+    max-width: 70%;
     position: absolute;
     z-index: 10001;
     /*left: 55%;*/

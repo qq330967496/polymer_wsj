@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <!--<link rel="stylesheet" type="text/css" href="../resources/css/login.css">-->
-    <link rel="stylesheet" type="text/css" href="/css/style.min.css">
-    <title>手机号快捷登陆页</title>
+    <link rel="stylesheet" type="text/css" href="../../css/style.min.css">
+    <title>创建昵称</title>
 </head>
 <body class="login">
 <div id="app" v-cloak>
@@ -15,8 +15,8 @@
         <div class="nav"></div>
         <div class="login_title">
             <span>
-                第三方帐号登录成功， <br>
-                昵称被占用，请重新
+                登录成功 <br>
+                {{error_msg}}
             </span>
         </div>
         <div class="input_field">
@@ -25,9 +25,9 @@
                     <div class="info" v-if="nickname">新昵称</div>
                 </div>
                 <div class="inner">
-                    <input v-model="nickname" id="nickname" placeholder="新昵称"/>
+                    <input v-model="nickname" id="nickname" placeholder="新昵称" @input="clearError('nickname')"/>
                     <div class="clear" @click="clearInput('nickname')">
-                        <img src="/images/icon_close.png" alt="" v-if="nickname">
+                        <img src="../../images/icon_close.png" alt="" v-if="nickname">
                     </div>
                 </div>
 
@@ -64,7 +64,7 @@
     })();
 </script>-->
 
-<script src="/js/common.js"></script>
-<script src="/js/login/change_nickname.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/login/change_nickname.js"></script>
 </body>
 </html>

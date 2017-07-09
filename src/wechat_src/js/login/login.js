@@ -21,17 +21,49 @@ const app = new Vue({
         init(){
             let _self = this;
         },
+        clearError(type){
+            $('#'+type).parents('.row').removeClass('error');
+        },
         sendSms(){
             let _self = this;
             console.log('发送验证码');
-            _self.time = 60;
-            var inte = setInterval(function(){
-                _self.time--;
-                if(_self.time<=0){
-                    clearInterval(inte);
+            
+            //请求
+            $.ajax({
+                url:'/wsj_server/sms/login/sendIdentifyingCode.do',
+                data:{
+                    mobile:_self.phone,
+                },
+                type:'GET',
+                success:function(json){
+                    //假数据
+                    /*json={
+                        success:true,
+                        message:'发送短信成功'
+                        // success:false,
+                        // message:'发送短信失败，请输入正确的手机号码'
+                    }*/
+                    if (json.success) {
+                        utils.prompt(json.message);
+                        _self.time = 60;//短信发送等待秒数
+                        var inte = setInterval(function(){
+                            _self.time--;
+                            if(_self.time<=0){
+                                clearInterval(inte);
+                            }
+                        },1000);
+                    }else{
+                        utils.prompt(json.message);
+                        if(json.message=='发送短信失败，请输入正确的手机号码'){
+                            $('#phone').parents('.row').addClass('error');
+                            $('#phone').focus();
+                        }
+                    }
+                },
+                error:function(){
+                    utils.prompt('网络错误，请重试');
                 }
-            },1000);
-
+            });
 
         },
         toLogin(){
@@ -52,13 +84,30 @@ const app = new Vue({
 
             //请求
             $.ajax({
-                url:'',
+                url:'/wsj_server/sms/login/validateCode.do',
                 data:{
-
+                    mobile:_self.phone,
+                    code:_self.captcha,
                 },
-                type:'POST',
+                type:'GET',
                 success:function(json){
-
+                    //假数据
+                    /*json={
+                            "message":"Error-003,操作过于频繁，请5分钟后重试",
+                            "success":false
+                        }*/
+                    if (json.success) {
+                        if(json.message=='注册成功'){
+                            // location.href='change_nickname.html?cur_nickname='+json.bean.name;
+                            location.href='change_nickname.html';
+                        }else if(json.message=='登陆成功' || json.message=='登录成功'){
+                            location.href='../index.html';
+                        }
+                    }else{
+                        utils.prompt(json.message.split(',')[1]);
+                        $('#captcha').parents('.row').addClass('error');
+                        $('#captcha').focus();
+                    }
                 },
                 error:function(){
                     utils.prompt('网络错误，请重试');
@@ -68,6 +117,7 @@ const app = new Vue({
         toWechatLogin(){
             let _self = this;
             console.log('微信登录');
+            location.href='/wsj_server/wechat/thirdPartLogin.do';
         },
 
         clearInput(type){
