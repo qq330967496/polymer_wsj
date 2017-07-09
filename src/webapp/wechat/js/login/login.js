@@ -96,14 +96,9 @@ webpackJsonp([2],[
 	                success: function (json) {
 	                    //假数据
 	                    /*json={
-	                        success:true,
-	                        message:'注册成功',
-	                        bean:{
-	                            name:'wsj_15889963320',
-	                        },
-	                        // success:false,
-	                        // message:'Error-001,验证码超时，请重新验证'
-	                    }*/
+	                            "message":"Error-003,操作过于频繁，请5分钟后重试",
+	                            "success":false
+	                        }*/
 	                    if (json.success) {
 	                        if (json.message == '注册成功') {
 	                            // location.href='change_nickname.html?cur_nickname='+json.bean.name;
@@ -125,7 +120,7 @@ webpackJsonp([2],[
 	        toWechatLogin() {
 	            let _self = this;
 	            console.log('微信登录');
-	            location.href = 'wsj_server/wechat/thirdPartLogin';
+	            location.href = '/wsj_server/wechat/thirdPartLogin.do';
 	        },
 
 	        clearInput(type) {
