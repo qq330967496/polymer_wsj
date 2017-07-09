@@ -2,35 +2,22 @@
 <dom-module id="finance-index">
     <template>
         <div class="top-bar">
-            <div class="pull-left logo">logo</div>
+            <div class="pull-left logo"></div>
             <div class="pull-left">
                 <paper-tabs class="nav-bar" selected="{{tabindex}}" noink no-bar>
-                    <!--<paper-tab id="home" on-click="_openOtherPage">
-                        <span class="img-icon img-icon-home"></span>
-                        首页
-                    </paper-tab>-->
                     <paper-tab>
                         <span class="img-icon img-icon-customer"></span>
                         客户
                     </paper-tab>
-                    <!--<paper-tab>
-                        <span class="img-icon img-icon-business"></span>
-                        金融业务
-                    </paper-tab>-->
                 </paper-tabs>
             </div>
             <div class="pull-right user-drawer">
-                <!--<iron-icon class="user-icon" icon="icons:perm-identity"></iron-icon>-->
                 你好，<span>[[staff.name]]</span>&nbsp;&nbsp;|&nbsp;&nbsp;
                 <a class="logout" href="javascript:void(0);" on-click="_logout">退出</a>
-                <!--<paper-icon-button class="icon" icon="icons:arrow-drop-down">退出</paper-icon-button>-->
             </div>
         </div>
         <div style="margin: 20px 0 0 66px">
             <div class="left-side pull-left">
-                <!--<template is="dom-if" if="{{showTabIndex(0,tabindex)}}">
-                    <div class="menu-title"><span class="img-icon img-icon-home"></span><b>首页</b></div>
-                </template>-->
                 <template is="dom-if" if="{{showTabIndex(0,tabindex)}}">
                     <div class="menu-title"><span class="img-icon img-icon-customer"></span><b>客户</b></div>
                     <paper-menu class="menu-list">
@@ -40,15 +27,6 @@
                         </paper-icon-item>
                     </paper-menu>
                 </template>
-                <!--<template is="dom-if" if="{{showTabIndex(1,tabindex)}}">
-                    <div class="menu-title"><span class="img-icon img-icon-business"></span><b>金融业务</b></div>
-                    <paper-menu class="menu-list">
-                        <paper-icon-item id="approval" on-click="_openFinancialPage">
-                            <span class="img-icon menu-business1"></span>
-                            待审核
-                        </paper-icon-item>
-                    </paper-menu>
-                </template>-->
             </div>
             <div>
                 <main-index id="mainIndex"></main-index>
