@@ -12,7 +12,8 @@ webpackJsonp([2],[
 	    data: {
 	        phone: '', //手机号
 	        captcha: '', //验证码
-	        time: 0
+	        time: 0,
+	        isWechat: utils.queryString('isWechat')
 	    },
 	    beforeCreate: function () {
 	        utils.adaptive();
