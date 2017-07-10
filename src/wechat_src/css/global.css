@@ -5,18 +5,18 @@
 html{
     height:100%;
 }
-body {
-    background: #efefef;
-    max-width: 750px;
-    height:100%;
-    margin: auto;
-    font-size: 0.65rem;/*750宽时26px*/
-    font-family: Microsoft Yahei, Hiragino Sans GB, "Helvetica Neue", Helvetica, sans-serif;
-}
-
 blockquote，th, body, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, li, ol, p, pre, td, textarea, ul {
     padding: 0;
     margin: 0
+}
+body {
+    background: #efefef;
+    width:100%;
+    max-width: 750px;
+    height:100%;
+    margin: 0 auto;
+    font-size: 0.65rem;/*750宽时26px*/
+    font-family: Microsoft Yahei, Hiragino Sans GB, "Helvetica Neue", Helvetica, sans-serif;
 }
 
 body, input, textarea, select, h1, h2, h3, h4, h5, h6 {
@@ -80,6 +80,10 @@ footer{
 }
 [v-cloak]{
     display: none;
+}
+#app{
+    max-width:750px;
+    min-height:100%;
 }
 
 :after, :before {
