@@ -11885,76 +11885,8 @@
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function($) {"use strict";
 
-	var _defineProperty2 = __webpack_require__(76);
-
-	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 	!(__WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, module) {
-	    var _utils;
-
-	    Date.prototype.Format = function (fmt) {
-	        var o = {
-	            "M+": this.getMonth() + 1,
-	            "d+": this.getDate(),
-	            "h+": this.getHours(),
-	            "m+": this.getMinutes(),
-	            "s+": this.getSeconds(),
-	            "q+": Math.floor((this.getMonth() + 3) / 3),
-	            "S": this.getMilliseconds() };
-	        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-	        for (var k in o) {
-	            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
-	        }return fmt;
-	    };
-
-	    Array.prototype.remove = function (val) {
-	        for (var i = 0; i < this.length; i++) {
-	            if (this[i] == val) {
-	                this.splice(i, 1);
-	                break;
-	            }
-	        }
-	    };
-
-	    var utils = (_utils = {
-	        getUrlParam: function getUrlParam(param) {
-	            var t = new RegExp("(^|&)" + param + "=([^&]*)(&|$)"),
-	                n = window.location.search.substr(1).match(t);
-	            return null != n ? unescape(n[2]) : null;
-	        },
-
-	        getUrlParamt: function getUrlParamt(param) {
-	            var t = new RegExp("(^|&)" + param + "=([^&]*)(&|$)"),
-	                n = window.location.search.substr(1).match(t);
-	            return null != n ? n[2] : null;
-	        },
-	        queryToken: function queryToken(key) {
-	            return (document.location.href.match(new RegExp("(?:\\?|&)" + key + "=(.*?)(?=&|$)")) || ['', null])[1];
-	        },
-
-	        getUrlParamsJson: function getUrlParamsJson(paramArr) {
-	            _self = this;
-	            var valueJson = {};
-	            var jsonStr = "{";
-	            if (paramArr != null && paramArr.length != 0) {
-	                paramArr.forEach(function (param) {
-	                    var value = _self.getUrlParamt(param);
-	                    if (value != null && value != "") {
-	                        jsonStr += param + ":'" + value + "',";
-	                    } else {
-	                        jsonStr += param + ":'',";
-	                    }
-	                });
-	            } else {
-	                return "{}";
-	            }
-	            jsonStr += '}';
-	            valueJson = eval('(' + jsonStr + ')');
-	            return valueJson;
-	        },
-
+	    var utils = {
 	        adaptive: function adaptive(num, width) {
 	            var screenWid = document.documentElement.clientWidth;
 	            var fixWid = 375;
@@ -11965,17 +11897,6 @@
 	            window.onresize = function () {
 	                utils.adaptive();
 	            };
-	        },
-
-	        getPrefix: function getPrefix() {
-	            var wlh = window.location.host.toString();
-	            var prefix = '';
-	            if (wlh.indexOf('-dev') !== -1) {
-	                prefix = '-dev';
-	            } else if (wlh.indexOf('-test') !== -1) {
-	                prefix = '-test';
-	            }
-	            return prefix;
 	        },
 
 	        setCookie: function setCookie(name, value, time) {
@@ -12001,43 +11922,13 @@
 
 	        queryString: function queryString(key) {
 	            return (document.location.search.match(new RegExp("(?:^\\?|&)" + key + "=(.*?)(?=&|$)")) || ['', null])[1];
-	        }
-	    }, (0, _defineProperty3.default)(_utils, "queryToken", function queryToken(key) {
-	        return (document.location.href.match(new RegExp("(?:\\?|&)" + key + "=(.*?)(?=&|$)")) || ['', null])[1];
-	    }), (0, _defineProperty3.default)(_utils, "replacePhone", function replacePhone(key) {
-	        return key.substr(0, 3) + '****' + key.substr(7);
-	    }), (0, _defineProperty3.default)(_utils, "urlpage", function urlpage() {
-	        return location.href.replace(document.location.search, "");
-	    }), (0, _defineProperty3.default)(_utils, "baiduMap", function baiduMap(city, addr) {
-	        var map = new BMap.Map("allmap"),
-	            defaultPoint = new BMap.Point(116.331398, 39.897445);
-	        map.centerAndZoom(defaultPoint, 12);
-	        map.disableDragging();
-	        var myGeo = new BMap.Geocoder();
-	        myGeo.getPoint(addr, function (e) {
-	            e && (map.centerAndZoom(e, 16), map.addOverlay(new BMap.Marker(e)));
-	        }, city);
-	    }), (0, _defineProperty3.default)(_utils, "hmBaidu", function hmBaidu() {
-	        var hm = document.createElement("script");
+	        },
 
-	        hm.src = "//hm.baidu.com/hm.js?9d04c3312130ec70e33078d306779e47";
-	        var s = document.getElementsByTagName("script")[0];
-	        s.parentNode.insertBefore(hm, s);
-	    }), (0, _defineProperty3.default)(_utils, "ua", navigator.userAgent), (0, _defineProperty3.default)(_utils, "url", window.location.href), (0, _defineProperty3.default)(_utils, "isShare", function isShare() {
-	        return this.url.match(/petShareFrom/i);
-	    }), (0, _defineProperty3.default)(_utils, "isMobile", function isMobile() {
-	        return this.ua.match(/AppleWebKit.*Mobile/i);
-	    }), (0, _defineProperty3.default)(_utils, "isIos", function isIos() {
-	        return this.ua.match(/iPhone|iPod|iPad/i);
-	    }), (0, _defineProperty3.default)(_utils, "isAndroid", function isAndroid() {
-	        return this.ua.match(/Android/i);
-	    }), (0, _defineProperty3.default)(_utils, "isWeixin", function isWeixin() {
-	        return this.ua.match(/MicroMessenger/i);
-	    }), (0, _defineProperty3.default)(_utils, "alert", function alert(obj, callback) {
-	        var content = obj.content || String(obj) || "",
-	            btnText = obj.btnText || "确定",
-	            boxClass = obj.boxClass || "",
-	            alertHtml = '\
+	        alert: function alert(obj, callback) {
+	            var content = obj.content || String(obj) || "",
+	                btnText = obj.btnText || "确定",
+	                boxClass = obj.boxClass || "",
+	                alertHtml = '\
 	                <div class="dialog ' + boxClass + '">\
 	                    <div class="dialog-box">\
 	                        <div class="dialog-detail">' + content + "" + '</div>\
@@ -12048,22 +11939,24 @@
 	                    <div class="dialog-overlay"></div>\
 	                </div>';
 
-	        $(".dialog").remove();
-	        $("body").append(alertHtml);
-	        var dialog = $(".dialog"),
-	            btnClose = $(".dialog-btn-close");
-	        btnClose.on("click", function () {
-	            dialog.remove();
-	            if (callback) {
-	                callback();
-	            }
-	        });
-	    }), (0, _defineProperty3.default)(_utils, "confirm", function confirm(obj, callback) {
-	        var content = obj.content || String(obj) || "",
-	            okText = obj.okText || "确定",
-	            cancelText = obj.cancelText || "取消",
-	            boxClass = obj.boxClass || "",
-	            confirmHtml = '\
+	            $(".dialog").remove();
+	            $("body").append(alertHtml);
+	            var dialog = $(".dialog"),
+	                btnClose = $(".dialog-btn-close");
+	            btnClose.on("click", function () {
+	                dialog.remove();
+	                if (callback) {
+	                    callback();
+	                }
+	            });
+	        },
+
+	        confirm: function confirm(obj, callback) {
+	            var content = obj.content || String(obj) || "",
+	                okText = obj.okText || "确定",
+	                cancelText = obj.cancelText || "取消",
+	                boxClass = obj.boxClass || "",
+	                confirmHtml = '\
 	                <div class="dialog ' + boxClass + '">\
 	                    <div class="dialog-box">\
 	                        <div class="dialog-detail">' + content + "" + '</div>\
@@ -12074,491 +11967,69 @@
 	                    </div>\
 	                    <div class="dialog-overlay"></div>\
 	                </div>';
-	        $(".dialog").remove();
-	        $("body").append(confirmHtml);
-	        var dialog = $(".dialog"),
-	            btnOk = $(".dialog-btn-ok"),
-	            btnCancel = $(".dialog-btn-cancel"),
-	            flag = true,
-	            oprea = function oprea() {
-	            dialog.remove();
-	            if (callback) {
-	                callback(flag);
-	            }
-	        };
-	        btnOk.on("click", function () {
-	            flag = true;
-	            oprea();
-	        });
-	        btnCancel.on("click", function () {
-	            flag = false;
-	            oprea();
-	        });
-	    }), (0, _defineProperty3.default)(_utils, "prompt", function prompt(obj, callback) {
-	        var content = obj.content || String(obj) || "",
-	            boxClass = obj.boxClass || "",
-	            delay = obj.delay || 2000,
-	            msgHtml = '<div class="dialog-prompt ' + boxClass + '"><div>' + content + '</div></div>';
-	        $(".dialog-prompt").remove();
-	        $("body").append(msgHtml);
-	        var prompt = $(".dialog-prompt"),
-	            promptWidth = prompt.width(),
-	            wiWidth = $(window).width();
-
-	        if (delay < 0) return;
-	        setTimeout(function () {
-	            prompt.css({ "opacity": 0 });
-	            setTimeout(function () {
+	            $(".dialog").remove();
+	            $("body").append(confirmHtml);
+	            var dialog = $(".dialog"),
+	                btnOk = $(".dialog-btn-ok"),
+	                btnCancel = $(".dialog-btn-cancel"),
+	                flag = true,
+	                oprea = function oprea() {
+	                dialog.remove();
 	                if (callback) {
-	                    callback();
+	                    callback(flag);
 	                }
-	            }, 500);
-	        }, delay);
-	    }), (0, _defineProperty3.default)(_utils, "prompt_nodelay", function prompt_nodelay(obj) {
-	        var content = obj.content || String(obj) || "",
-	            boxClass = obj.boxClass || "",
-	            msgHtml = '<div class="dialog-prompt-nodelay">\
+	            };
+	            btnOk.on("click", function () {
+	                flag = true;
+	                oprea();
+	            });
+	            btnCancel.on("click", function () {
+	                flag = false;
+	                oprea();
+	            });
+	        },
+
+	        prompt: function prompt(obj, callback) {
+	            var content = obj.content || String(obj) || "",
+	                boxClass = obj.boxClass || "",
+	                delay = obj.delay || 2000,
+	                msgHtml = '<div class="dialog-prompt ' + boxClass + '"><div>' + content + '</div></div>';
+	            $(".dialog-prompt").remove();
+	            $("body").append(msgHtml);
+	            var prompt = $(".dialog-prompt"),
+	                promptWidth = prompt.width(),
+	                wiWidth = $(window).width();
+
+	            if (delay < 0) return;
+	            setTimeout(function () {
+	                prompt.css({ "opacity": 0 });
+	                setTimeout(function () {
+	                    if (callback) {
+	                        callback();
+	                    }
+	                }, 500);
+	            }, delay);
+	        },
+	        prompt_nodelay: function prompt_nodelay(obj) {
+	            var content = obj.content || String(obj) || "",
+	                boxClass = obj.boxClass || "",
+	                msgHtml = '<div class="dialog-prompt-nodelay">\
 	                                <div class="dialog-prompt ' + boxClass + '">' + content + '</div>\
 	                                <div class="dialog-overlay"/>\
 	                            </div>';
-	        $(".dialog-prompt").remove();
-	        $("body").append(msgHtml);
+	            $(".dialog-prompt").remove();
+	            $("body").append(msgHtml);
 
-	        var prompt = $(".dialog-prompt"),
-	            promptWidth = prompt.width(),
-	            wiWidth = $(window).width();
-	        prompt.css({ "margin-left": -promptWidth * 0.5 });
-	    }), (0, _defineProperty3.default)(_utils, "formatTime", function formatTime(ms) {
-	        var ss = 1000;
-	        var mi = ss * 60;
-	        var hh = mi * 60;
-	        var dd = hh * 24;
-
-	        var day = parseInt(ms / dd);
-	        var hour = parseInt((ms - day * dd) / hh);
-	        var minute = parseInt((ms - day * dd - hour * hh) / mi);
-	        var second = parseInt((ms - day * dd - hour * hh - minute * mi) / ss);
-	        var milliSecond = parseInt(ms - day * dd - hour * hh - minute * mi - second * ss);
-
-	        var result = {
-	            d: day,
-	            h: hour,
-	            mi: minute,
-	            s: second,
-	            ms: milliSecond
-	        };
-
-	        return result;
-	    }), (0, _defineProperty3.default)(_utils, "formatTime_zero", function formatTime_zero(ms) {
-	        var ss = 1000;
-	        var mi = ss * 60;
-	        var hh = mi * 60;
-	        var dd = hh * 24;
-
-	        var day = utils.getTwoNum(ms / dd);
-	        var hour = utils.getTwoNum((ms - day * dd) / hh);
-	        var minute = utils.getTwoNum((ms - day * dd - hour * hh) / mi);
-	        var second = utils.getTwoNum((ms - day * dd - hour * hh - minute * mi) / ss);
-	        var milliSecond = utils.getThreeNum(ms - day * dd - hour * hh - minute * mi - second * ss);
-
-	        var result = {
-	            d: day,
-	            h: hour,
-	            mi: minute,
-	            s: second,
-	            ms: milliSecond
-	        };
-
-	        return result;
-	    }), (0, _defineProperty3.default)(_utils, "getTwoNum", function getTwoNum(data) {
-	        if (!data) return "00";
-	        var int = parseInt(data);
-	        if (int < 10) return "0" + int;else return int;
-	    }), (0, _defineProperty3.default)(_utils, "getThreeNum", function getThreeNum(data) {
-	        if (!data) return "000";
-	        var int = parseInt(data);
-	        if (int >= 100) return int;else if (int < 10) return "00" + int;else return "0" + int;
-	    }), (0, _defineProperty3.default)(_utils, "goToApp", function goToApp(cmd, param) {
-	        if (utils.isAndroid()) {
-	            console.log("安卓指令:" + cmd + ":" + param);
-	            window.JavaScriptHelper.sendCommand(cmd, param);
-	        } else if (utils.isIos()) {
-	            console.log("IOS指令:" + cmd + ":" + param);
-	            window.location = cmd + ":" + param;
+	            var prompt = $(".dialog-prompt"),
+	                promptWidth = prompt.width(),
+	                wiWidth = $(window).width();
+	            prompt.css({ "margin-left": -promptWidth * 0.5 });
 	        }
-	    }), (0, _defineProperty3.default)(_utils, "checkLogin", function checkLogin(shareUrl) {
-	        shareUrl = shareUrl;
-	        var token = utils.getUrlParam('token');
-	        if (token == null || token == '') {
-	            token = utils.getCookie('token');
-	        }
-	        if (token == null || token == '') {
-	            utils.toLogin(shareUrl);
-	        }
-	        return token;
-	    }), (0, _defineProperty3.default)(_utils, "toLogin", function toLogin(url) {
-	        console.log('app登录');
-
-	        url = url ? encodeURIComponent(url) : '';
-	        var param = 'url==' + url + '||title==ETC车宝';
-	        utils.goToApp('login', param);
-	    }), (0, _defineProperty3.default)(_utils, "awakeAPP", function awakeAPP() {
-	        if (utils.isWeixin()) {
-	            if (utils.isAndroid()) {
-	                window.location.href = "https://lnk0.com/lQBx5k";
-	            } else if (utils.isIos()) {
-	                window.location.href = "https://lnk0.com/QRpskc";
-	            }
-	        } else {
-	            if (utils.isAndroid()) {
-	                window.location.href = "m://com.etcchebao/";
-	                window.location.href = "https://lnk0.com/lQBx5k";
-	            } else if (utils.isIos()) {
-	                window.location.href = "etcchebao://";
-	                window.location.href = "https://lnk0.com/QRpskc";
-	            }
-	        }
-	    }), (0, _defineProperty3.default)(_utils, "loadFile", function loadFile(url, callback) {
-	        var elem;
-	        if (url.match(/\.js/i)) {
-	            elem = document.createElement("script");
-	            elem.src = url;
-	            document.body.appendChild(elem);
-	        } else {
-	            elem = document.createElement("link");
-	            elem.href = url;
-	            elem.rel = "stylesheet";
-	            document.head.appendChild(elem);
-	        }
-	        elem.onload = elem.onreadystatechange = function () {
-	            if (!this.readyState || this.readyState == "loaded" || this.readyState == "complete") {
-	                if (callback) {
-	                    callback();
-	                }
-	            }
-	        };
-	    }), (0, _defineProperty3.default)(_utils, "wxShare", function wxShare(wxData) {
-	        var wxData = wxData || {},
-	            title = wxData.title || "ETC车宝",
-	            desc = wxData.desc || "",
-	            img = wxData.img || "",
-	            link = wxData.link || window.location.href,
-	            url = encodeURIComponent(window.location.href.split("#")[0]);
-	        $.ajax({
-	            dataType: "jsonp",
-	            url: "https://act" + utils.getPrefix() + ".etcchebao.com/wechat/api/jsWxConfig?hash=" + utils.getWeChatHash(),
-	            success: function success(data) {
-	                utils.loadFile("https://res.wx.qq.com/open/js/jweixin-1.0.0.js", function () {
-	                    var shareData = eval(data);
-
-	                    wx.config({
-	                        debug: false,
-	                        appId: shareData.data.appid,
-	                        timestamp: shareData.data.timestamp,
-	                        nonceStr: shareData.data.noncestr,
-	                        signature: shareData.data.signature,
-	                        jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo']
-	                    });
-
-	                    wx.ready(function () {
-	                        wx.onMenuShareTimeline({
-	                            title: title,
-	                            link: link,
-	                            imgUrl: img,
-	                            success: function success() {},
-	                            cancel: function cancel() {}
-	                        });
-	                        wx.onMenuShareAppMessage({
-	                            title: title,
-	                            desc: desc,
-	                            link: link,
-	                            imgUrl: img,
-	                            type: '',
-	                            dataUrl: '',
-	                            success: function success() {},
-	                            cancel: function cancel() {}
-	                        });
-	                        wx.onMenuShareQQ({
-	                            title: title,
-	                            desc: desc,
-	                            link: link,
-	                            imgUrl: img,
-	                            success: function success() {},
-	                            cancel: function cancel() {}
-	                        });
-	                        wx.onMenuShareWeibo({
-	                            title: title,
-	                            desc: desc,
-	                            link: link,
-	                            imgUrl: img,
-	                            success: function success() {},
-	                            cancel: function cancel() {}
-	                        });
-	                    });
-	                });
-	            },
-	            error: function error(xhr, type) {
-	                alert('微信分享链接错误1111');
-	            }
-	        });
-	    }), (0, _defineProperty3.default)(_utils, "img_dialog", function img_dialog(obj, callback) {
-	        var obj = obj || {};
-	        var content = obj.content || String(obj) || "",
-	            img = obj.img || "",
-	            btnText = obj.btnText || "确定",
-	            boxClass = obj.boxClass || "",
-	            flag = true,
-	            html = '\
-	                <div class="img_dialog ' + boxClass + '">\
-	                    <div class="img_dialog_main">\
-	                        <div class="img_dialog_img">\
-	                            <img src="../images/bg_etccards.png" alt="">\
-	                        </div>\
-	                        <div class="img_dialog_text">\
-	                            ' + content + '\
-	                        </div>\
-	                        <div class="img_dialog_btn">\
-	                            ' + btnText + '\
-	                        </div>\
-	                        <div class="img_dialog_close">\
-	                            X\
-	                        </div>\
-	                    </div>\
-	                    <div class="dialog-overlay"></div>\
-	                </div>\
-	                ';
-	        $("body").append(html);
-	        var $dialog = $(".img_dialog"),
-	            $ok = $dialog.find(".img_dialog_btn"),
-	            $close = $dialog.find(".img_dialog_close"),
-	            $overlay = $dialog.find(".dialog-overlay");
-
-	        var okEvent = function okEvent() {
-	            if (callback) {
-	                callback(true);
-	            }
-	        };
-	        var closeEvent = function closeEvent() {
-	            if (callback) {
-	                callback(false);
-	            }
-	            $dialog.remove();
-	        };
-
-	        $ok.click(function () {
-	            okEvent();
-	        });
-
-	        $close.click(function () {
-	            closeEvent();
-	        });
-	        $overlay.click(function () {
-	            closeEvent();
-	        });
-	    }), (0, _defineProperty3.default)(_utils, "toAuthorize", function toAuthorize(url) {
-	        window.location.href = utils.getUrl("passport_redirect") + '?client_type=3&user_type=0&type=2&hash=' + utils.getWeChatHash() + '&jump_login=3&src=' + url;
-	    }), (0, _defineProperty3.default)(_utils, "getWcUserinfo", function getWcUserinfo(openid, cb) {
-	        console.log("获取微信用户信息");
-
-	        $.ajax({
-	            url: utils.getUrl("passport_wechat_info") + "?hash=" + utils.getWeChatHash() + "&openid=" + openid,
-	            dataType: "jsonp",
-	            success: function success(json) {
-	                console.log(json);
-	                if (json.code == 0) {
-	                    cb(json.data);
-	                } else {
-	                    alert(json.msg);
-	                }
-	            },
-	            error: function error() {
-	                alert('网络出错，请稍后再试');
-	            }
-	        });
-	    }), (0, _defineProperty3.default)(_utils, "getWeChatHash", function getWeChatHash() {
-	        return utils.getPrefix() == '-test' ? 'jinghui' : utils.getPrefix() == '-dev' ? 'jinghui' : 'etclink';
-	    }), (0, _defineProperty3.default)(_utils, "getUrl", function getUrl(type) {
-	        var url = '';
-	        switch (type) {
-	            case 'passport_redirect':
-	                url = 'https://passport' + utils.getPrefix() + '.etcchebao.com/redirect/';
-	                break;
-	            case 'passport_wechat_info':
-	                url = 'https://passport' + utils.getPrefix() + '.etcchebao.com/wechat/info';
-	                break;
-	            default:
-	                url = '';
-	        }
-	        return url;
-	    }), (0, _defineProperty3.default)(_utils, "scrollToBottom", function scrollToBottom(cb) {
-	        var _this = this;
-	        $(window).scroll(function () {
-	            var scrollTop = $(this).scrollTop();
-	            var scrollHeight = $(document).height();
-	            var windowHeight = $(this).height();
-	            if (scrollTop + windowHeight == scrollHeight) {
-	                console.log("滚动到底部");
-	                cb();
-	            }
-	        });
-	    }), (0, _defineProperty3.default)(_utils, "getHotLine", function getHotLine(callback) {
-	        $.ajax({
-	            url: 'https://api-mall' + utils.getPrefix() + '.etcchebao.com/home/getConfigOption?option=CUSTOMER_TELEPHONE_NUMBERS',
-	            dataType: "jsonp",
-	            async: false,
-	            success: function success(json) {
-	                console.log(json);
-	                if (json.code == 0) {
-	                    callback(json.data);
-	                } else {
-	                    console.log(json.msg);
-	                }
-	            }, error: function error(e) {
-	                console.log('网络错误');
-	            }
-	        });
-	    }), (0, _defineProperty3.default)(_utils, "common_dialog", function common_dialog(obj) {
-	        var obj = obj || {};
-	        var content = obj.content || String(obj) || "";
-	        var boxClass = obj.boxClass || "";
-
-	        var html = '\
-	                    <div class="common_dialog ' + boxClass + '">\
-	                        <div class="common_dialog_main">\
-	                            ' + content + '\
-	                        </div>\
-	                        <div class="dialog-overlay"></div>\
-	                    </div>\
-	                    ';
-	        $("body").append(html);
-
-	        $(".dialog-overlay").click(function () {
-	            $(".common_dialog").remove();
-	        });
-
-	        obj.dialog_event ? obj.dialog_event() : '';
-	    }), (0, _defineProperty3.default)(_utils, "commonAjax", function commonAjax(obj) {
-	        obj.beforeSend = obj.beforeSend || function () {
-	            utils.prompt_nodelay("加载中...");
-	        };
-	        obj.complete = obj.complete || function () {
-	            $(".dialog-prompt-nodelay").remove();
-	        };
-	        obj.error = obj.error || function () {
-	            utils.alert('网络错误，请重试');
-	        };
-	        $.ajax(obj);
-	    }), (0, _defineProperty3.default)(_utils, "pull_down", function pull_down(selector, cb) {
-	        var $this = $(selector);
-	        var percent = 0;
-	        var isPulling = false;
-	        var mouseStartY = 0;
-
-	        var loading = '<div style="top:-1.8rem;position: absolute;text-align: center;width:100%;">\
-	                                <img src="../images/loading_etcv2.gif" alt="" style="width:100%;">\
-	                           </div>';
-	        $this.prepend(loading);
-
-	        $this.on('touchstart', function (e) {
-	            isPulling = true;
-	            mouseStartY = window.event.touches[0].clientY;
-	        });
-	        $this.on('touchmove', function (e) {
-	            var maxDistance = 150;
-	            var mouseDistanceY = window.event.touches[0].clientY - mouseStartY;
-	            mouseDistanceY = mouseDistanceY > maxDistance ? maxDistance : mouseDistanceY;
-
-
-	            if ($(window).scrollTop() == 0 && isPulling && mouseDistanceY > 0) {
-	                e.preventDefault();
-
-	                percent = mouseDistanceY / maxDistance;
-	                var pullMouseDistanceY = mouseDistanceY * percent / 40;
-
-	                $this.css({
-	                    '-webkit-transition': '0s ease all',
-	                    '-moz-transition': '0s ease all',
-	                    'transition': '0s ease all',
-	                    'transform': 'translateY(' + pullMouseDistanceY + 'rem)',
-	                    '-webkit-transform': 'translateY(' + pullMouseDistanceY + 'rem)',
-	                    '-o-transform': 'translateY(' + pullMouseDistanceY + 'rem)',
-	                    '-moz-transform': 'translateY(' + pullMouseDistanceY + 'rem)' });
-	            }
-	        });
-	        $this.on('touchend', function (e) {
-	            if (percent == 1) {
-	                cb ? cb() : '';
-	            }
-
-	            isPulling = false;
-	            $this.css({
-	                '-webkit-transition': '0.5s ease all',
-	                '-moz-transition': '0.5s ease all',
-	                'transition': '0.5s ease all',
-	                'transform': 'translateY(0px)',
-	                '-webkit-transform': 'translateY(0px)',
-	                '-o-transform': 'translateY(0px)',
-	                '-moz-transform': 'translateY(0px)' });
-	            percent = 0;
-	        });
-	    }), _utils);
+	    };
 
 	    module.exports = utils;
 	}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
-
-/***/ }),
-/* 76 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	exports.__esModule = true;
-
-	var _defineProperty = __webpack_require__(77);
-
-	var _defineProperty2 = _interopRequireDefault(_defineProperty);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = function (obj, key, value) {
-	  if (key in obj) {
-	    (0, _defineProperty2.default)(obj, key, {
-	      value: value,
-	      enumerable: true,
-	      configurable: true,
-	      writable: true
-	    });
-	  } else {
-	    obj[key] = value;
-	  }
-
-	  return obj;
-	};
-
-/***/ }),
-/* 77 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	module.exports = { "default": __webpack_require__(78), __esModule: true };
-
-/***/ }),
-/* 78 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	__webpack_require__(79);
-	var $Object = __webpack_require__(14).Object;
-	module.exports = function defineProperty(it, key, desc){
-	  return $Object.defineProperty(it, key, desc);
-	};
-
-/***/ }),
-/* 79 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var $export = __webpack_require__(12);
-	// 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
-	$export($export.S + $export.F * !__webpack_require__(22), 'Object', {defineProperty: __webpack_require__(18).f});
 
 /***/ })
 /******/ ]);

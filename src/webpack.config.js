@@ -28,7 +28,7 @@ var config = {
             // wsCache:__dirname+'/wechat_src/lib/web-storage-cache.min.js',
             // vue: 'vue/dist/vue',
             //vue组件
-            components: __dirname+'/wechat_src/components'
+            // components: __dirname+'/wechat_src/components'
         }
     },
     module: {
@@ -57,7 +57,8 @@ var config = {
         }),
         new webpack.ProvidePlugin({
             '$'   : __dirname+'/wechat_src/lib/zepto/zepto.min.js',
-            'Vue' : 'vue/dist/vue'
+            'Vue' : 'vue/dist/vue',
+            // 'Vue' : __dirname+'/wechat_src/lib/vue.min.js',
         }),
     ]
 }

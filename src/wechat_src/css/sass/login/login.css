@@ -100,11 +100,9 @@ body.login {
     color: #ffffff;
     font-size: 0.7rem; }
   body.login .other_login_type {
-    position: absolute;
     margin-top: 2rem;
     padding: 1rem;
     color: #ffffff;
-    height: 5rem;
     font-size: 0.7rem;
     text-align: center; }
     body.login .other_login_type .other_login_type_tip {
