@@ -92,7 +92,7 @@ webpackJsonp([2],[
 	                            location.href = '../index.html';
 	                        }
 	                    } else {
-	                        utils.prompt(json.message.split(',')[1]);
+	                        utils.prompt(json.message);
 	                        $('#captcha').parents('.row').addClass('error');
 	                        $('#captcha').focus();
 	                    }

@@ -94,9 +94,9 @@ const app = new Vue({
                 success:function(json){
                     //假数据
                     /*json={
-                            "message":"Error-003,操作过于频繁，请5分钟后重试",
-                            "success":false
-                        }*/
+                        "message":"账号被禁用",
+                        "success":false
+                    }*/
                     if (json.success) {
                         if(json.message=='注册成功'){
                             // location.href='change_nickname.html?cur_nickname='+json.bean.name;
@@ -105,7 +105,7 @@ const app = new Vue({
                             location.href='../index.html';
                         }
                     }else{
-                        utils.prompt(json.message.split(',')[1]);
+                        utils.prompt(json.message);
                         $('#captcha').parents('.row').addClass('error');
                         $('#captcha').focus();
                     }
