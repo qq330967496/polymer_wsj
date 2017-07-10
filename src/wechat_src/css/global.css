@@ -2,9 +2,13 @@
 *公共css
 **/
 @charset "UTF-8";
+html{
+    height:100%;
+}
 body {
     background: #efefef;
     max-width: 750px;
+    height:100%;
     margin: auto;
     font-size: 0.65rem;/*750宽时26px*/
     font-family: Microsoft Yahei, Hiragino Sans GB, "Helvetica Neue", Helvetica, sans-serif;

@@ -2,14 +2,18 @@
 
 @charset "UTF-8";
 body.login {
-  .bg {
+  /*.bg {
     position: absolute;
     top: 0;
     left: 0;
     height: 100%;
     width: 100%;
-    background-image: linear-gradient(-110deg, #00c99d 0%, #00bcbc 100%, #00bbbe 100%);
+
     z-index: -1;
+  }*/
+  #app{
+    min-height:100%;
+    background-image: linear-gradient(-110deg, #00c99d 0%, #00bcbc 100%, #00bbbe 100%);
   }
 
   .main_field {
