@@ -10,12 +10,17 @@ const app = new Vue({
         captcha:'',//验证码
         time:0,
         isWechat:utils.queryString('isWechat'),
+        isSuccess:utils.queryString('isSuccess'),
+        message:decodeURIComponent(utils.queryString('message')),
     },
     beforeCreate: function () {
         utils.adaptive();
     },
     mounted: function () {
         let _self = this;
+        if(_self.isSuccess=="false"&&_self.message!=null){
+            utils.prompt(_self.message);
+        }
         _self.init();
     },
     methods: {

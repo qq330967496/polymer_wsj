@@ -12,13 +12,18 @@ webpackJsonp([2],[
 	        phone: '',
 	        captcha: '',
 	        time: 0,
-	        isWechat: utils.queryString('isWechat')
+	        isWechat: utils.queryString('isWechat'),
+	        isSuccess: utils.queryString('isSuccess'),
+	        message: decodeURIComponent(utils.queryString('message'))
 	    },
 	    beforeCreate: function beforeCreate() {
 	        utils.adaptive();
 	    },
 	    mounted: function mounted() {
 	        var _self = this;
+	        if (_self.isSuccess == "false" && _self.message != null) {
+	            utils.prompt(_self.message);
+	        }
 	        _self.init();
 	    },
 	    methods: {
