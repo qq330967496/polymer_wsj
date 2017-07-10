@@ -133,6 +133,7 @@ gulp.task('cssmin', function(done) {
 //将js加上10位md5,并修改html中的引用路径，该动作依赖build-js
 gulp.task('md5:js', ['build-js'], function(done) {
     gulp.src('webapp/wechat/js/**/*.js')
+        // .pipe(babel())
         .pipe(uglify()) //压缩
         .pipe(md5(10, ['webapp/wechat/view/**/*.html', 'webapp/wechat/view/app.html']))
         .pipe(gulp.dest('webapp/wechat/js'))

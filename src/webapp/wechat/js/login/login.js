@@ -2,55 +2,46 @@ webpackJsonp([2],[
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(Vue, $) {/**
-	 * Created by Sever on 2017/7/7.
-	 */
-	var utils = __webpack_require__(3);
+	/* WEBPACK VAR INJECTION */(function(Vue, $) {'use strict';
 
-	const app = new Vue({
+	var utils = __webpack_require__(75);
+
+	var app = new Vue({
 	    el: '#app',
 	    data: {
-	        phone: '', //手机号
-	        captcha: '', //验证码
+	        phone: '',
+	        captcha: '',
 	        time: 0,
 	        isWechat: utils.queryString('isWechat')
 	    },
-	    beforeCreate: function () {
+	    beforeCreate: function beforeCreate() {
 	        utils.adaptive();
 	    },
-	    mounted: function () {
-	        let _self = this;
+	    mounted: function mounted() {
+	        var _self = this;
 	        _self.init();
 	    },
 	    methods: {
-	        init() {
-	            let _self = this;
+	        init: function init() {
+	            var _self = this;
 	        },
-	        clearError(type) {
+	        clearError: function clearError(type) {
 	            $('#' + type).parents('.row').removeClass('error');
 	        },
-	        sendSms() {
-	            let _self = this;
+	        sendSms: function sendSms() {
+	            var _self = this;
 	            console.log('发送验证码');
 
-	            //请求
 	            $.ajax({
 	                url: '/wsj_server/sms/login/sendIdentifyingCode.do',
 	                data: {
 	                    mobile: _self.phone
 	                },
 	                type: 'GET',
-	                success: function (json) {
-	                    //假数据
-	                    /*json={
-	                        success:true,
-	                        message:'发送短信成功'
-	                        // success:false,
-	                        // message:'发送短信失败，请输入正确的手机号码'
-	                    }*/
+	                success: function success(json) {
 	                    if (json.success) {
 	                        utils.prompt(json.message);
-	                        _self.time = 60; //短信发送等待秒数
+	                        _self.time = 60;
 	                        var inte = setInterval(function () {
 	                            _self.time--;
 	                            if (_self.time <= 0) {
@@ -65,13 +56,13 @@ webpackJsonp([2],[
 	                        }
 	                    }
 	                },
-	                error: function () {
+	                error: function error() {
 	                    utils.prompt('网络错误，请重试');
 	                }
 	            });
 	        },
-	        toLogin() {
-	            let _self = this;
+	        toLogin: function toLogin() {
+	            var _self = this;
 	            console.log('登录');
 	            if (_self.phone.length != 11) {
 	                utils.prompt('请输入正确的手机号');
@@ -86,7 +77,6 @@ webpackJsonp([2],[
 	                return;
 	            }
 
-	            //请求
 	            $.ajax({
 	                url: '/wsj_server/sms/login/validateCode.do',
 	                data: {
@@ -94,15 +84,9 @@ webpackJsonp([2],[
 	                    code: _self.captcha
 	                },
 	                type: 'GET',
-	                success: function (json) {
-	                    //假数据
-	                    /*json={
-	                            "message":"Error-003,操作过于频繁，请5分钟后重试",
-	                            "success":false
-	                        }*/
+	                success: function success(json) {
 	                    if (json.success) {
 	                        if (json.message == '注册成功') {
-	                            // location.href='change_nickname.html?cur_nickname='+json.bean.name;
 	                            location.href = 'change_nickname.html';
 	                        } else if (json.message == '登陆成功' || json.message == '登录成功') {
 	                            location.href = '../index.html';
@@ -113,19 +97,18 @@ webpackJsonp([2],[
 	                        $('#captcha').focus();
 	                    }
 	                },
-	                error: function () {
+	                error: function error() {
 	                    utils.prompt('网络错误，请重试');
 	                }
 	            });
 	        },
-	        toWechatLogin() {
-	            let _self = this;
+	        toWechatLogin: function toWechatLogin() {
+	            var _self = this;
 	            console.log('微信登录');
 	            location.href = '/wsj_server/wechat/thirdPartLogin.do';
 	        },
-
-	        clearInput(type) {
-	            let _self = this;
+	        clearInput: function clearInput(type) {
+	            var _self = this;
 	            $('#' + type).focus();
 	            switch (type) {
 	                case 'phone':

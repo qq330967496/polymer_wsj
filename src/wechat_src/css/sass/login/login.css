@@ -101,11 +101,8 @@ body.login {
     font-size: 0.7rem; }
   body.login .other_login_type {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    width: 16.75rem;
+    margin-top: 2rem;
+    padding: 1rem;
     color: #ffffff;
     height: 5rem;
     font-size: 0.7rem;

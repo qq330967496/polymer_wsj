@@ -2,78 +2,46 @@ webpackJsonp([1],[
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(Vue, $) {/**
-	 * Created by Sever on 2017/7/7.
-	 */
-	var utils = __webpack_require__(3);
+	/* WEBPACK VAR INJECTION */(function(Vue, $) {'use strict';
 
-	const app = new Vue({
+	var utils = __webpack_require__(75);
+
+	var app = new Vue({
 	    el: '#app',
 	    data: {
 	        cur_nickname: utils.queryString('cur_nickname'),
-	        nickname: '', //昵称
+	        nickname: '',
 	        error_msg: ''
 	    },
-	    beforeCreate: function () {
+	    beforeCreate: function beforeCreate() {
 	        utils.adaptive();
 	    },
-	    mounted: function () {
-	        let _self = this;
+	    mounted: function mounted() {
+	        var _self = this;
 	        _self.init();
 	    },
 	    methods: {
-	        init() {
-	            let _self = this;
-	            /* $.ajax({
-	                 // url:'/wsj_server/customers/getLoginCustomerInfo.do',
-	                 data:{
-	                     
-	                 },
-	                 type:'GET',
-	                 success:function(json){
-	                     //假数据
-	                     json={
-	                         success:true,
-	                         message:'登录成功',
-	                     }
-	                     if(json.success){
-	                         // location.href='../index.html';
-	                     }else{
-	                         utils.prompt('没有该用户');
-	                         // _self.error_msg = '昵称被占用，请重新输入';
-	                     }
-	                 },
-	                 error:function(){
-	                     utils.prompt('网络错误，请重试');
-	                 }
-	             })*/
+	        init: function init() {
+	            var _self = this;
 	        },
-	        clearError(type) {
+	        clearError: function clearError(type) {
 	            $('#' + type).parents('.row').removeClass('error');
 	        },
-	        submit() {
-	            let _self = this;
+	        submit: function submit() {
+	            var _self = this;
 	            console.log('提交');
 	            if (!_self.nickname) {
 	                utils.prompt('请输入昵称');
 	                return;
 	            }
 
-	            //请求
 	            $.ajax({
 	                url: '/wsj_server/customers/changeCustomerNickName.do',
 	                data: {
 	                    nickName: _self.nickname
 	                },
 	                type: 'GET',
-	                success: function (json) {
-	                    //假数据
-	                    /*json={
-	                        // success:true,
-	                        // message:'修改成功',
-	                        success:false,
-	                        message:'修改失败',
-	                    }*/
+	                success: function success(json) {
 	                    if (json.success) {
 	                        location.href = '../index.html';
 	                    } else {
@@ -82,13 +50,13 @@ webpackJsonp([1],[
 	                        $('#nickname').focus();
 	                    }
 	                },
-	                error: function () {
+	                error: function error() {
 	                    utils.prompt('网络错误，请重试');
 	                }
 	            });
 	        },
-	        clearInput(type) {
-	            let _self = this;
+	        clearInput: function clearInput(type) {
+	            var _self = this;
 	            $('#' + type).focus();
 	            switch (type) {
 	                case 'nickname':

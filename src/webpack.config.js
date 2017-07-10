@@ -19,13 +19,13 @@ var config = {
         alias: {
             //插件名称
             // zepto:__dirname+'/wechat_src/lib/zepto/zepto.min.js',
-            tap:__dirname+'/wechat_src/lib/zepto/zepto.tap.min.js',
-            iscroll:__dirname+'/wechat_src/lib/iscroll/iscroll.min.js',
-            swiper:__dirname+'/wechat_src/lib/swiper.min.js',
+            // tap:__dirname+'/wechat_src/lib/zepto/zepto.tap.min.js',
+            // iscroll:__dirname+'/wechat_src/lib/iscroll/iscroll.min.js',
+            // swiper:__dirname+'/wechat_src/lib/swiper.min.js',
             //工具模块
             utils:__dirname+'/wechat_src/lib/utils.js',
             //web-storage-cache模块
-            wsCache:__dirname+'/wechat_src/lib/web-storage-cache.min.js',
+            // wsCache:__dirname+'/wechat_src/lib/web-storage-cache.min.js',
             // vue: 'vue/dist/vue',
             //vue组件
             components: __dirname+'/wechat_src/components'
