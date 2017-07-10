@@ -25,7 +25,7 @@ var host = {
     html: 'wechat/view/login/login.html'
 };
 gulp.task('default', function() {
-    runSequence('clean:sass','sass', 'md5:css', 'md5:js', 'copy:html');
+    runSequence('connect','clean:sass','sass','copy:html', 'md5:css', 'md5:js');
     console.log('done');
 });
 
@@ -133,8 +133,9 @@ gulp.task('cssmin', function(done) {
 //将js加上10位md5,并修改html中的引用路径，该动作依赖build-js
 gulp.task('md5:js', ['build-js'], function(done) {
     gulp.src('webapp/wechat/js/**/*.js')
+        // .pipe(babel())
         .pipe(uglify()) //压缩
-        .pipe(md5(10, ['webapp/wechat/view/**/*.html', 'webapp/wechat/view/app.html']))
+        .pipe(md5(10, ['webapp/wechat/view/**/*.html']))
         .pipe(gulp.dest('webapp/wechat/js'))
         .on('end', done);
 });

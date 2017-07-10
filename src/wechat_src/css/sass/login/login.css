@@ -3,15 +3,19 @@
 /*函数*/
 /*混合*/
 body.login {
-  /*change deafult placeholder color*/ }
-  body.login .bg {
+  /*.bg {
     position: absolute;
     top: 0;
     left: 0;
     height: 100%;
     width: 100%;
-    background-image: linear-gradient(-110deg, #00c99d 0%, #00bcbc 100%, #00bbbe 100%);
-    z-index: -1; }
+
+    z-index: -1;
+  }*/
+  /*change deafult placeholder color*/ }
+  body.login #app {
+    min-height: 100%;
+    background-image: linear-gradient(-110deg, #00c99d 0%, #00bcbc 100%, #00bbbe 100%); }
   body.login .main_field {
     padding: 1.7rem 0.8rem;
     display: block; }
@@ -100,14 +104,9 @@ body.login {
     color: #ffffff;
     font-size: 0.7rem; }
   body.login .other_login_type {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    width: 16.75rem;
+    margin-top: 2rem;
+    padding: 1rem;
     color: #ffffff;
-    height: 5rem;
     font-size: 0.7rem;
     text-align: center; }
     body.login .other_login_type .other_login_type_tip {
