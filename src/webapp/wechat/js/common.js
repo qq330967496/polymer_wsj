@@ -11889,6 +11889,7 @@
 	    var utils = {
 	        adaptive: function adaptive(num, width) {
 	            var screenWid = document.documentElement.clientWidth;
+
 	            var fixWid = 375;
 	            screenWid = screenWid > 750 ? 750 : screenWid;
 	            var htmlFontSize = screenWid / fixWid * 20;

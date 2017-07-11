@@ -12,7 +12,6 @@ body.login {
     z-index: -1;
   }*/
   #app{
-    min-height:100%;
     background-image: linear-gradient(-110deg, #00c99d 0%, #00bcbc 100%, #00bbbe 100%);
   }
 
@@ -33,13 +32,13 @@ body.login {
   }
 
   .login_title {
-    display: inline-block;
+    display: block;
     //margin: 1.63rem 0.08rem 0.86rem 0.08rem;
     margin: pxToRem(163) pxToRem(8) pxToRem(86);
     font-size: pxToRem(40);
     line-height: pxToRem(40);
-    height: pxToRem(40);
-    width: pxToRem(670);
+    //height: pxToRem(40);
+    //width: pxToRem(670);
     color: #ffffff;
     span {
       text-align: left;
@@ -47,9 +46,9 @@ body.login {
   }
 
   .input_field {
-    display: inline-block;
+    //display: inline-block;
     margin: 0 pxToRem(8);
-    width: pxToRem(670);
+    //width: pxToRem(670);
     color: #ffffff;
     //height: pxToRem(200);
     /*& > * {
@@ -166,7 +165,7 @@ body.login {
       border-top: 1px solid #ffffff;
       display: block;
       position: absolute;
-      width: pxToRem(150);
+      width: pxToRem(100);
       top: pxToRem(14);
       left: 0;
     }
@@ -176,7 +175,7 @@ body.login {
       border-top: 1px solid #ffffff;
       display: block;
       position: absolute;
-      width: pxToRem(150);
+      width: pxToRem(100);
       top: pxToRem(14);
       right: 0;
     }
@@ -184,10 +183,9 @@ body.login {
 
   .logo_filed {
     display: block;
-    height: pxToRem(88);
+    //height: pxToRem(88);
     line-height: pxToRem(88);
     margin-top: pxToRem(60);
-    width: pxToRem(670);
   }
 
   .wechat_logo {

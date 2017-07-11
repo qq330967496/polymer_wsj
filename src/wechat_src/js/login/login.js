@@ -17,6 +17,12 @@ const app = new Vue({
         utils.adaptive();
     },
     mounted: function () {
+        /*alert('document.documentElement.clientWidth：'+document.documentElement.clientWidth+ '\n'
+                +'document.body.clientWidth:'+document.body.clientWidth+ '\n'
+                +'window.innerWidth:'+window.innerWidth+ '\n'
+                + 'html：'+$("html").width()+ '\n'
+                + 'body：'+$("body").width()+ '\n'
+                + 'app：'+$("#app").width());*/
         let _self = this;
         if(_self.isSuccess=="false"&&_self.message!=null){
             utils.prompt(_self.message);
